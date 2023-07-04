@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
@@ -20,18 +20,13 @@ const columns = [
       </Button>
     )
   },
-  { field: 'co_code', headerName: 'code', width: 120 },
-  { field: 'co_fname_th', headerName: 'first name(TH)', width: 150 },
-  { field: 'co_lname_th', headerName: 'last name(TH)', width: 150 },
-  { field: 'co_fname_en', headerName: 'first name(EN)', width: 150 },
-  { field: 'co_lname_en', headerName: 'last name(EN)', width: 150 },
-  { field: 'co_email', headerName: 'email', width: 270 },
-  { field: 'co_tel', headerName: 'tel', width: 120 },
-  { field: 'cur_name_th', headerName: 'curriculum', width: 220 },
-  { field: 'fi_name_th', headerName: 'faculty', width: 120 }
+  { field: 'fi_name_th', headerName: 'name(TH)', width: 120 },
+  { field: 'fi_name_en', headerName: 'name(EN)', width: 220 },
+  { field: 'ac_name_th', headerName: 'type(TH)', width: 220 },
+  { field: 'ac_name_en', headerName: 'type(EN)', width: 220 }
 ]
 
-function CollegiansTab({ data }) {
+function FacultyTab({ data }) {
   const [openInsDialog, setOpenInsDialog] = useState(false)
 
   console.log(data)
@@ -43,7 +38,7 @@ function CollegiansTab({ data }) {
     <CardContent>
       <Box sx={{ mb: 2 }}>
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
-          + Collegian
+          + Faculty
         </Button>
         <Button variant='text'>Export</Button>
       </Box>
@@ -51,7 +46,7 @@ function CollegiansTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.co_id}
+          getRowId={row => row.fi_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}
@@ -63,4 +58,4 @@ function CollegiansTab({ data }) {
   )
 }
 
-export default CollegiansTab
+export default FacultyTab

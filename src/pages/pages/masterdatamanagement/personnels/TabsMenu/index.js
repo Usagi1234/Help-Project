@@ -10,6 +10,7 @@ import MuiTab from '@mui/material/Tab'
 // ** Icons Imports
 import School from 'mdi-material-ui/School'
 import CollegiansTab from './Collegians'
+import InstructorsTab from './Instructors'
 
 // ** Demo Tabs Imports
 
@@ -37,12 +38,11 @@ const TabName = styled('span')(({ theme }) => ({
   }
 }))
 
-const Tabs = ({ data, subMenu, tabValues }) => {
-  const academicsData = data.academics
-  const academicsTypeData = data.academictype
-  const facultyData = data.faculty
+const Tabs = ({ data }) => {
+  const collegiansData = data.collegians
+  const instructorsData = data.instructors
 
-  const [value, setValue] = useState(tabValues)
+  const [value, setValue] = useState('collegians')
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -67,10 +67,23 @@ const Tabs = ({ data, subMenu, tabValues }) => {
               </Box>
             }
           />
+          <Tab
+            value='instructors'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconHidden>
+                  <School />
+                </IconHidden>
+                <TabName>Instructors</TabName>
+              </Box>
+            }
+          />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='collegians'>
-          <CollegiansTab data={academicsData} />
-          collegians
+          <CollegiansTab data={collegiansData} />
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='instructors'>
+          <InstructorsTab data={instructorsData} />
         </TabPanel>
       </TabContext>
     </Card>

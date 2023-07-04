@@ -20,18 +20,16 @@ const columns = [
       </Button>
     )
   },
-  { field: 'co_code', headerName: 'code', width: 120 },
-  { field: 'co_fname_th', headerName: 'first name(TH)', width: 150 },
-  { field: 'co_lname_th', headerName: 'last name(TH)', width: 150 },
-  { field: 'co_fname_en', headerName: 'first name(EN)', width: 150 },
-  { field: 'co_lname_en', headerName: 'last name(EN)', width: 150 },
-  { field: 'co_email', headerName: 'email', width: 270 },
-  { field: 'co_tel', headerName: 'tel', width: 120 },
-  { field: 'cur_name_th', headerName: 'curriculum', width: 220 },
-  { field: 'fi_name_th', headerName: 'faculty', width: 120 }
+  { field: 'ist_fname_th', headerName: 'first name(TH)', width: 120 },
+  { field: 'ist_lname_th', headerName: 'last name(TH)', width: 150 },
+  { field: 'ist_fname_en', headerName: 'first name(EN)', width: 150 },
+  { field: 'ist_lname_en', headerName: 'last name(EN)', width: 150 },
+  { field: 'ist_email', headerName: 'email', width: 180 },
+  { field: 'ist_tel', headerName: 'tel', width: 120 },
+  { field: 'fi_name_th', headerName: 'faculty', width: 140 }
 ]
 
-function CollegiansTab({ data }) {
+function InstructorsTab({ data }) {
   const [openInsDialog, setOpenInsDialog] = useState(false)
 
   console.log(data)
@@ -43,7 +41,7 @@ function CollegiansTab({ data }) {
     <CardContent>
       <Box sx={{ mb: 2 }}>
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
-          + Collegian
+          + Instructor
         </Button>
         <Button variant='text'>Export</Button>
       </Box>
@@ -51,7 +49,7 @@ function CollegiansTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.co_id}
+          getRowId={row => row.ist_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}
@@ -63,4 +61,4 @@ function CollegiansTab({ data }) {
   )
 }
 
-export default CollegiansTab
+export default InstructorsTab

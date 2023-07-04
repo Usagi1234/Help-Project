@@ -23,18 +23,15 @@ const PersonnelsPage = ({ data }) => {
 export default PersonnelsPage
 
 export async function getServerSideProps(context) {
-  const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllAcademics`)
-  const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getallacademictype`)
-  const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+  const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllcollegians`)
+  const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllinstructors`)
 
-  const resAcademics = await queryAcademics.json()
-  const resAcademicType = await queryAcademicType.json()
-  const resFaculty = await queryFaculty.json()
+  const resCollegians = await queryCollegians.json()
+  const resInstructor = await queryInstructors.json()
 
   const WrapData = {
-    academics: resAcademics.message.Data,
-    academictype: resAcademicType.message.Data,
-    faculty: resFaculty.message.Data
+    collegians: resCollegians.message.Data,
+    instructors: resInstructor.message.Data
   }
 
   return {

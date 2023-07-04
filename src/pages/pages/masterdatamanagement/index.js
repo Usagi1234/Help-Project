@@ -1,18 +1,16 @@
-import { Box, Link } from '@mui/material'
+import { Box } from '@mui/material'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 function MaterDataPage() {
+  const router = useRouter()
+  const currentPath = router.pathname
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <li>
-        <Link href='academics'>Academics</Link>
-      </li>
-      <li>
-        <Link href='curriculums'>Curriculums</Link>
-      </li>
-      <li>
-        <Link href='personnels'>Personnels</Link>
-      </li>
+      <li onClick={() => router.push(`${currentPath}/academics`)}>Academics</li>
+      <li onClick={() => router.push(`${currentPath}/curriculums`)}>Curriculums</li>
+      <li onClick={() => router.push(`${currentPath}/personnels`)}>Personnels</li>
     </Box>
   )
 }

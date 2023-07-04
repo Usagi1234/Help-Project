@@ -37,12 +37,10 @@ const TabName = styled('span')(({ theme }) => ({
   }
 }))
 
-const Tabs = ({ data, subMenu, tabValues }) => {
+const Tabs = ({ data }) => {
   const academicsData = data.academics
-  const academicsTypeData = data.academictype
-  const facultyData = data.faculty
 
-  const [value, setValue] = useState(tabValues)
+  const [value, setValue] = useState('')
 
   const handleChange = (event, newValue) => {
     setValue(newValue)

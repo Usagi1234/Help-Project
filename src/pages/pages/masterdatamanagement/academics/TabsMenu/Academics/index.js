@@ -20,8 +20,8 @@ const columns = [
       </Button>
     )
   },
-  { field: 'ac_name_th', headerName: 'name(TH)', width: 120 },
-  { field: 'ac_name_en', headerName: 'name(EN)', width: 150 },
+  { field: 'ac_name_th', headerName: 'name(TH)', width: 200 },
+  { field: 'ac_name_en', headerName: 'name(EN)', width: 200 },
   { field: 'ac_type_name_th', headerName: 'type(TH)', width: 150 },
   { field: 'ac_type_name_en', headerName: 'type(EN)', width: 150 },
   { field: 'ac_tel', headerName: 'tel', width: 120 },
@@ -44,15 +44,17 @@ function AcademicsTab({ data }) {
         </Button>
         <Button variant='text'>Export</Button>
       </Box>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        getRowId={row => row.ac_id}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10 } }
-        }}
-        pageSizeOptions={[10, 25, 50]}
-      />
+      {data.length > 0 && (
+        <DataGrid
+          rows={data}
+          columns={columns}
+          getRowId={row => row.ac_id}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } }
+          }}
+          pageSizeOptions={[10, 25, 50]}
+        />
+      )}
       <InsertDialog header={'Insert Form'} open={openInsDialog} handleClose={() => setOpenInsDialog(false)} />
     </CardContent>
   )
