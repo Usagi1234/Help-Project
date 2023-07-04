@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
-import InsertDialog from '../../Dialog'
+import InsertDialog from '../../../../../../custom-components/Dialog'
+import ExportButton from '../../../../../../custom-components/BtnExport'
 
 const columns = [
   {
@@ -42,7 +43,7 @@ function AcademicsTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Academic
         </Button>
-        <Button variant='text'>Export</Button>
+        <ExportButton />
       </Box>
       {data.length > 0 && (
         <DataGrid

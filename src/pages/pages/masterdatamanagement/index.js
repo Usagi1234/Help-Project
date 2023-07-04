@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { useRouter } from 'next/router'
+import Typography from '@mui/material/Typography'
 import React from 'react'
 
 function MaterDataPage() {
@@ -8,9 +9,24 @@ function MaterDataPage() {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <li onClick={() => router.push(`${currentPath}/academics`)}>Academics</li>
-      <li onClick={() => router.push(`${currentPath}/curriculums`)}>Curriculums</li>
-      <li onClick={() => router.push(`${currentPath}/personnels`)}>Personnels</li>
+      <Typography
+        sx={{ cursor: 'pointer', '&:hover': { color: 'blue' } }}
+        onClick={() => router.push(`${currentPath}/academics`)}
+      >
+        Academics
+      </Typography>
+      <Typography
+        sx={{ cursor: 'pointer', '&:hover': { color: 'blue' } }}
+        onClick={() => router.push(`${currentPath}/curriculums`)}
+      >
+        Curriculums
+      </Typography>
+      <Typography
+        sx={{ cursor: 'pointer', '&:hover': { color: 'blue' } }}
+        onClick={() => router.push(`${currentPath}/personnels`)}
+      >
+        Personnels
+      </Typography>
     </Box>
   )
 }
