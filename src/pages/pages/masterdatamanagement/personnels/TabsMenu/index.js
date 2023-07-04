@@ -8,7 +8,8 @@ import { styled } from '@mui/material/styles'
 import MuiTab from '@mui/material/Tab'
 
 // ** Icons Imports
-import School from 'mdi-material-ui/School'
+import AccountTie from 'mdi-material-ui/AccountTie'
+import Account from 'mdi-material-ui/Account'
 import CollegiansTab from './Collegians'
 import InstructorsTab from './Instructors'
 
@@ -61,7 +62,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <Account />
                 </IconHidden>
                 <TabName>Collegians</TabName>
               </Box>
@@ -72,7 +73,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <AccountTie />
                 </IconHidden>
                 <TabName>Instructors</TabName>
               </Box>

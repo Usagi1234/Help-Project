@@ -17,7 +17,8 @@ function MaterDataPage() {
       </Typography>
       <Typography
         sx={{ cursor: 'pointer', '&:hover': { color: 'blue' } }}
-        onClick={() => router.push(`${currentPath}/curriculums`)}
+
+        // onClick={() => router.push(`${currentPath}/curriculums`)}
       >
         Curriculums
       </Typography>

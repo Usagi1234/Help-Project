@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
-import InsertDialog from '../../../../../../custom-components/Dialog'
 import ExportButton from 'src/custom-components/BtnExport'
+import InsertDialog from 'src/custom-components/Dialog/AcademicTypeInsert'
 
 const columns = [
   {
@@ -53,7 +53,12 @@ function AcademicTypeTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <InsertDialog header={'Insert Form'} open={openInsDialog} handleClose={() => setOpenInsDialog(false)} />
+      <InsertDialog
+        type={'insert'}
+        open={openInsDialog}
+        handleClose={() => setOpenInsDialog(false)}
+        handleSubmit={console.log('Submit!')}
+      />
     </CardContent>
   )
 }

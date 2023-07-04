@@ -8,7 +8,7 @@ const IconGrid = ({ mdiIcon }) => {
     <Grid item xs={1.5} minWidth={100}>
       <Card sx={{ borderRadius: 3 }}>
         <CardContent sx={{ textAlign: 'center' }}>
-          <Icon path={mdiIcon} size={1.5} />
+          <Icon color={'orange'} path={mdiIcon} size={1.5} />
         </CardContent>
       </Card>
     </Grid>
