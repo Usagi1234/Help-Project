@@ -5,35 +5,36 @@ import { Box, Button } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 
-const columns = [
-  {
-    field: '',
-    headerName: 'Edit',
-    width: 100,
-    renderCell: cellValues => (
-      <Button
-        variant='text'
-        onClick={() => {
-          console.log(cellValues.row)
-        }}
-      >
-        ...
-      </Button>
-    )
-  },
-  { field: 'ist_fname_th', headerName: 'first name(TH)', width: 120 },
-  { field: 'ist_lname_th', headerName: 'last name(TH)', width: 150 },
-  { field: 'ist_fname_en', headerName: 'first name(EN)', width: 150 },
-  { field: 'ist_lname_en', headerName: 'last name(EN)', width: 150 },
-  { field: 'ist_email', headerName: 'email', width: 180 },
-  { field: 'ist_tel', headerName: 'tel', width: 120 },
-  { field: 'fi_name_th', headerName: 'faculty', width: 140 }
-]
-
 function InstructorsTab({ data }) {
+  const [instructor, setInstructor] = useState([])
   const [openInsDialog, setOpenInsDialog] = useState(false)
 
-  console.log(data)
+  const columns = [
+    {
+      field: '',
+      headerName: 'Edit',
+      width: 100,
+      renderCell: cellValues => (
+        <Button
+          variant='text'
+          onClick={() => {
+            setInstructor(cellValues.row)
+          }}
+        >
+          ...
+        </Button>
+      )
+    },
+    { field: 'ist_fname_th', headerName: 'first name(TH)', width: 120 },
+    { field: 'ist_lname_th', headerName: 'last name(TH)', width: 150 },
+    { field: 'ist_fname_en', headerName: 'first name(EN)', width: 150 },
+    { field: 'ist_lname_en', headerName: 'last name(EN)', width: 150 },
+    { field: 'ist_email', headerName: 'email', width: 180 },
+    { field: 'ist_tel', headerName: 'tel', width: 120 },
+    { field: 'fi_name_th', headerName: 'faculty', width: 140 }
+  ]
+
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -61,7 +62,7 @@ function InstructorsTab({ data }) {
         type={'insert'}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
-        handleSubmit={console.log('Submit!')}
+        handleSubmit={() => console.log('Submit!')}
       />
     </CardContent>
   )
