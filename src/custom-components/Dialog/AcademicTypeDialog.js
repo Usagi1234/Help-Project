@@ -18,7 +18,7 @@ import TextField from '@mui/material/TextField'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-const InsertDialog = ({ open, handleClose, handleSubmit, type }) => {
+const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type }) => {
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
       <DialogContent>
@@ -60,4 +60,4 @@ const InsertDialog = ({ open, handleClose, handleSubmit, type }) => {
   )
 }
 
-export default InsertDialog
+export default AcademicTypeDialog

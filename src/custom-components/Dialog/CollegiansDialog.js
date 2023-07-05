@@ -17,14 +17,14 @@ import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-const InsertDialog = ({ open, handleClose, handleSubmit, type }) => {
+const CollegianDialog = ({ open, handleClose, handleSubmit, type }) => {
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
       <DialogContent>
         <DialogContentText>
           <Card>
-            {type === 'insert' && <CardHeader title='Add New Instructor' titleTypographyProps={{ variant: 'h6' }} />}
-            {type === 'edit' && <CardHeader title='Edit Instructor' titleTypographyProps={{ variant: 'h6' }} />}
+            {type === 'insert' && <CardHeader title='Add New Collegian' titleTypographyProps={{ variant: 'h6' }} />}
+            {type === 'edit' && <CardHeader title='Edit Collegian' titleTypographyProps={{ variant: 'h6' }} />}
             <Divider sx={{ margin: 0 }} />
             <form onSubmit={e => e.preventDefault()}>
               <CardContent>
@@ -41,16 +41,34 @@ const InsertDialog = ({ open, handleClose, handleSubmit, type }) => {
                   <Grid item xs={12} sm={6}>
                     <TextField fullWidth label='Last Name (ENG)*' placeholder='English Last Name' />
                   </Grid>
-
+                  <Grid item xs={12} sm={6}>
+                    <TextField fullWidth label='Collegian Code*' placeholder='Collegian Code' />
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField fullWidth label='Telephone*' placeholder='+66 98-687-7856' />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                     <TextField fullWidth label='Email*' placeholder='....@hotmail.com' />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id='form-layouts-separator-select-label'>Faculty Institutes</InputLabel>
+                      <InputLabel id='form-layouts-separator-select-label'>Faculty Institutes*</InputLabel>
+                      <Select
+                        label='Category'
+                        defaultValue=''
+                        id='form-layouts-separator-select'
+                        labelId='form-layouts-separator-select-label'
+                      >
+                        <MenuItem value='University 1'>University 1</MenuItem>
+                        <MenuItem value='University 2'>University 2</MenuItem>
+                        <MenuItem value='University 3'>University 3</MenuItem>
+                        <MenuItem value='University 4'>University 4</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id='form-layouts-separator-select-label'>Curriculum*</InputLabel>
                       <Select
                         label='Category'
                         defaultValue=''
@@ -81,4 +99,4 @@ const InsertDialog = ({ open, handleClose, handleSubmit, type }) => {
   )
 }
 
-export default InsertDialog
+export default CollegianDialog

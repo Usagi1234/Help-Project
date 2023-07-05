@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
-import InsertDialog from 'src/custom-components/Dialog/FacultyInsert'
+import FacultyDialog from 'src/custom-components/Dialog/FacultyDialog'
 
 const columns = [
   {
@@ -54,7 +54,7 @@ function FacultyTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <InsertDialog
+      <FacultyDialog
         type={'insert'}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}

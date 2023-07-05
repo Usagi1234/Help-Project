@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
-import InsertDialog from 'src/custom-components/Dialog/AcademicTypeInsert'
+import AcademicTypeDialog from 'src/custom-components/Dialog/AcademicTypeDialog'
 
 const columns = [
   {
@@ -53,7 +53,7 @@ function AcademicTypeTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <InsertDialog
+      <AcademicTypeDialog
         type={'insert'}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}

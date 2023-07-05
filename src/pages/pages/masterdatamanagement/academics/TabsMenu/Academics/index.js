@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
 import ExportButton from '../../../../../../custom-components/BtnExport'
-import InsertDialog from 'src/custom-components/Dialog/AcademicsInsert'
+import AcademicDialog from 'src/custom-components/Dialog/AcademicsDialog'
 
 const columns = [
   {
@@ -56,7 +56,7 @@ function AcademicsTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <InsertDialog
+      <AcademicDialog
         type={'insert'}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}

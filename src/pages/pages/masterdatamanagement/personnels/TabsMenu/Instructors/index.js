@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
-import InsertDialog from 'src/custom-components/Dialog/InstructorInsert'
+import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 
 const columns = [
   {
@@ -57,7 +57,7 @@ function InstructorsTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <InsertDialog
+      <InstructorDialog
         type={'insert'}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
