@@ -15,8 +15,11 @@ import { mdiSchoolOutline } from '@mdi/js'
 import { mdiAccountGroupOutline } from '@mdi/js'
 import { mdiAccountTie } from '@mdi/js'
 import { useRouter } from 'next/router'
+import { useTheme } from '@mui/material/styles'
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 const MasterDataMenu = () => {
+  const theme = useTheme()
   const router = useRouter()
 
   const ColorIcon = styled(Icon)(({ theme }) => ({
@@ -57,7 +60,10 @@ const MasterDataMenu = () => {
                   ml: -5,
                   marginBottom: 2.25,
                   color: 'common.white',
-                  backgroundColor: 'primary.main'
+                  background: `linear-gradient(${theme.palette.primary.main} 30%,${hexToRGBA(
+                    theme.palette.primary.light,
+                    1
+                  )} 100%,${hexToRGBA(theme.palette.background.default, 0.05)})`
                 }}
               >
                 <Icon path={mdiSchoolOutline} size={1.5} />
@@ -106,7 +112,10 @@ const MasterDataMenu = () => {
                   ml: -5,
                   marginBottom: 2.25,
                   color: 'common.white',
-                  backgroundColor: 'primary.main'
+                  background: `linear-gradient(${theme.palette.primary.main} 30%,${hexToRGBA(
+                    theme.palette.primary.light,
+                    1
+                  )} 100%,${hexToRGBA(theme.palette.background.default, 0.05)})`
                 }}
               >
                 <Icon path={mdiAccountGroupOutline} size={1.3} />
@@ -155,7 +164,10 @@ const MasterDataMenu = () => {
                   ml: -5,
                   marginBottom: 2.25,
                   color: 'common.white',
-                  backgroundColor: 'primary.main'
+                  background: `linear-gradient(${theme.palette.primary.main} 30%,${hexToRGBA(
+                    theme.palette.primary.light,
+                    1
+                  )} 100%,${hexToRGBA(theme.palette.background.default, 0.05)})`
                 }}
               >
                 <Icon path={mdiAccountTie} size={1.4} />
