@@ -23,16 +23,35 @@ const PersonnelsPage = ({ data }) => {
 export default PersonnelsPage
 
 export async function getServerSideProps(context) {
-  const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllcollegians`)
-  const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllinstructors`)
-
-  const resCollegians = await queryCollegians.json()
-  const resInstructor = await queryInstructors.json()
-
-  const WrapData = {
-    collegians: resCollegians.message.Data,
-    instructors: resInstructor.message.Data
+  const WrapData = []
+  try {
+    const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllcollegians`)
+    const resCollegians = await queryCollegians.json()
+    if (!resCollegians) {
+      return { notFound: true }
+    } else {
+      WrapData.push({ collegians: resCollegians.message.Data })
+    }
+  } catch (err) {
+    return { error: err }
   }
+
+  try {
+    const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllinstructors`)
+    const resInstructor = await queryInstructors.json()
+    if (!resInstructor) {
+      return { notFound: true }
+    } else {
+      WrapData.push({ instructors: resInstructor.message.Data })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+
+  // const WrapData = {
+  //   collegians: resCollegians.message.Data,
+  //   instructors: resInstructor.message.Data
+  // }
 
   return {
     props: { data: WrapData }

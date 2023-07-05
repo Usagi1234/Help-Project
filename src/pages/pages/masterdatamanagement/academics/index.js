@@ -23,19 +23,46 @@ const AcademicsPage = ({ data }) => {
 export default AcademicsPage
 
 export async function getServerSideProps(context) {
-  const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllAcademics`)
-  const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getallacademictype`)
-  const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
-
-  const resAcademics = await queryAcademics.json()
-  const resAcademicType = await queryAcademicType.json()
-  const resFaculty = await queryFaculty.json()
-
-  const WrapData = {
-    academics: resAcademics.message.Data,
-    academictype: resAcademicType.message.Data,
-    faculty: resFaculty.message.Data
+  const WrapData = []
+  try {
+    const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllAcademics`)
+    const resAcademics = await queryAcademics.json()
+    if (!resAcademics) {
+      return { notFound: true }
+    } else {
+      WrapData.push({ academics: resAcademics.message.Data })
+    }
+  } catch (err) {
+    return { error: err }
   }
+  try {
+    const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getallacademictype`)
+    const resAcademicType = await queryAcademicType.json()
+    if (!resAcademicType) {
+      return { notFound: true }
+    } else {
+      WrapData.push({ academictype: resAcademicType.message.Data })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+  try {
+    const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+    const resFaculty = await queryFaculty.json()
+    if (!resFaculty) {
+      return { notFound: true }
+    } else {
+      WrapData.push({ faculty: resFaculty.message.Data })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+
+  // const WrapData = {
+  //   academics: resAcademics.message.Data,
+  //   academictype: resAcademicType.message.Data,
+  //   faculty: resFaculty.message.Data
+  // }
 
   return {
     props: { data: WrapData }

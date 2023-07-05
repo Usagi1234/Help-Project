@@ -31,7 +31,6 @@ const columns = [
 
 function AcademicsTab({ data }) {
   const [openInsDialog, setOpenInsDialog] = useState(false)
-
   console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined

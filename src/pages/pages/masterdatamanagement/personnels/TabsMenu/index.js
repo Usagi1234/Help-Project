@@ -40,8 +40,8 @@ const TabName = styled('span')(({ theme }) => ({
 }))
 
 const Tabs = ({ data }) => {
-  const collegiansData = data.collegians
-  const instructorsData = data.instructors
+  const collegiansData = data[0].collegians
+  const instructorsData = data[1].instructors
 
   const [value, setValue] = useState('collegians')
 
