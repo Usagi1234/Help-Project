@@ -21,45 +21,41 @@ const FacultyDialog = ({ open, handleClose, type, handleSubmit }) => {
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
       <DialogContent>
-        <DialogContentText>
-          <Card>
-            {type === 'insert' && (
-              <CardHeader title='Add New Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />
-            )}
-            {type === 'edit' && <CardHeader title='Edit Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />}
-            <Divider sx={{ margin: 0 }} />
-            <form onSubmit={e => e.preventDefault()}>
-              <CardContent>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField fullWidth label='Thai Name' placeholder='Thai Name' />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField fullWidth label='English Name' placeholder='English Name' />
-                  </Grid>
+        <Card>
+          {type === 'insert' && (
+            <CardHeader title='Add New Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />
+          )}
+          {type === 'edit' && <CardHeader title='Edit Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />}
+          <Divider sx={{ margin: 0 }} />
+          <CardContent>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='Thai Name' placeholder='Thai Name' />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField fullWidth label='English Name' placeholder='English Name' />
+              </Grid>
 
-                  <Grid item xs={12} sm={6} sx={3}>
-                    <FormControl fullWidth>
-                      <InputLabel id='form-layouts-separator-select-label'>Academic </InputLabel>
-                      <Select
-                        label='Country'
-                        defaultValue=''
-                        id='form-layouts-separator-select'
-                        labelId='form-layouts-separator-select-label'
-                      >
-                        <MenuItem value='University 1'>University 1</MenuItem>
-                        <MenuItem value='University 2'>University 2</MenuItem>
-                        <MenuItem value='University 3'>University 3</MenuItem>
-                        <MenuItem value='University 4'>University 4</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </CardContent>
-              <Divider sx={{ margin: 0 }} />
-            </form>
-          </Card>
-        </DialogContentText>
+              <Grid item xs={12} sm={6} sx={3}>
+                <FormControl fullWidth>
+                  <InputLabel id='form-layouts-separator-select-label'>Academic </InputLabel>
+                  <Select
+                    label='Country'
+                    defaultValue=''
+                    id='form-layouts-separator-select'
+                    labelId='form-layouts-separator-select-label'
+                  >
+                    <MenuItem value='University 1'>University 1</MenuItem>
+                    <MenuItem value='University 2'>University 2</MenuItem>
+                    <MenuItem value='University 3'>University 3</MenuItem>
+                    <MenuItem value='University 4'>University 4</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider sx={{ margin: 0 }} />
+        </Card>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
