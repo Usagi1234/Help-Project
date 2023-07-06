@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 import Icon from '@mdi/react'
 import { mdiDatabaseSettingsOutline } from '@mdi/js'
 import { mdiCalendarRange } from '@mdi/js'
@@ -64,9 +65,9 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 Master Data
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>ระบบบริหารจัดการข้อมูล Master Data</Typography>
+              </Box>
               <Button
                 onClick={function () {
                   router.push(`${currentPath}/masterdatamenu`)
@@ -110,9 +111,11 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 Study Plan
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>
+                  Describe what this feature does, and how it benefits your customers.
+                </Typography>
+              </Box>
               <Button variant='contained' sx={{ px: 8 }}>
                 MORE
               </Button>
@@ -146,9 +149,11 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 User
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>
+                  Describe what this feature does, and how it benefits your customers.
+                </Typography>
+              </Box>
               <Button variant='contained' sx={{ px: 8 }}>
                 MORE
               </Button>
@@ -184,9 +189,11 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 Co-operation
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>
+                  Describe what this feature does, and how it benefits your customers.
+                </Typography>
+              </Box>
               <Button variant='contained' sx={{ px: 8 }}>
                 MORE
               </Button>
@@ -223,9 +230,11 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 Overview
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>
+                  Describe what this feature does, and how it benefits your customers.
+                </Typography>
+              </Box>
               <Button variant='contained' sx={{ px: 8 }}>
                 MORE
               </Button>
@@ -261,9 +270,11 @@ const MainMenu = () => {
               <Typography variant='h6' sx={{ marginBottom: 2.75 }}>
                 Etc
               </Typography>
-              <Typography variant='body2' sx={{ marginBottom: 6, mx: 15, minWidth: 200, width: '30%', height: 65 }}>
-                Describe what this feature does, and how it benefits your customers.
-              </Typography>
+              <Box sx={{ width: 50, marginBottom: 6, mx: 15, minWidth: 180, height: 65 }}>
+                <Typography variant='body2'>
+                  Describe what this feature does, and how it benefits your customers.
+                </Typography>
+              </Box>
               <Button variant='contained' sx={{ px: 8 }}>
                 MORE
               </Button>
