@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
@@ -6,13 +6,19 @@ import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 
 function InstructorsTab({ data }) {
+  const [rows, setRows] = useState(data)
   const [instructor, setInstructor] = useState([])
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
 
+  useEffect(() => {
+    if (data !== undefined) setRows(data)
+  }, [data])
+
   const columns = [
     {
-      field: '',
+      filterable: false,
+      field: 'edit',
       headerName: 'Edit',
       width: 100,
       renderCell: cellValues => (
@@ -27,7 +33,11 @@ function InstructorsTab({ data }) {
         </Button>
       )
     },
-    { field: 'ist_fname_th', headerName: 'first name(TH)', width: 120 },
+    {
+      field: 'ist_fname_th',
+      headerName: 'first name(TH)',
+      width: 120
+    },
     { field: 'ist_lname_th', headerName: 'last name(TH)', width: 150 },
     { field: 'ist_fname_en', headerName: 'first name(EN)', width: 150 },
     { field: 'ist_lname_en', headerName: 'last name(EN)', width: 150 },
@@ -36,7 +46,7 @@ function InstructorsTab({ data }) {
     { field: 'fi_name_th', headerName: 'faculty', width: 140 }
   ]
 
-  // console.log(data)
+  console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -49,14 +59,19 @@ function InstructorsTab({ data }) {
         </Button>
         <ExportButton />
       </Box>
-      {data.length > 0 && (
+      {rows?.length > 0 && (
         <DataGrid
-          rows={data}
+          rows={rows}
           columns={columns}
-          getRowId={row => row.ist_id}
+          // getRowId={row => row.ist_id}
           initialState={{
-            pagination: { paginationModel: { pageSize: 10 } }
+            pagination: {
+              paginationModel: {
+                pageSize: 10
+              }
+            }
           }}
+          disableRowSelectionOnClick
           pageSizeOptions={[10, 25, 50]}
         />
       )}

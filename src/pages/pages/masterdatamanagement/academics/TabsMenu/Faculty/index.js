@@ -47,7 +47,7 @@ function FacultyTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.fi_id}
+          // getRowId={row => row.fi_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}

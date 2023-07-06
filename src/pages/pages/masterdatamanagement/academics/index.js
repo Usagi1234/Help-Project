@@ -30,7 +30,11 @@ export async function getServerSideProps(context) {
     if (!resAcademics) {
       return { notFound: true }
     } else {
-      WrapData.push({ academics: resAcademics.message.Data })
+      const newRow = resAcademics.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ academics: newRow })
     }
   } catch (err) {
     return { error: err }
@@ -41,7 +45,11 @@ export async function getServerSideProps(context) {
     if (!resAcademicType) {
       return { notFound: true }
     } else {
-      WrapData.push({ academictype: resAcademicType.message.Data })
+      const newRow = resAcademicType.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ academictype: newRow })
     }
   } catch (err) {
     return { error: err }
@@ -52,7 +60,11 @@ export async function getServerSideProps(context) {
     if (!resFaculty) {
       return { notFound: true }
     } else {
-      WrapData.push({ faculty: resFaculty.message.Data })
+      const newRow = resFaculty.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ faculty: newRow })
     }
   } catch (err) {
     return { error: err }

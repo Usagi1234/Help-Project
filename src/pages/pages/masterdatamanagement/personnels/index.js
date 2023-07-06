@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import HeaderCard from './HeaderCard'
 import Path from './Path'
 import Tabs from '../personnels/TabsMenu'
+import CollegiansTab from './TabsMenu/Collegians'
 
 const PersonnelsPage = ({ data }) => {
   console.log(data)
@@ -30,7 +31,11 @@ export async function getServerSideProps(context) {
     if (!resCollegians) {
       return { notFound: true }
     } else {
-      WrapData.push({ collegians: resCollegians.message.Data })
+      const newRow = resCollegians.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ collegians: newRow })
     }
   } catch (err) {
     return { error: err }
@@ -42,7 +47,11 @@ export async function getServerSideProps(context) {
     if (!resInstructor) {
       return { notFound: true }
     } else {
-      WrapData.push({ instructors: resInstructor.message.Data })
+      const newRow = resInstructor.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ instructors: newRow })
     }
   } catch (err) {
     return { error: err }

@@ -48,7 +48,7 @@ function AcademicsTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.ac_id}
+          // getRowId={row => row.ac_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}
