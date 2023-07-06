@@ -68,7 +68,6 @@ function CollegiansTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.co_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}

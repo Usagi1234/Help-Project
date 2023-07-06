@@ -30,7 +30,11 @@ export async function getServerSideProps(context) {
     if (!resCollegians) {
       return { notFound: true }
     } else {
-      WrapData.push({ collegians: resCollegians.message.Data })
+      const newRow = resCollegians.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ collegians: newRow })
     }
   } catch (err) {
     return { error: err }
