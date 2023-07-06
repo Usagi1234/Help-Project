@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -15,9 +15,14 @@ import InputLabel from '@mui/material/InputLabel'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import { FormHelperText } from '@mui/material'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
-const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type }) => {
-  const [state, setState] = useState({
+const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
+  const router = useRouter()
+
+  const initialState = {
     ist_fname_th: '',
     ist_lname_th: '',
     ist_fname_en: '',
@@ -25,7 +30,66 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
     ist_email: '',
     ist_tel: '',
     faculty_institutes_fi_id: ''
+  }
+  const [state, setState] = useState(initialState)
+  const [editState, setEditState] = useState(instructor)
+
+  const [stateAlert, setStateAlert] = useState({
+    ist_fname_th: false,
+    ist_lname_th: false,
+    ist_fname_en: false,
+    ist_lname_en: false,
+    ist_email: false,
+    ist_tel: false,
+    faculty_institutes_fi_id: false
   })
+
+  const [dropDown, setDropDown] = useState({
+    faculty: []
+  })
+
+  useEffect(() => {
+    const fetchMenuDropdown = async () => {
+      const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+      const resFaculty = await queryFaculty.json()
+      setDropDown({ ...dropDown, faculty: resFaculty.message.Data })
+    }
+    fetchMenuDropdown()
+  }, [])
+
+  useEffect(() => {
+    console.log('Dropdown', dropDown)
+  }, [dropDown])
+
+  const handleInsert = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}frappe.help-api.insertinstructors`, state)
+      .then(function (response) {
+        console.log(response.message)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      .finally(() => {
+        handleCloseModi()
+        router.replace(router.asPath, undefined, { sroll: false })
+      })
+  }
+
+  const handleUpdate = () => {
+    axios
+      .put(`${process.env.NEXT_PUBLIC_API}frappe.help-api.editinstructor`, editState)
+      .then(function (response) {
+        console.log(response.message)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      .finally(() => {
+        handleCloseModi()
+        router.replace(router.asPath, undefined, { sroll: false })
+      })
+  }
 
   const handleChange = (e, type) => {
     const { value } = e.target
@@ -44,28 +108,194 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
     if (type === 'tel') {
       filterData = value.replace(/[^\d.-]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
     }
-
-    setState({ ...state, [e.target.name]: filterData })
+    if (Dialogtype === 'insert') {
+      setState({ ...state, [e.target.name]: filterData })
+    } else {
+      setEditState({ ...editState, [e.target.name]: filterData })
+    }
   }
 
-  if (type === 'edit' && instructor !== undefined) {
-    setState(instructor)
+  const handleChangeDropdown = e => {
+    if (Dialogtype === 'insert') {
+      setState({ ...state, faculty_institutes_fi_id: e.target.value })
+    } else {
+      setEditState({ ...editState, faculty_institutes_fi_id: e.target.value })
+    }
   }
 
-  // console.log(state)
+  const handleCloseModi = () => {
+    handleClose(false)
+    setState(initialState)
+  }
+
+  const ValidationsForm = () => {
+    if (
+      stateAlert.ist_fname_th === false ||
+      stateAlert.ist_lname_th === false ||
+      stateAlert.ist_fname_en === false ||
+      stateAlert.ist_lname_en === false ||
+      stateAlert.ist_email === false ||
+      stateAlert.ist_tel === false ||
+      stateAlert.faculty_institutes_fi_id === false
+    ) {
+      if (Dialogtype === 'insert') {
+        handleInsert()
+      } else {
+        handleUpdate()
+      }
+    } else {
+      console.log('please fill all!')
+    }
+  }
+
+  const AlertForm = key => {
+    if (Dialogtype === 'insert') {
+      switch (key) {
+        case 'ist_fname_th':
+          if (state.ist_fname_th !== '') {
+            setStateAlert(pre => ({ ...pre, ist_fname_th: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_fname_th: true }))
+          }
+          break
+        case 'ist_lname_th':
+          if (state.ist_lname_th !== '') {
+            setStateAlert(pre => ({ ...pre, ist_lname_th: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_lname_th: true }))
+          }
+          break
+        case 'ist_fname_en':
+          if (state.ist_fname_en !== '') {
+            setStateAlert(pre => ({ ...pre, ist_fname_en: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_fname_en: true }))
+          }
+          break
+        case 'ist_lname_en':
+          if (state.ist_lname_en !== '') {
+            setStateAlert(pre => ({ ...pre, ist_lname_en: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_lname_en: true }))
+          }
+          break
+        case 'ist_tel':
+          if (state.ist_tel !== '' && state.ist_tel.length === 12) {
+            setStateAlert(pre => ({ ...pre, ist_tel: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_tel: true }))
+          }
+          break
+        case 'ist_email':
+          if (state.ist_email !== '') {
+            if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(state.ist_email)) {
+              setStateAlert(pre => ({ ...pre, ist_email: true }))
+            } else {
+              setStateAlert(pre => ({ ...pre, ist_email: false }))
+            }
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_email: true }))
+          }
+          break
+        case 'faculty_institutes_fi_id':
+          if (state.faculty_institutes_fi_id !== '') {
+            setStateAlert(pre => ({ ...pre, faculty_institutes_fi_id: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, faculty_institutes_fi_id: true }))
+          }
+          break
+        default:
+          console.log('Error')
+      }
+    } else {
+      switch (key) {
+        case 'ist_fname_th':
+          if (editState.ist_fname_th !== '') {
+            setStateAlert(pre => ({ ...pre, ist_fname_th: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_fname_th: true }))
+          }
+          break
+        case 'ist_lname_th':
+          if (editState.ist_lname_th !== '') {
+            setStateAlert(pre => ({ ...pre, ist_lname_th: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_lname_th: true }))
+          }
+          break
+        case 'ist_fname_en':
+          if (editState.ist_fname_en !== '') {
+            setStateAlert(pre => ({ ...pre, ist_fname_en: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_fname_en: true }))
+          }
+          break
+        case 'ist_lname_en':
+          if (editState.ist_lname_en !== '') {
+            setStateAlert(pre => ({ ...pre, ist_lname_en: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_lname_en: true }))
+          }
+          break
+        case 'ist_tel':
+          if (editState.ist_tel !== '' && editState.ist_tel.length === 12) {
+            setStateAlert(pre => ({ ...pre, ist_tel: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_tel: true }))
+          }
+          break
+        case 'ist_email':
+          if (editState.ist_email !== '') {
+            if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(editState.ist_email)) {
+              setStateAlert(pre => ({ ...pre, ist_email: true }))
+            } else {
+              setStateAlert(pre => ({ ...pre, ist_email: false }))
+            }
+          } else {
+            setStateAlert(pre => ({ ...pre, ist_email: true }))
+          }
+          break
+        case 'faculty_institutes_fi_id':
+          if (editState.faculty_institutes_fi_id !== '') {
+            setStateAlert(pre => ({ ...pre, faculty_institutes_fi_id: false }))
+          } else {
+            setStateAlert(pre => ({ ...pre, faculty_institutes_fi_id: true }))
+          }
+          break
+        default:
+          console.log('Error')
+      }
+    }
+  }
+
+  const handleSubmit = () => {
+    Object.keys(state).forEach(key => {
+      // console.log(key)
+      AlertForm(key)
+    })
+    ValidationsForm()
+  }
+
+  useEffect(() => {
+    setEditState(instructor)
+  }, [instructor])
 
   return (
-    <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
+    <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleCloseModi} sx={{ minWidth: 400 }}>
       <DialogContent>
         <Card>
-          {type === 'insert' && <CardHeader title='Add New Instructor' titleTypographyProps={{ variant: 'h6' }} />}
-          {type === 'edit' && <CardHeader title='Edit Instructor' titleTypographyProps={{ variant: 'h6' }} />}
+          {Dialogtype === 'insert' && (
+            <CardHeader title='Add New Instructor' titleTypographyProps={{ variant: 'h6' }} />
+          )}
+          {Dialogtype === 'edit' && <CardHeader title='Edit Instructor' titleTypographyProps={{ variant: 'h6' }} />}
           <Divider sx={{ margin: 0 }} />
           <CardContent>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_fname_th}
+                  helperText={stateAlert.ist_fname_th && 'Please fill first name'}
+                  error={stateAlert.ist_fname_th}
+                  value={Dialogtype === 'insert' ? state.ist_fname_th : editState.ist_fname_th}
                   fullWidth
                   label='First Name (TH)*'
                   placeholder='Thai First Name'
@@ -75,7 +305,9 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_lname_th}
+                  helperText={stateAlert.ist_lname_th && 'Please fill last name'}
+                  error={stateAlert.ist_lname_th}
+                  value={Dialogtype === 'insert' ? state.ist_lname_th : editState.ist_lname_th}
                   fullWidth
                   label='Last Name (TH)*'
                   placeholder='Thai Last Name'
@@ -85,7 +317,9 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_fname_en}
+                  helperText={stateAlert.ist_fname_en && 'Please fill first name'}
+                  error={stateAlert.ist_fname_en}
+                  value={Dialogtype === 'insert' ? state.ist_fname_en : editState.ist_fname_en}
                   fullWidth
                   label='First Name (ENG)*'
                   placeholder='English First Name'
@@ -95,7 +329,9 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_lname_en}
+                  helperText={stateAlert.ist_lname_en && 'Please fill last name'}
+                  error={stateAlert.ist_lname_en}
+                  value={Dialogtype === 'insert' ? state.ist_lname_en : editState.ist_lname_en}
                   fullWidth
                   label='Last Name (ENG)*'
                   placeholder='English Last Name'
@@ -106,10 +342,12 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_tel}
+                  helperText={stateAlert.ist_tel && 'Please fill tell'}
+                  error={stateAlert.ist_tel}
+                  value={Dialogtype === 'insert' ? state.ist_tel : editState.ist_tel}
                   fullWidth
                   label='Telephone*'
-                  placeholder='+66 98-687-7856'
+                  placeholder='098-687-7856'
                   name='ist_tel'
                   onChange={e => handleChange(e, 'tel')}
                   inputProps={{ maxLength: 10 }}
@@ -117,7 +355,9 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  value={state.ist_email}
+                  helperText={stateAlert.ist_email && 'Invalid email format'}
+                  error={stateAlert.ist_email}
+                  value={Dialogtype === 'insert' ? state.ist_email : editState.ist_email}
                   type='email'
                   fullWidth
                   label='Email*'
@@ -126,20 +366,26 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
                   onChange={e => handleChange(e, 'email')}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
+              <Grid item xs={12}>
+                <FormControl fullWidth error={stateAlert.faculty_institutes_fi_id}>
                   <InputLabel id='form-layouts-separator-select-label'>Faculty Institutes</InputLabel>
                   <Select
+                    value={
+                      Dialogtype === 'insert' ? state.faculty_institutes_fi_id : editState.faculty_institutes_fi_id
+                    }
                     label='Category'
                     defaultValue=''
                     id='form-layouts-separator-select'
                     labelId='form-layouts-separator-select-label'
+                    onChange={handleChangeDropdown}
                   >
-                    <MenuItem value='University 1'>University 1</MenuItem>
-                    <MenuItem value='University 2'>University 2</MenuItem>
-                    <MenuItem value='University 3'>University 3</MenuItem>
-                    <MenuItem value='University 4'>University 4</MenuItem>
+                    {dropDown.faculty?.map(faculty => (
+                      <MenuItem key={faculty.fi_id} value={faculty.fi_id}>
+                        {faculty.fi_name_th + '(' + faculty.ac_name_th + ' ' + faculty.ac_campus + ')'}
+                      </MenuItem>
+                    ))}
                   </Select>
+                  <FormHelperText>{stateAlert.faculty_institutes_fi_id && 'Please select faculty'}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>
@@ -148,16 +394,9 @@ const InstrcutorDialog = ({ instructor, open, handleClose, handleSubmit, type })
         </Card>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button
-          variant='contained'
-          onClick={() =>
-            function () {
-              handleSubmit()
-            }
-          }
-        >
-          Submit
+        <Button onClick={handleCloseModi}>Cancel</Button>
+        <Button variant='contained' onClick={() => handleSubmit()}>
+          {Dialogtype === 'insert' ? 'Submit' : 'Update'}
         </Button>
       </DialogActions>
     </Dialog>

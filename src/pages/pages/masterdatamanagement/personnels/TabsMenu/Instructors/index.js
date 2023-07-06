@@ -8,6 +8,7 @@ import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 function InstructorsTab({ data }) {
   const [instructor, setInstructor] = useState([])
   const [openInsDialog, setOpenInsDialog] = useState(false)
+  const [openEditDialog, setOpenEditDialog] = useState(false)
 
   const columns = [
     {
@@ -19,6 +20,7 @@ function InstructorsTab({ data }) {
           variant='text'
           onClick={() => {
             setInstructor(cellValues.row)
+            setOpenEditDialog(true)
           }}
         >
           ...
@@ -58,11 +60,12 @@ function InstructorsTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
+      <InstructorDialog Dialogtype={'insert'} open={openInsDialog} handleClose={setOpenInsDialog} />
       <InstructorDialog
-        type={'insert'}
-        open={openInsDialog}
-        handleClose={() => setOpenInsDialog(false)}
-        handleSubmit={() => console.log('Submit!')}
+        instructor={instructor}
+        Dialogtype={'edit'}
+        open={openEditDialog}
+        handleClose={setOpenEditDialog}
       />
     </CardContent>
   )
