@@ -4,12 +4,22 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
+import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
+// import { useRouter } from 'next/router'
 
 function InstructorsTab({ data }) {
+  // const router = useRouter()
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
   const [rows, setRows] = useState(data)
   const [instructor, setInstructor] = useState([])
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
+  const [value, setValue] = useState('') // use when delete button is clicked
+
+  const handleClose = () => {
+    setOpenConfirmDelete(false)
+    // router.replace(router.asPath)
+  }
 
   useEffect(() => {
     if (data !== undefined) setRows(data)
@@ -25,7 +35,15 @@ function InstructorsTab({ data }) {
       headerName: 'Delete',
       width: 85,
       renderCell: cellValues => (
-        <Button variant='contained' color='error' m={1}>
+        <Button
+          variant='contained'
+          color='error'
+          m={1}
+          onClick={() => {
+            setValue(cellValues.row)
+            setOpenConfirmDelete(true)
+          }}
+        >
           <Typography variant='caption' color={'white'}>
             Delete
           </Typography>
@@ -99,6 +117,11 @@ function InstructorsTab({ data }) {
         Dialogtype={'edit'}
         open={openEditDialog}
         handleClose={setOpenEditDialog}
+      />
+      <ConfirmDeleteDialog
+        open={openConfirmDelete}
+        value={value.ist_fname_th + ' ' + value.ist_lname_th}
+        handleClose={handleClose}
       />
     </CardContent>
   )
