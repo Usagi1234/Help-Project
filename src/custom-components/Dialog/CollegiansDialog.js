@@ -53,7 +53,6 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
   const [academicState, setAcademicState] = useState(true)
   const [insertState, setInsertState] = useState(initialInsertState)
 
-  console.log('type: ', type)
   console.log('datarow: ', row)
 
   useEffect(() => {
@@ -69,13 +68,16 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
   }, [])
 
   useEffect(() => {
-    if (row && Object.values(row).every(value => value !== '')) {
+    if (type === 'edit') {
       setState(row)
       setAcademicState(false)
+      console.log('type: ', type)
     } else {
+      setState(initialState)
       setAcademicState(true)
+      console.log('type: ', type)
     }
-  }, [row])
+  }, [row, type])
 
   useEffect(() => {
     if (state.ac_id !== null) {
