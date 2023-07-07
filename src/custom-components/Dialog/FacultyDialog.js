@@ -63,6 +63,12 @@ const FacultyDialog = ({ open, handleClose, type, DataInRow }) => {
     {
       type === 'insert' && (setNameTH(''), setNameEN(''), setAcademic(''))
     }
+
+    // ถ้ากดปุ่ม edit แล้วลบข้อความใน TextField แลัว กด Updata แล้วกดออก จะคืนค่า row
+    {
+      type === 'edit' &&
+        (setNameTH(DataInRow.fi_name_th), setNameEN(DataInRow.fi_name_en), setAcademic(DataInRow.academics_ac_id))
+    }
   }
 
   const handleSubmit = event => {
@@ -108,6 +114,10 @@ const FacultyDialog = ({ open, handleClose, type, DataInRow }) => {
   const handleUpdate = () => {
     // เช็คว่า TextField ค่าว่างไหม
     handleCheckEmpty()
+
+    if (!nameTH || !nameEN || !academic) {
+      return
+    }
 
     // สร้าง Object ข้อมูลที่จะส่ง
     const UpdateDataFaculty = {
@@ -212,6 +222,11 @@ const FacultyDialog = ({ open, handleClose, type, DataInRow }) => {
                     error={!!checkError.academic}
                     onChange={e => setAcademic(e.target.value)}
                   >
+                    {/* {DataInRow.map(() => (
+                      <MenuItem key={DataInRow.fi_id} value={DataInRow.ac_id}>
+                        {DataInRow.ac_name_th}
+                      </MenuItem>
+                    ))} */}
                     <MenuItem value='AC-13'>University 1</MenuItem>
                     <MenuItem value='AC-19'>University 2</MenuItem>
                     <MenuItem value='AC-18'>University 3</MenuItem>
