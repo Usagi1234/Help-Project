@@ -5,20 +5,46 @@ import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
-// import { useRouter } from 'next/router'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 function InstructorsTab({ data }) {
-  // const router = useRouter()
+  const router = useRouter()
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
   const [rows, setRows] = useState(data)
   const [instructor, setInstructor] = useState([])
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
   const [value, setValue] = useState('') // use when delete button is clicked
+  const [deleteId, setDeleteId] = useState('')
+
+  console.log('Id', deleteId)
 
   const handleClose = () => {
     setOpenConfirmDelete(false)
     // router.replace(router.asPath)
+  }
+
+  const handleDelete = () => {
+    if (deleteId !== '') {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API}frappe.help-api.delete`, {
+          table: 'tabinstrutors',
+          primary: deleteId
+        })
+        .then(function (response) {
+          console.log(response.message)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .finally(() => {
+          handleClose()
+          router.replace(router.asPath)
+        })
+    } else {
+      console.log('not have any id to delete')
+    }
   }
 
   useEffect(() => {
@@ -41,6 +67,7 @@ function InstructorsTab({ data }) {
           m={1}
           onClick={() => {
             setValue(cellValues.row)
+            setDeleteId(cellValues.row.ist_id)
             setOpenConfirmDelete(true)
           }}
         >
@@ -122,6 +149,7 @@ function InstructorsTab({ data }) {
         open={openConfirmDelete}
         value={value.ist_fname_th + ' ' + value.ist_lname_th}
         handleClose={handleClose}
+        handleDelete={handleDelete}
       />
     </CardContent>
   )
