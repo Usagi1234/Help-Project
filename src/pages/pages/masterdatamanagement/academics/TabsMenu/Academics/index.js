@@ -1,14 +1,24 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import ExportButton from '../../../../../../custom-components/BtnExport'
 import AcademicDialog from 'src/custom-components/Dialog/AcademicsDialog'
+import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
+import { useRouter } from 'next/router'
 
 function AcademicsTab({ data }) {
+  const router = useRouter() // Set Router
+
   // Setstate AcademicDialog
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
+
+  // Setstate Delete
+  const [deleteId, setDeleteId] = useState('') // set delete state
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
+  const [value, setValue] = useState('') // use when delete button is clicked
 
   //รับค่าจากแถวข้อมูล
   const [rowdata, setRowdata] = useState('')
@@ -20,6 +30,32 @@ function AcademicsTab({ data }) {
 
   // ประกาศ Colum
   const columns = [
+    {
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'delete',
+      headerName: 'Delete',
+      width: 85,
+      renderCell: cellValues => (
+        <Button
+          variant='contained'
+          color='error'
+          m={1}
+          onClick={() => {
+            setValue(cellValues.row)
+            setDeleteId(cellValues.row.ac_id)
+            setOpenConfirmDelete(true)
+            console.log(cellValues.row)
+          }}
+        >
+          <Typography variant='caption' color={'white'}>
+            Delete
+          </Typography>
+        </Button>
+      )
+    },
     {
       field: '',
       headerName: 'Edit',
@@ -45,6 +81,33 @@ function AcademicsTab({ data }) {
     { field: 'ac_campus', headerName: 'campus', width: 120 },
     { field: 'ac_address', headerName: 'address', width: 300 }
   ]
+
+  // ฟังก์ชัน Delete
+  const handleClose = () => {
+    setOpenConfirmDelete(false)
+  }
+
+  const handleDelete = () => {
+    if (deleteId !== '') {
+      axios
+        .post(`http://192.168.1.168:8000/api/method/frappe.help-api.delete`, {
+          table: 'tabacademics',
+          primary: deleteId
+        })
+        .then(function (response) {
+          console.log(response.message)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .finally(() => {
+          handleClose()
+          router.replace(router.asPath)
+        })
+    } else {
+      console.log('not have any id to delete')
+    }
+  }
 
   return (
     <CardContent>
@@ -83,6 +146,12 @@ function AcademicsTab({ data }) {
         open={openEditDialog}
         handleClose={() => setOpenEditDialog(false)}
         handleSubmit={console.log('คาร์บิว')}
+      />
+      <ConfirmDeleteDialog
+        open={openConfirmDelete}
+        value={value.ist_fname_th + ' ' + value.ist_lname_th}
+        handleClose={handleClose}
+        handleDelete={handleDelete}
       />
     </CardContent>
   )
