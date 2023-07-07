@@ -17,6 +17,7 @@ import Select from '@mui/material/Select'
 import FilterInput from '../Ex/filterInput'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { TextField } from '@mui/material'
 
 const initialState = {
   ac_id: null,
@@ -104,6 +105,7 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
     console.log('get: ', state)
   }, [state])
 
+  // * สำหรับ ปิดหน้า Dialog
   const handleClose = () => {
     onClose()
     setInsertState(initialInsertState)
@@ -111,10 +113,29 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
     router.replace(router.asPath)
   }
 
-  const handleInputChange = (key, updatedValue) => {
-    setState(prevState => ({ ...prevState, [key]: updatedValue }))
+  const handleChange = (e, type) => {
+    const { value } = e.target
+    const filterData = ''
+    if (type === 'code') {
+      filterData = value.replace(/(\d{3})(\d{3})(\d{4})/, '')
+    }
+    if (type === 'english') {
+      filterData = value.replace(/[^a-z]/gi, '')
+    }
+    if (type === 'thai') {
+      filterData = value.replace(/^[A-Za-z0-9 ]+$/g, '')
+    }
+    if (type === 'email') {
+      // filterData = value.replace(/^w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/g, '')
+      filterData = value
+    }
+    if (type === 'tel') {
+      filterData = value.replace(/[^\d.-]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
+    }
+    setState({ ...state, [e.target.name]: filterData })
   }
 
+  // * สำหรับ Submit
   const handleSubmit = () => {
     const emptyKeys = Object.keys(state).filter(key => state[key] === null)
     if (emptyKeys.length > 0) {
@@ -218,74 +239,81 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   label='Collegian Code'
                   placeholder='0123456789'
-                  filterType='code'
+                  name='co_code'
                   error={insertState.co_code}
                   value={state.co_code || ''}
-                  onChange={updatedValue => handleInputChange('co_code', updatedValue)}
+                  onChange={() => handleChange(event, 'thai')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   label='First Name (TH)'
+                  name='co_fname_th'
                   placeholder='Leonard'
-                  filterType='th'
                   error={insertState.co_fname_th}
                   value={state.co_fname_th || ''}
-                  onChange={updatedValue => handleInputChange('co_fname_th', updatedValue)}
+                  onChange={() => handleChange(event, 'thai')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
-                  label='First Name (TH)'
+                <TextField
+                  fullWidth
+                  label='Last Name (TH)'
                   placeholder='Leonard'
-                  filterType='th'
+                  name='co_lname_th'
                   error={insertState.co_lname_th}
                   value={state.co_lname_th || ''}
-                  onChange={updatedValue => handleInputChange('co_lname_th', updatedValue)}
+                  onChange={() => handleChange(event, 'thai')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   label='First Name (EN)'
+                  name='co_fname_en'
                   placeholder='Leonard'
-                  filterType='en'
                   error={insertState.co_fname_en}
                   value={state.co_fname_en || ''}
-                  onChange={updatedValue => handleInputChange('co_fname_en', updatedValue)}
+                  onChange={() => handleChange(event, 'english')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   label='Last Name (EN)'
                   placeholder='Carter'
-                  filterType='en'
+                  name='co_lname_en'
                   error={insertState.co_lname_en}
                   value={state.co_lname_en || ''}
-                  onChange={updatedValue => handleInputChange('co_lname_en', updatedValue)}
+                  onChange={() => handleChange(event, 'english')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   type='email'
                   label='Email'
                   placeholder='carterleonard@gmail.com'
-                  filterType='email'
+                  name='co_email'
                   error={insertState.co_email}
                   value={state.co_email || ''}
-                  onChange={updatedValue => handleInputChange('co_email', updatedValue)}
+                  onChange={() => handleChange(event, 'email')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FilterInput
+                <TextField
+                  fullWidth
                   label='Phone No.'
                   placeholder='+1-123-456-8790'
-                  filterType='tel'
+                  name='co_tel'
                   error={insertState.co_tel}
                   value={state.co_tel || ''}
-                  onChange={updatedValue => handleInputChange('co_tel', updatedValue)}
+                  onChange={() => handleChange(event, 'tel')}
                 />
               </Grid>
             </Grid>

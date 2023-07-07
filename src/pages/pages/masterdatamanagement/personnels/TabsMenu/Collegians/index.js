@@ -1,27 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import CollegianDialog from 'src/custom-components/Dialog/CollegiansDialog'
+import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 function CollegiansTab({ data }) {
+  const router = useRouter()
   const [openDialog, setOpenDialog] = useState(false)
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
+  const [value, setValue] = useState('')
   const [dialogType, setDialogType] = useState('')
   const [dataRow, setDataRow] = useState('')
 
+  // * หัวตาราง
   const columns = [
     {
-      field: '',
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'delete',
+      headerName: 'Delete',
+      width: 85,
+      renderCell: cellValues => (
+        <Button
+          variant='contained'
+          color='error'
+          m={1}
+          onClick={() => {
+            setValue(cellValues.row)
+            setOpenConfirmDelete(true)
+          }}
+        >
+          <Typography variant='caption' color={'white'}>
+            Delete
+          </Typography>
+        </Button>
+      )
+    },
+    {
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'edit',
       headerName: 'Edit',
       width: 100,
       renderCell: cellValues => (
         <Button
           variant='text'
           onClick={() => {
-            console.log(cellValues.row)
-            setDialogType('edit')
             setDataRow(cellValues.row)
+            setDialogType('edit')
             setOpenDialog(true)
           }}
         >
@@ -40,13 +74,26 @@ function CollegiansTab({ data }) {
     { field: 'fi_name_th', headerName: 'faculty', width: 120 }
   ]
 
-  useEffect(() => {
-    console.log('tt: ', dataRow)
-  }, [dataRow])
-
+  // * ถ้าไม่มีข้อมูลให้แสดงข้อความ
   console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
+  }
+
+  const handleDeleteSubmit = id => {
+    axios
+      .post('http://192.168.1.168:8000/api/method/frappe.help-api.delete', {
+        table: 'tabcollegians',
+        primary: id
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    router.replace(router.asPath)
+    setOpenConfirmDelete(false)
   }
 
   return (
@@ -75,6 +122,15 @@ function CollegiansTab({ data }) {
         />
       )}
       <CollegianDialog type={dialogType} open={openDialog} onClose={() => setOpenDialog(false)} row={dataRow} />
+      <ConfirmDeleteDialog
+        open={openConfirmDelete}
+        value={value.co_fname_th + ' ' + value.co_lname_th}
+        handleClose={() => {
+          setOpenConfirmDelete(false)
+          router.replace(router.asPath)
+        }}
+        handleDelete={() => handleDeleteSubmit(value.co_id)}
+      />
     </CardContent>
   )
 }
