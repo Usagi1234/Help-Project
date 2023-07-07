@@ -5,36 +5,46 @@ import { Box, Button } from '@mui/material'
 import ExportButton from '../../../../../../custom-components/BtnExport'
 import AcademicDialog from 'src/custom-components/Dialog/AcademicsDialog'
 
-const columns = [
-  {
-    field: '',
-    headerName: 'Edit',
-    width: 100,
-    renderCell: cellValues => (
-      <Button
-        variant='text'
-        onClick={() => {
-          console.log(cellValues.row)
-        }}
-      >
-        ...
-      </Button>
-    )
-  },
-  { field: 'ac_name_th', headerName: 'name(TH)', width: 200 },
-  { field: 'ac_name_en', headerName: 'name(EN)', width: 200 },
-  { field: 'ac_type_name_th', headerName: 'type(TH)', width: 150 },
-  { field: 'ac_type_name_en', headerName: 'type(EN)', width: 150 },
-  { field: 'ac_tel', headerName: 'tel', width: 120 },
-  { field: 'ac_address', headerName: 'address', width: 300 }
-]
-
 function AcademicsTab({ data }) {
+  // Setstate AcademicDialog
   const [openInsDialog, setOpenInsDialog] = useState(false)
+  const [openEditDialog, setOpenEditDialog] = useState(false)
+
+  //รับค่าจากแถวข้อมูล
+  const [rowdata, setRowdata] = useState('')
+
   console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
+
+  // ประกาศ Colum
+  const columns = [
+    {
+      field: '',
+      headerName: 'Edit',
+      width: 100,
+      renderCell: cellValues => (
+        <Button
+          variant='text'
+          onClick={() => {
+            // console.log(cellValues.row)
+            setRowdata(cellValues.row)
+            setOpenEditDialog(true)
+          }}
+        >
+          ...
+        </Button>
+      )
+    },
+    { field: 'ac_name_th', headerName: 'name(TH)', width: 200 },
+    { field: 'ac_name_en', headerName: 'name(EN)', width: 200 },
+    { field: 'ac_type_name_th', headerName: 'type(TH)', width: 150 },
+    { field: 'ac_type_name_en', headerName: 'type(EN)', width: 150 },
+    { field: 'ac_tel', headerName: 'tel', width: 120 },
+    { field: 'ac_campus', headerName: 'campus', width: 120 },
+    { field: 'ac_address', headerName: 'address', width: 300 }
+  ]
 
   return (
     <CardContent>
@@ -55,11 +65,24 @@ function AcademicsTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
+
+      {/* เปิด Dialog Insert */}
       <AcademicDialog
         type={'insert'}
+        data={data}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
         handleSubmit={console.log('Submit!')}
+      />
+
+      {/* เปิด Dialog Edit */}
+      <AcademicDialog
+        type={'edit'}
+        data={data}
+        rowdata={rowdata}
+        open={openEditDialog}
+        handleClose={() => setOpenEditDialog(false)}
+        handleSubmit={console.log('คาร์บิว')}
       />
     </CardContent>
   )
