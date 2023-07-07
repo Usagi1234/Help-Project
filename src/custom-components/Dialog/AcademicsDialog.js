@@ -4,6 +4,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import Button from '@mui/material/Button'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 ///////////////////////////////////////////////////////////
 // ** React Imports
@@ -23,6 +24,9 @@ import Select from '@mui/material/Select'
 const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }) => {
   console.log(data)
   console.log(rowdata)
+
+  // ตัวแปร เราเตอร์
+  const Route = useRouter()
 
   // เช็คการรับค่าใน input
   const handleChange = (e, key, type) => {
@@ -103,7 +107,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
     setSubmitted(true)
 
     // ตรวจสอบค่าว่างใน TextField
-    if (!nameTh || !nameEn || !acType || !tel || !address || !campus) {
+    if (!nameTh || !nameEn || !acType || !tel || !address || !campus || tel.length !== 12) {
       alert('ฮานาเงะ')
 
       return
@@ -117,13 +121,17 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
       ac_address: address,
       ac_campus: campus
     }
-    console.log(data)
+
+    // console.log(data)
     axios
       .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertacademic', data)
       .then(response => {
         console.log(response)
         handleClose()
-        window.location.reload()
+
+        // window.location.reload()
+        Route.replace(Route.asPath, undefined, { scroll: false })
+        handleCancel() // รีข้อมูล
       })
       .catch(error => {
         console.log(error)
@@ -136,7 +144,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
     setSubmitted(true)
 
     // ตรวจสอบค่าว่างใน TextField
-    if (!nameTh || !nameEn || !acType || !tel || !address || !campus) {
+    if (!nameTh || !nameEn || !acType || !tel || !address || !campus || tel.length !== 12) {
       alert('ฮานาเงะ')
 
       return
@@ -157,7 +165,9 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
       .then(response => {
         console.log(response)
         handleClose()
-        window.location.reload()
+
+        // window.location.reload()
+        Route.replace(Route.asPath, undefined, { scroll: false })
       })
       .catch(error => {
         console.log(error)
@@ -214,13 +224,13 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
                   label='Phone No.'
                   placeholder='+1-123-456-8790'
                   id='ac_tel'
-                  value={tel} // กำหนดค่าให้ TextField จาก state tel
+                  value={tel}
                   onChange={e => {
                     setTel(e.target.value)
                     handleChange(e, 'ac_tel', 'tel')
                   }}
-                  error={submitted && (!tel || tel.length !== 10)} // แสดงสีแดงเมื่อกดส่งและค่าว่างหรือไม่ครบ 10 ตัว
-                  helperText={submitted && (!tel || tel.length !== 10) && 'กรุณากรอกข้อมูล 10 ตัว'}
+                  error={submitted && (!tel || tel.length !== 12)}
+                  helperText={submitted && (!tel || tel.length !== 12) && 'กรุณากรอกข้อมูลให้ครบ 10 ตัว'}
                   inputProps={{ minLength: 0, maxLength: 10 }}
                 />
               </Grid>
@@ -247,15 +257,28 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
                     defaultValue=''
                     id='academic_type_ac_type_id'
                     labelId='form-layouts-separator-select-label'
-                    value={acType} // กำหนดค่าให้ Select จาก state acType
-                    onChange={e => setAcType(e.target.value)} // อัปเดต state acType เมื่อมีการเปลี่ยนแปลงใน Select
-                    error={submitted && !acType} // แสดงสีแดงเมื่อกดส่งและค่าว่าง
+                    value={acType}
+                    onChange={e => {
+                      setAcType(e.target.value)
+                    }}
+                    error={submitted && !acType}
                     helperText={submitted && !acType && 'กรุณากรอกข้อมูล'}
                   >
-                    <MenuItem value='ACT-3'>University 1</MenuItem>
-                    <MenuItem value='ACT-4'>University 2</MenuItem>
-                    <MenuItem value='ACT-5'>University 3</MenuItem>
-                    <MenuItem value='ACT-6'>University 4</MenuItem>
+                    {data
+                      ?.filter((contentAc, index, self) => {
+                        return (
+                          index ===
+                          self.findIndex(c => c.academic_type_ac_type_id === contentAc.academic_type_ac_type_id)
+                        )
+                      })
+                      .filter(contentAc => {
+                        return contentAc.academic_type_ac_type_id !== ''
+                      })
+                      .map((contentAc, value) => (
+                        <MenuItem key={value} value={contentAc.academic_type_ac_type_id}>
+                          {contentAc.ac_type_name_th}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>
