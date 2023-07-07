@@ -61,9 +61,9 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
   const [address, setAddress] = useState(rowdata?.ac_address || '')
   const [campus, setCampus] = useState(rowdata?.ac_campus || '')
 
-  // กำหนดค่า TextField ทุกครั้งที่มีข้อมูลจาก rowdata
+  // กำหนดค่า TextField ทุกครั้งที่มีข้อมูลจาก rowdata หรือมีการเปิด Modal
   useEffect(() => {
-    if (rowdata) {
+    if (open && type === 'edit' && rowdata) {
       setNameTh(rowdata.ac_name_th || '')
       setNameEn(rowdata.ac_name_en || '')
       setAcType(rowdata.academic_type_ac_type_id || '')
@@ -71,7 +71,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
       setAddress(rowdata.ac_address || '')
       setCampus(rowdata.ac_campus || '')
     }
-  }, [rowdata])
+  }, [open, type, rowdata])
 
   // Set ค่าว่างเมื่อกด cancal
   const handleCancel = () => {
