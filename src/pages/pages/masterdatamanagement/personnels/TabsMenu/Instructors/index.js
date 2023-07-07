@@ -5,6 +5,7 @@ import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
+
 // import { useRouter } from 'next/router'
 
 function InstructorsTab({ data }) {
@@ -18,6 +19,7 @@ function InstructorsTab({ data }) {
 
   const handleClose = () => {
     setOpenConfirmDelete(false)
+
     // router.replace(router.asPath)
   }
 
