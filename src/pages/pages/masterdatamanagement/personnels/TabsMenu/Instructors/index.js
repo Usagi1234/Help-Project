@@ -17,12 +17,12 @@ function InstructorsTab({ data }) {
   const [openEditDialog, setOpenEditDialog] = useState(false)
   const [value, setValue] = useState('') // use when delete button is clicked
   const [deleteId, setDeleteId] = useState('')
+  const tableName = 'Instructors'
 
   console.log('Id', deleteId)
 
   const handleClose = () => {
     setOpenConfirmDelete(false)
-    // router.replace(router.asPath)
   }
 
   const handleDelete = () => {
@@ -110,6 +110,15 @@ function InstructorsTab({ data }) {
     { field: 'fi_name_th', headerName: 'faculty', width: 140 }
   ]
 
+  const DataExport = rows?.map(val => ({
+    FirstNameTH: val.ist_fname_th,
+    LastNameTH: val.ist_lname_th,
+    FirstNameEN: val.ist_fname_en,
+    LastNameEN: val.ist_lname_en,
+    Tel: val.ist_tel,
+    Faculty: val.fi_name_th
+  }))
+
   console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
@@ -121,7 +130,11 @@ function InstructorsTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Instructor
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={rows?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       {rows?.length > 0 && (
         <DataGrid
