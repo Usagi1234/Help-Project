@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid'
 import { Fragment } from 'react'
 import HeaderCard from './HeaderCard'
-import Path from './Path'
 import Tabs from './TabsMenu'
 
 const AcademicsPage = ({ data }) => {
@@ -9,7 +8,6 @@ const AcademicsPage = ({ data }) => {
 
   return (
     <Fragment>
-      <Path name={'test name'} path={'test path'} />
       <Grid container direction={'row'} item xs={12} spacing={2}>
         <Grid item xs={12}>
           <HeaderCard />

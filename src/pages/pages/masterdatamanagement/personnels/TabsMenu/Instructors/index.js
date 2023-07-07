@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 
@@ -17,6 +17,25 @@ function InstructorsTab({ data }) {
 
   const columns = [
     {
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'delete',
+      headerName: 'Delete',
+      width: 85,
+      renderCell: cellValues => (
+        <Button variant='contained' color='error' m={1}>
+          <Typography variant='caption' color={'white'}>
+            Delete
+          </Typography>
+        </Button>
+      )
+    },
+    {
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
       filterable: false,
       field: 'edit',
       headerName: 'Edit',
@@ -63,7 +82,6 @@ function InstructorsTab({ data }) {
         <DataGrid
           rows={rows}
           columns={columns}
-          // getRowId={row => row.ist_id}
           initialState={{
             pagination: {
               paginationModel: {
