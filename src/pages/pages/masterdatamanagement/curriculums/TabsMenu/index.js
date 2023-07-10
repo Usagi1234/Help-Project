@@ -12,6 +12,10 @@ import School from 'mdi-material-ui/School'
 
 // ** Demo Tabs Imports
 import CurriculumsTab from './Curriculums'
+import SubjectsTab from './Subjects'
+import SubjectGroupsTab from './SubjectGroups'
+import SubjectTypesTab from './SubjectTypes'
+import SubjectCategoriesTab from './SubjectCategories'
 
 const Tab = styled(MuiTab)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -39,6 +43,10 @@ const TabName = styled('span')(({ theme }) => ({
 
 const Tabs = ({ data }) => {
   const academicsData = data.academics
+  const subjects = data.subjects
+  const subjectGroups = data.subjectgroups
+  const subjectTypes = data.subjecttypes
+  const subjectCategories = data.subjectCategory
 
   const [value, setValue] = useState('')
 
@@ -65,10 +73,70 @@ const Tabs = ({ data }) => {
               </Box>
             }
           />
+          <Tab
+            value='Subjects'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconHidden>
+                  <School />
+                </IconHidden>
+                <TabName>Subjects</TabName>
+              </Box>
+            }
+          />
+          <Tab
+            value='Subjects-Groups'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconHidden>
+                  <School />
+                </IconHidden>
+                <TabName>Subjects Groups</TabName>
+              </Box>
+            }
+          />
+          <Tab
+            value='Subjects-Types'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconHidden>
+                  <School />
+                </IconHidden>
+                <TabName>Subjects Types</TabName>
+              </Box>
+            }
+          />
+          <Tab
+            value='Subjects-Category'
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <IconHidden>
+                  <School />
+                </IconHidden>
+                <TabName>Subjects Category</TabName>
+              </Box>
+            }
+          />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='curriculums'>
           <CurriculumsTab data={academicsData} />
           curriculums
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='Subjects'>
+          <SubjectsTab data={subjects} />
+          subjects
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='Subjects-Groups'>
+          <SubjectGroupsTab data={subjectGroups} />
+          subjects groups
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='Subjects-Types'>
+          <SubjectTypesTab data={subjectTypes} />
+          subjects types
+        </TabPanel>
+        <TabPanel sx={{ p: 0 }} value='Subjects-Category'>
+          <SubjectCategoriesTab data={subjectCategories} />
+          subjects category
         </TabPanel>
       </TabContext>
     </Card>

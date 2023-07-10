@@ -23,7 +23,7 @@ export default PersonnelsPage
 export async function getServerSideProps(context) {
   const WrapData = []
   try {
-    const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllcollegians`)
+    const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.collegian.getAllcollegians`)
     const resCollegians = await queryCollegians.json()
     if (!resCollegians) {
       return { notFound: true }
@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
   }
 
   try {
-    const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllinstructors`)
+    const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.getAllinstructors`)
     const resInstructor = await queryInstructors.json()
     if (!resInstructor) {
       return { notFound: true }
