@@ -9,11 +9,11 @@ import SubjectTypeDialog from 'src/custom-components/Dialog/SubjectTypeDialog'
 function TestPage() {
   return (
     <Box>
-      <SubjectDialog open={false} />
+      {/* <SubjectDialog open={false} />
       <CurriculumDialog open={false} />
       <SubjectGroupDialog open={false} />
       <SubjectTypeDialog open={false} />
-      <SubjectCategoryDialog open={true} />
+      <SubjectCategoryDialog open={true} /> */}
     </Box>
   )
 }

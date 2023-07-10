@@ -21,36 +21,84 @@ const CurriculumsPage = ({ data }) => {
 export default CurriculumsPage
 
 export async function getServerSideProps(context) {
-  const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.academic.getAllAcademics`)
-  const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.academic_type.getallacademictype`)
-  const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.faculty.getAllfacultys`)
-  const querySubjects = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.getAllsubjects`)
+  const WrapData = []
+  try {
+    const queryCurriculums = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.curriculum.getAllcurriculums`)
+    const resCurriculums = await queryCurriculums.json()
+    if (!resCurriculums) {
+      return { notFound: true }
+    } else {
+      const newRow = resCurriculums.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ curriculums: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+  try {
+    const querySubjects = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.getAllsubjects`)
+    const resSubjects = await querySubjects.json()
+    if (!resSubjects) {
+      return { notFound: true }
+    } else {
+      const newRow = resSubjects.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ subjects: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+  try {
+    const querySubjectGroups = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.getAllsubjects`)
+    const resSubjectGroups = await querySubjectGroups.json()
+    if (!resSubjectGroups) {
+      return { notFound: true }
+    } else {
+      const newRow = resSubjectGroups.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ subjectgroups: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+  try {
+    const querySubjectTypes = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject_type.getAllsubject_type`)
+    const resSubjectTypes = await querySubjectTypes.json()
+    if (!resSubjectTypes) {
+      return { notFound: true }
+    } else {
+      const newRow = resSubjectTypes.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ subjecttypes: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
+  try {
+    const querySubjectCategories = await fetch(
+      `${process.env.NEXT_PUBLIC_API}.MasterData.subject_category.getAllsubject_category`
+    )
 
-  const querySubjectGroups = await fetch(
-    `${process.env.NEXT_PUBLIC_API}.MasterData.subject_groups.getAllsubject_groups`
-  )
-  const querySubjectTypes = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject_type.getAllsubject_type`)
-
-  const querySubjectCategories = await fetch(
-    `${process.env.NEXT_PUBLIC_API}.MasterData.subject_category.getAllsubject_category`
-  )
-
-  const resAcademics = await queryAcademics.json()
-  const resAcademicType = await queryAcademicType.json()
-  const resFaculty = await queryFaculty.json()
-  const resSubjects = await querySubjects.json()
-  const resSubjectGroups = await querySubjectGroups.json()
-  const resSubjectTypes = await querySubjectTypes.json()
-  const resSubjectCategories = await querySubjectCategories.json()
-
-  const WrapData = {
-    academics: resAcademics.message.Data,
-    academictype: resAcademicType.message.Data,
-    faculty: resFaculty.message.Data,
-    subjects: resSubjects.message.Data,
-    subjectgroups: resSubjectGroups.message.Data,
-    subjecttype: resSubjectTypes.message.Data,
-    subjectcategories: resSubjectCategories.message.Data
+    const resSubjectCategories = await querySubjectCategories.json()
+    if (!resSubjectCategories) {
+      return { notFound: true }
+    } else {
+      const newRow = resSubjectCategories.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ subjectcategories: newRow })
+    }
+  } catch (err) {
+    return { error: err }
   }
 
   return {
