@@ -81,7 +81,7 @@ function SubjectsTab({ data, subjectGroups }) {
   return (
     <CardContent>
       <Box sx={{ mb: 2 }}>
-        <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
+        <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenIns(true)}>
           + Subject
         </Button>
         <ExportButton
@@ -105,7 +105,7 @@ function SubjectsTab({ data, subjectGroups }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      <SubjectsDialog open={true} subjectGroups={subjectGroups} />
+      <SubjectsDialog Dialogtype={'insert'} open={openIns} subjectGroups={subjectGroups} handleClose={setOpenIns} />
       {/* <InstructorDialog
         instructor={instructor}
         Dialogtype={'edit'}
