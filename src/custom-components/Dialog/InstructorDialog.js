@@ -31,10 +31,8 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
     ist_tel: '',
     faculty_institutes_fi_id: ''
   }
-  const [state, setState] = useState(initialState)
-  const [editState, setEditState] = useState(instructor)
 
-  const [stateAlert, setStateAlert] = useState({
+  const initialStateAlert = {
     ist_fname_th: false,
     ist_lname_th: false,
     ist_fname_en: false,
@@ -42,11 +40,17 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
     ist_email: false,
     ist_tel: false,
     faculty_institutes_fi_id: false
-  })
+  }
+  const [state, setState] = useState(initialState)
+  const [editState, setEditState] = useState(instructor)
+
+  const [stateAlert, setStateAlert] = useState({ initialStateAlert })
 
   const [dropDown, setDropDown] = useState({
     faculty: []
   })
+
+  const [tricker, setTricker] = useState(false)
 
   useEffect(() => {
     const fetchMenuDropdown = async () => {
@@ -126,16 +130,17 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
   const handleCloseModi = () => {
     handleClose(false)
     setState(initialState)
+    setStateAlert(initialStateAlert)
   }
 
   const ValidationsForm = () => {
     if (
-      stateAlert.ist_fname_th === false ||
-      stateAlert.ist_lname_th === false ||
-      stateAlert.ist_fname_en === false ||
-      stateAlert.ist_lname_en === false ||
-      stateAlert.ist_email === false ||
-      stateAlert.ist_tel === false ||
+      stateAlert.ist_fname_th === false &&
+      stateAlert.ist_lname_th === false &&
+      stateAlert.ist_fname_en === false &&
+      stateAlert.ist_lname_en === false &&
+      stateAlert.ist_email === false &&
+      stateAlert.ist_tel === false &&
       stateAlert.faculty_institutes_fi_id === false
     ) {
       if (Dialogtype === 'insert') {
@@ -273,8 +278,15 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
       // console.log(key)
       AlertForm(key)
     })
-    ValidationsForm()
+    setTricker(true)
   }
+
+  useEffect(() => {
+    if (tricker) {
+      ValidationsForm()
+      setTricker(false)
+    }
+  }, [tricker])
 
   useEffect(() => {
     setEditState(instructor)
