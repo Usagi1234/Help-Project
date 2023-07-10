@@ -19,7 +19,7 @@ function InstructorsTab({ data }) {
   const [deleteId, setDeleteId] = useState('')
   const tableName = 'Instructors'
 
-  console.log('Id', deleteId)
+  // console.log('Id', deleteId)
 
   const handleClose = () => {
     setOpenConfirmDelete(false)
@@ -33,7 +33,7 @@ function InstructorsTab({ data }) {
           primary: deleteId
         })
         .then(function (response) {
-          console.log(response.message)
+          // console.log(response.message)
         })
         .catch(function (error) {
           console.log(error)
@@ -119,7 +119,7 @@ function InstructorsTab({ data }) {
     Faculty: val.fi_name_th
   }))
 
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }

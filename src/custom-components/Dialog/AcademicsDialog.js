@@ -22,8 +22,8 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }) => {
-  console.log(data)
-  console.log(rowdata)
+  // console.log(data)
+  // console.log(rowdata)
 
   // ตัวแปร เราเตอร์
   const Route = useRouter()

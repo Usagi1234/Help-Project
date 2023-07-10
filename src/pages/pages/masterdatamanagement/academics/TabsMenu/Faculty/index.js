@@ -57,7 +57,7 @@ function FacultyTab({ data }) {
           primary: deleteId
         })
         .then(function (response) {
-          console.log(response.message)
+          // console.log(response.message)
         })
         .catch(function (error) {
           console.log(error)

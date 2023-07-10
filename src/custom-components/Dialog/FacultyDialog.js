@@ -25,7 +25,7 @@ import DialogContent from '@mui/material/DialogContent'
 
 const FacultyDialog = ({ open, handleClose, type, DataInRow }) => {
   const Route = useRouter()
-  console.log('Data IN ROW', DataInRow)
+  // console.log('Data IN ROW', DataInRow)
 
   // State variables =================================
   const [nameTH, setNameTH] = useState('')

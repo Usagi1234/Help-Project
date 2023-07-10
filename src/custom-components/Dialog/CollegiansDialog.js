@@ -53,14 +53,14 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
   const [academicState, setAcademicState] = useState(true)
   const [insertState, setInsertState] = useState(initialInsertState)
 
-  console.log('datarow: ', row)
+  // console.log('datarow: ', row)
 
   useEffect(() => {
     axios
       .get('http://192.168.1.168:8000/api/method/frappe.help-api.getAllAcademics')
       .then(response => {
         setDataAcademic(response.data.message.Data)
-        console.log('dataAC', response.data.message.Data)
+        // console.log('dataAC', response.data.message.Data)
       })
       .catch(error => {
         console.log(error)

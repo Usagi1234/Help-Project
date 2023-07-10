@@ -75,7 +75,7 @@ function CollegiansTab({ data }) {
   ]
 
   // * ถ้าไม่มีข้อมูลให้แสดงข้อความ
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -87,7 +87,7 @@ function CollegiansTab({ data }) {
         primary: id
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
       })
       .catch(err => {
         console.log(err)

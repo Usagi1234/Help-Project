@@ -9,7 +9,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 
 function AcademicTypeTab({ data }) {
-  console.log('data', data)
+  // console.log('data', data)
   const router = useRouter()
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
@@ -25,7 +25,7 @@ function AcademicTypeTab({ data }) {
         primary: id
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -84,7 +84,7 @@ function AcademicTypeTab({ data }) {
     { field: 'ac_type_name_en', headerName: 'name(EN)', width: 220 },
     { field: 'ac_area', headerName: 'area', width: 150 }
   ]
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -112,14 +112,14 @@ function AcademicTypeTab({ data }) {
         type='insert'
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
-        handleSubmit={console.log('Submit!')}
+        // handleSubmit={console.log('Submit!')}
         rowData={rowData}
       />
       <AcademicTypeDialog
         type='edit'
         open={openEditDialog}
         handleClose={() => setOpenEditDialog(false)}
-        handleSubmit={console.log('Submit!')}
+        // handleSubmit={console.log('Submit!')}
         rowData={rowData}
       />
       <ConfirmDeleteDialog
