@@ -53,7 +53,9 @@ export async function getServerSideProps(context) {
     return { error: err }
   }
   try {
-    const querySubjectGroups = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.getAllsubjects`)
+    const querySubjectGroups = await fetch(
+      `${process.env.NEXT_PUBLIC_API}.MasterData.subject_groups.getAllsubject_groups`
+    )
     const resSubjectGroups = await querySubjectGroups.json()
     if (!resSubjectGroups) {
       return { notFound: true }

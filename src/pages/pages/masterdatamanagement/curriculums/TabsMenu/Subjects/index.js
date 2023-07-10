@@ -7,8 +7,11 @@ import InstructorDialog from 'src/custom-components/Dialog/InstructorDialog'
 import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import SubjectsDialog from 'src/custom-components/Dialog/SubjectDialog'
 
-function SubjectsTab({ data }) {
+function SubjectsTab({ data, subjectGroups }) {
+  const [openIns, setOpenIns] = useState(false)
+
   const columns = [
     {
       sortable: false,
@@ -58,16 +61,16 @@ function SubjectsTab({ data }) {
       )
     },
     {
-      field: 'ist_fname_th',
-      headerName: 'first name(TH)',
+      field: 'sj_name_th',
+      headerName: 'name(TH)',
       width: 120
     },
-    { field: 'ist_lname_th', headerName: 'last name(TH)', width: 150 },
-    { field: 'ist_fname_en', headerName: 'first name(EN)', width: 150 },
-    { field: 'ist_lname_en', headerName: 'last name(EN)', width: 150 },
-    { field: 'ist_email', headerName: 'email', width: 180 },
-    { field: 'ist_tel', headerName: 'tel', width: 120 },
-    { field: 'fi_name_th', headerName: 'faculty', width: 140 }
+    { field: 'subject_group_sjg_id', headerName: 'subject group', width: 120 },
+    { field: 'sj_theory_credit', headerName: 'theory', width: 120 },
+    { field: 'sj_action_credit', headerName: 'action', width: 100 },
+    { field: 'sj_ot_credit', headerName: 'ot', width: 100 },
+    { field: 'sj_credit', headerName: 'credit', width: 100 },
+    { field: 'cur_shot_name_th', headerName: 'curriculum', width: 140 }
   ]
 
   console.log(data)
@@ -82,9 +85,9 @@ function SubjectsTab({ data }) {
           + Subject
         </Button>
         <ExportButton
-          isEmpty={data?.length > 0 ? 0 : 1}
-          // fileName={tableName + '_' + Date().toLocaleString()}
-          // excelData={DataExport}
+        // isEmpty={data?.length > 0 ? 0 : 1}
+        // fileName={tableName + '_' + Date().toLocaleString()}
+        // excelData={DataExport}
         />
       </Box>
       {data?.length > 0 && (
@@ -102,14 +105,14 @@ function SubjectsTab({ data }) {
           pageSizeOptions={[10, 25, 50]}
         />
       )}
-      {/* <InstructorDialog Dialogtype={'insert'} open={openInsDialog} handleClose={setOpenInsDialog} />
-      <InstructorDialog
+      <SubjectsDialog open={true} subjectGroups={subjectGroups} />
+      {/* <InstructorDialog
         instructor={instructor}
         Dialogtype={'edit'}
         open={openEditDialog}
         handleClose={setOpenEditDialog}
-      />
-      <ConfirmDeleteDialog
+      /> */}
+      {/* <ConfirmDeleteDialog
         open={openConfirmDelete}
         value={value.ist_fname_th + ' ' + value.ist_lname_th}
         handleClose={handleClose}
