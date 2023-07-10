@@ -108,7 +108,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
 
     // ตรวจสอบค่าว่างใน TextField
     if (!nameTh || !nameEn || !acType || !tel || !address || !campus || tel.length !== 12) {
-      alert('ฮานาเงะ')
+      // alert('ฮานาเงะ')
 
       return
     }

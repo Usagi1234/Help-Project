@@ -22,6 +22,7 @@ function AcademicsTab({ data }) {
 
   //รับค่าจากแถวข้อมูล
   const [rowdata, setRowdata] = useState('')
+  const tableName = 'Academics'
 
   // console.log(data)
   if (!data || data.length === 0) {
@@ -82,6 +83,16 @@ function AcademicsTab({ data }) {
     { field: 'ac_address', headerName: 'address', width: 300 }
   ]
 
+  const DataExport = data?.map(val => ({
+    AcademicNameTH: val.ac_name_th,
+    AcademicNameEN: val.ac_name_en,
+    AcademicTypeTH: val.ac_type_name_th,
+    AcademicTypeEN: val.ac_type_name_en,
+    AcademicTel: val.ac_tel,
+    Campus: val.ac_campus,
+    Address: val.ac_address
+  }))
+
   // ฟังก์ชัน Delete
   const handleClose = () => {
     setOpenConfirmDelete(false)
@@ -115,7 +126,11 @@ function AcademicsTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Academic
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       {data.length > 0 && (
         <DataGrid
