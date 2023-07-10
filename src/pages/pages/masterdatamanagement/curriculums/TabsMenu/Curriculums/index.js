@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Box, Button } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import InsertDialog from 'src/custom-components/Dialog'
+import CurriculumsDialog from 'src/custom-components/Dialog/CurriculumsDialog'
 
 const columns = [
   {
@@ -54,7 +55,7 @@ function CurriculumsTab({ data }) {
         }}
         pageSizeOptions={[10, 25, 50]}
       />
-      <InsertDialog header={'Insert Form'} open={openInsDialog} handleClose={() => setOpenInsDialog(false)} />
+      <CurriculumsDialog header={'Insert Form'} open={openInsDialog} handleClose={() => setOpenInsDialog(false)} />
     </CardContent>
   )
 }

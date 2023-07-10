@@ -149,7 +149,7 @@ function AcademicsTab({ data }) {
       />
       <ConfirmDeleteDialog
         open={openConfirmDelete}
-        value={value.ist_fname_th + ' ' + value.ist_lname_th}
+        value={value.ac_name_th + ' ' + value.ac_name_en}
         handleClose={handleClose}
         handleDelete={handleDelete}
       />
