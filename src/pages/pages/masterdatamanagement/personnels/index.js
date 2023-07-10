@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid'
 import { Fragment } from 'react'
 import HeaderCard from './HeaderCard'
-import Path from './Path'
 import Tabs from '../personnels/TabsMenu'
 
 const PersonnelsPage = ({ data }) => {
@@ -9,7 +8,6 @@ const PersonnelsPage = ({ data }) => {
 
   return (
     <Fragment>
-      <Path name={'test name'} path={'test path'} />
       <Grid container direction={'row'} item xs={12} spacing={2}>
         <Grid item xs={12}>
           <HeaderCard />
@@ -46,7 +44,11 @@ export async function getServerSideProps(context) {
     if (!resInstructor) {
       return { notFound: true }
     } else {
-      WrapData.push({ instructors: resInstructor.message.Data })
+      const newRow = resInstructor.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ instructors: newRow })
     }
   } catch (err) {
     return { error: err }

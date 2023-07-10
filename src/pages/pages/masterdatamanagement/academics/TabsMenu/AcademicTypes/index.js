@@ -46,7 +46,7 @@ function AcademicTypeTab({ data }) {
         <DataGrid
           rows={data}
           columns={columns}
-          getRowId={row => row.ac_type_id}
+          // getRowId={row => row.ac_type_id}
           initialState={{
             pagination: { paginationModel: { pageSize: 10 } }
           }}
