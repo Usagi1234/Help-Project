@@ -94,6 +94,7 @@ const CurriculumsDialog = ({ open, handleClose, type, handleSubmit }) => {
                     <MenuItem value='University 2'>University 2</MenuItem>
                     <MenuItem value='University 3'>University 3</MenuItem>
                     <MenuItem value='University 4'>University 4</MenuItem>
+                    <MenuItem value='University 4'>University 55</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
