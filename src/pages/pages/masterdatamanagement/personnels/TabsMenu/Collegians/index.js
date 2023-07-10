@@ -15,6 +15,7 @@ function CollegiansTab({ data }) {
   const [value, setValue] = useState('')
   const [dialogType, setDialogType] = useState('')
   const [dataRow, setDataRow] = useState('')
+  const tableName = 'Collegians'
 
   // * หัวตาราง
   const columns = [
@@ -80,6 +81,18 @@ function CollegiansTab({ data }) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
 
+  const DataExport = data?.map(val => ({
+    Code: val.co_code,
+    FirstNameTH: val.co_fname_th,
+    LastNameTH: val.co_lname_th,
+    FirstNameEN: val.co_fname_en,
+    LastNameEN: val.co_lname_en,
+    Tel: val.co_tel,
+    Email: val.co_email,
+    Curriculum: val.cur_name_th,
+    Faculty: val.fi_name_th
+  }))
+
   const handleDeleteSubmit = id => {
     axios
       .post('http://192.168.1.168:8000/api/method/frappe.help-api.delete', {
@@ -109,7 +122,11 @@ function CollegiansTab({ data }) {
         >
           + Collegian
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       {data.length > 0 && (
         <DataGrid

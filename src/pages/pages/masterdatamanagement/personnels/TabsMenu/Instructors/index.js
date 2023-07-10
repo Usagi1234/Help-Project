@@ -116,6 +116,7 @@ function InstructorsTab({ data }) {
     FirstNameEN: val.ist_fname_en,
     LastNameEN: val.ist_lname_en,
     Tel: val.ist_tel,
+    Email: val.ist_email,
     Faculty: val.fi_name_th
   }))
 
