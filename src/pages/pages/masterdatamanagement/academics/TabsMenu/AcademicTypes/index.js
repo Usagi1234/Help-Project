@@ -15,6 +15,7 @@ function AcademicTypeTab({ data }) {
   const [openEditDialog, setOpenEditDialog] = useState(false)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [value, setValue] = useState('')
+  const tableName = 'AcademicType'
 
   const [rowData, setRowdata] = useState('')
 
@@ -84,6 +85,13 @@ function AcademicTypeTab({ data }) {
     { field: 'ac_type_name_en', headerName: 'name(EN)', width: 220 },
     { field: 'ac_area', headerName: 'area', width: 150 }
   ]
+
+  const DataExport = data?.map(val => ({
+    AcademicTypeTH: val.ac_type_name_th,
+    AcademicTypeEN: val.ac_type_name_en,
+    Area: val.ac_area
+  }))
+
   // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
@@ -95,7 +103,11 @@ function AcademicTypeTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Academic Type
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       {data.length > 0 && (
         <DataGrid

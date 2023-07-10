@@ -23,7 +23,7 @@ function FacultyTab({ data }) {
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
-
+  const tableName = 'Faculty'
   const [value, setValue] = useState('')
   const [deleteId, setDeleteId] = useState('') // set delete state
 
@@ -124,13 +124,24 @@ function FacultyTab({ data }) {
     { field: 'ac_name_en', headerName: 'type(EN)', width: 220 }
   ]
 
+  const DataExport = data?.map(val => ({
+    FacultyNameTH: val.fi_name_th,
+    FacultyNameEN: val.fi_name_en,
+    AcademicTypeTH: val.ac_name_th,
+    AcademicTypeEN: val.ac_name_en
+  }))
+
   return (
     <CardContent>
       <Box sx={{ mb: 2 }}>
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Faculty
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       {data.length > 0 && (
         <DataGrid
