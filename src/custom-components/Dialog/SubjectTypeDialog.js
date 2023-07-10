@@ -18,26 +18,27 @@ import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-const SubjectGroupDialog = ({ open, handleClose }) => {
+const SubjectTypeDialog = ({ open, handleClose, header }) => {
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
+      <DialogTitle>{header}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {/* //////////////////////////////////////////////////////////////////////////////// */}
           <Card>
-            <CardHeader title='Add New Subject Group' titleTypographyProps={{ variant: 'h6' }} />
+            <CardHeader title='Add New Subject Type' titleTypographyProps={{ variant: 'h6' }} />
             <Divider sx={{ margin: 0 }} />
             <form onSubmit={e => e.preventDefault()}>
               <CardContent>
                 <Grid container spacing={5}>
-                  <Grid item xs={12} sm={7}>
-                    <TextField fullWidth label='Group Name' placeholder='Supject Group Name' />
+                  <Grid item xs={12} sm={8}>
+                    <TextField fullWidth label='Type Name' placeholder='Subject Type Name' />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} sx={3}>
                     <FormControl fullWidth>
-                      <InputLabel id='form-layouts-separator-select-label'>Credit</InputLabel>
+                      <InputLabel id='form-layouts-separator-select-label'>Category </InputLabel>
                       <Select
-                        label='Type'
+                        label='Country'
                         defaultValue=''
                         id='form-layouts-separator-select'
                         labelId='form-layouts-separator-select-label'
@@ -67,4 +68,4 @@ const SubjectGroupDialog = ({ open, handleClose }) => {
   )
 }
 
-export default SubjectGroupDialog
+export default SubjectTypeDialog
