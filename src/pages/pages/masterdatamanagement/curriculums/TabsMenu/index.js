@@ -126,7 +126,7 @@ const Tabs = ({ data }) => {
           <SubjectsTab data={subjects} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects-Groups'>
-          <SubjectGroupsTab data={subjectgroups} />
+          <SubjectGroupsTab data={subjectgroups} data1={subjecttypes} />
           subjects groups
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects-Types'>
