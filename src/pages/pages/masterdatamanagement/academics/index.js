@@ -67,6 +67,23 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return { error: err }
   }
+  try {
+    const queryDepartments = await fetch(
+      `${process.env.NEXT_PUBLIC_API_PRODUCTION}.MasterData.department.getAllDepartments`
+    )
+    const resDepartments = await queryDepartments.json()
+    if (!resDepartments) {
+      return { notFound: true }
+    } else {
+      const newRow = resDepartments.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ departments: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
 
   // const WrapData = {
   //   academics: resAcademics.message.Data,
