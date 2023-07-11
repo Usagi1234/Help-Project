@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import CardContent from '@mui/material/CardContent'
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import ExportButton from 'src/custom-components/BtnExport'
 import CurriculumsDialog from 'src/custom-components/Dialog/CurriculumsDialog'
+import ConfirmDeleteDialog from 'src/custom-components/Dialog/ConfirmDeleteDialog'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 function CurriculumsTab({ data }) {
+  // ตัวแปร เราเตอร์
+  const router = useRouter() // Set Router
+
   // Setstate CurriculumDialog
   const [openInsDialog, setOpenInsDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
+
+  // Setstate Delete
+  const [deleteId, setDeleteId] = useState('') // set delete state
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
+  const [value, setValue] = useState('') // use when delete button is clicked
 
   //รับค่าจากแถวข้อมูล
   const [rowdata, setRowdata] = useState('')
@@ -20,6 +31,32 @@ function CurriculumsTab({ data }) {
 
   // ประกาศ Colum
   const columns = [
+    {
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'delete',
+      headerName: 'Delete',
+      width: 85,
+      renderCell: cellValues => (
+        <Button
+          variant='contained'
+          color='error'
+          m={1}
+          onClick={() => {
+            setValue(cellValues.row)
+            setDeleteId(cellValues.row.cur_id)
+            setOpenConfirmDelete(true)
+            console.log(cellValues.row)
+          }}
+        >
+          <Typography variant='caption' color={'white'}>
+            Delete
+          </Typography>
+        </Button>
+      )
+    },
     {
       field: '',
       headerName: 'Edit',
@@ -45,6 +82,33 @@ function CurriculumsTab({ data }) {
     { field: 'faculty_institutes_fi_id', headerName: 'faculty', width: 120 },
     { field: 'release_year', headerName: 'release year', width: 300 }
   ]
+
+  // ฟังก์ชัน Delete
+  const handleClose = () => {
+    setOpenConfirmDelete(false)
+  }
+
+  const handleDelete = () => {
+    if (deleteId !== '') {
+      axios
+        .post(`http://111.223.38.19/api/method/frappe.API.MasterData.delete_data.delete`, {
+          table: 'tabcurriculums',
+          primary: deleteId
+        })
+        .then(function (response) {
+          console.log(response.message)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .finally(() => {
+          handleClose()
+          router.replace(router.asPath)
+        })
+    } else {
+      console.log('not have any id to delete')
+    }
+  }
 
   return (
     <CardContent>
@@ -79,6 +143,14 @@ function CurriculumsTab({ data }) {
         open={openEditDialog}
         handleClose={() => setOpenEditDialog(false)}
         handleSubmit={console.log('คาร์บิว')}
+      />
+
+      {/* เปิด Dialog Delete */}
+      <ConfirmDeleteDialog
+        open={openConfirmDelete}
+        value={value.ac_name_th + ' ' + value.ac_name_en}
+        handleClose={handleClose}
+        handleDelete={handleDelete}
       />
     </CardContent>
   )
