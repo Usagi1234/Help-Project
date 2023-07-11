@@ -68,9 +68,7 @@ export async function getServerSideProps(context) {
     return { error: err }
   }
   try {
-    const queryDepartments = await fetch(
-      `${process.env.NEXT_PUBLIC_API_PRODUCTION}.MasterData.department.getAllDepartments`
-    )
+    const queryDepartments = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.department.getAllDepartments`)
     const resDepartments = await queryDepartments.json()
     if (!resDepartments) {
       return { notFound: true }
