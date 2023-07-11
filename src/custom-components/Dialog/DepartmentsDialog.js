@@ -196,7 +196,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
 
   useEffect(() => {
     const MenuDropdown = async () => {
-      const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API_PRODUCTION}.MasterData.faculty.getAllfacultys`)
+      const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.faculty.getAllfacultys`)
       const resFaculty = await queryFaculty.json()
       setDropDown({ ...dropDown, faculty: resFaculty.message.Data })
     }
