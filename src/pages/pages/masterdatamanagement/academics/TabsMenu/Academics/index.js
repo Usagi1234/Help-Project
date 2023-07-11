@@ -161,6 +161,8 @@ function AcademicsTab({ data }) {
         handleClose={() => setOpenEditDialog(false)}
         // handleSubmit={console.log('คาร์บิว')}
       />
+
+      {/* เปิด Dialog Delete */}
       <ConfirmDeleteDialog
         open={openConfirmDelete}
         value={value.ac_name_th + ' ' + value.ac_name_en}
