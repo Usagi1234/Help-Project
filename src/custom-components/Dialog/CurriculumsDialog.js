@@ -268,7 +268,7 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
                       helperText={
                         submitted &&
                         !ShortNameEn.includes('.') &&
-                        'กรุณากรอกข้อมูลให้ครบถ้วน(ต้องใส่ "." อย่างน้อยหนึงตัว '
+                        'กรุณากรอกข้อมูลให้ครบถ้วน(ต้องใส่ "." อย่างน้อยหนึงตัว) '
                       }
                     />
                   </Grid>
