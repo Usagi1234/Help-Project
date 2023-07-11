@@ -54,9 +54,15 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
 
   const [tricker, setTricker] = useState(false)
 
-  useEffect(() => {
-    console.log(state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log(state)
+  // }, [state])
+
+  const handleCloseModi = () => {
+    handleClose(false)
+    setState(initialState)
+    setStateAlert(initialStateAlert)
+  }
 
   const handleChange = (e, type) => {
     const { value } = e.target
@@ -78,7 +84,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
   }
 
   return (
-    <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleClose} sx={{ minWidth: 400 }}>
+    <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleCloseModi} sx={{ minWidth: 400 }}>
       <DialogContent>
         {/* //////////////////////////////////////////////////////////////////////////////// */}
         <Card>
@@ -244,7 +250,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
         {/* /////////////////////////////////////////////////////////////////////////// */}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleCloseModi}>Cancel</Button>
         <Button variant='contained' onClick={handleClose}>
           Submit
         </Button>
