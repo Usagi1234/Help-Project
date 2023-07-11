@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import CardContent from '@mui/material/CardContent'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+
+// ? Import Mui
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, CardContent } from '@mui/material'
+
+// ? Import Component
 import ExportButton from 'src/custom-components/BtnExport'
 import SubjectGroupDialog from 'src/custom-components/Dialog/SubjectGroupDialog'
 import ConfirmDeleteDialog from 'src/custom-components/Dialog/DeleteDialogAc_Type/ConfirmDeleteDalog '
-import axios from 'axios'
 
 function SubjectGroupsTab({ data, dataDropdown }) {
+  const router = useRouter()
   const [openDialog, setOpenDialog] = useState(false)
   const [openDialogDel, setOpenDialogDel] = useState(false)
   const [dataRowDel, setDataRowDel] = useState('')
@@ -28,6 +33,8 @@ function SubjectGroupsTab({ data, dataDropdown }) {
       .catch(error => {
         console.log(error)
       })
+    router.replace(router.asPath)
+    setOpenDialogDel(false)
   }
 
   const columns = [

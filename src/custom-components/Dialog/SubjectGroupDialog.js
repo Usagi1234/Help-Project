@@ -6,18 +6,22 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
-import CardContent from '@mui/material/CardContent'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
+import {
+  Card,
+  Grid,
+  Divider,
+  MenuItem,
+  TextField,
+  CardHeader,
+  InputLabel,
+  CardContent,
+  FormControl,
+  Select,
+  FormHelperText
+} from '@mui/material'
 
 const initialState = {
   sjg_name: null,
@@ -41,7 +45,13 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
 
   useEffect(() => {
     if (type === 'edit') {
-      setState(row)
+      setState(pre => ({
+        ...pre,
+        sjg_name: row.sjg_name,
+        subject_type_name: row.subject_type_name,
+        subject_type_id: row.subject_type_id,
+        sjg_id: row.sjg_id
+      }))
       console.log('type: ', type)
     } else {
       setState(initialState)
@@ -56,15 +66,43 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
     router.replace(router.asPath)
   }
 
-  useEffect(() => {
-    console.log('get: ', state)
-  }, [state])
-
   const handleChange = e => {
     const { value } = e.target
     const filterData = ''
     filterData = value.replace(/^[A-Za-z0-9 ]+$/g, '')
     setState({ ...state, [e.target.name]: filterData })
+  }
+
+  const handleSubmit = () => {
+    const emptyKeys = Object.keys(state).filter(key => state[key] === null || state[key].length === 0)
+    if (emptyKeys.length > 0) {
+      console.log('incomplete information')
+      const updatedInsertState = emptyKeys.reduce((prev, key) => ({ ...prev, [key]: true }), {})
+      setValidationState(prevState => ({ ...prevState, ...updatedInsertState }))
+    } else {
+      if (type === 'insert') {
+        axios
+          .post('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.insertsubject_groups', state)
+          .then(res => {
+            console.log(res)
+            // console.log('Insert Successful information')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        axios
+          .put('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.editsubject_groups', state)
+          .then(res => {
+            console.log(res)
+            // console.log('Edit Successful information')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+      handleDialogClose()
+    }
   }
 
   return (
@@ -83,19 +121,21 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
                       label='Group Name'
                       placeholder='Subject Group Name'
                       name='sjg_name'
+                      helperText={validationState.sjg_name ? 'Please select your currency' : ''}
                       error={validationState.sjg_name}
                       value={state.sjg_name || ''}
                       onChange={event => handleChange(event)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth error={validationState.subject_type_id}>
                       <InputLabel id='form-layouts-separator-select-label'>Subject Type</InputLabel>
                       <Select
                         label='Type'
                         id='form-layouts-separator-select'
                         labelId='form-layouts-separator-select-label'
                         value={state.subject_type_id || ''}
+                        error={validationState.subject_type_id}
                         onChange={e => setState(pre => ({ ...pre, subject_type_id: e.target.value }))}
                       >
                         {dropdown.map(subTypes => (
@@ -108,6 +148,9 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
                           </MenuItem>
                         ))}
                       </Select>
+                      <FormHelperText>
+                        {validationState.subject_type_id && 'Please select Subject Types'}
+                      </FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>
@@ -119,7 +162,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDialogClose}>Cancel</Button>
-        <Button variant='contained' onClick={handleClose}>
+        <Button variant='contained' onClick={handleSubmit}>
           Submit
         </Button>
       </DialogActions>
