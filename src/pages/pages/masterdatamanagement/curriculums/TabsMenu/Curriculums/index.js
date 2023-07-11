@@ -148,7 +148,7 @@ function CurriculumsTab({ data }) {
       {/* เปิด Dialog Delete */}
       <ConfirmDeleteDialog
         open={openConfirmDelete}
-        value={value.ac_name_th + ' ' + value.ac_name_en}
+        value={value.cur_name_th + ' ' + value.cur_name_en}
         handleClose={handleClose}
         handleDelete={handleDelete}
       />
