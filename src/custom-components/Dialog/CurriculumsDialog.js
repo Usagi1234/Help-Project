@@ -23,6 +23,19 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
   // ตัวแปร เราเตอร์
   const Route = useRouter()
 
+  // เซ็ตค่าให้ Dialog Input ให้เป็นค่า่างทุกครั้งที่เปิดขึ้นมา
+  useEffect(() => {
+    if (type === 'insert') {
+      setNameTh('')
+      setNameEn('')
+      setShortNameTh('')
+      setShortNameEn('')
+      setDpm('')
+      setFaculty('')
+      setReleaseYear('')
+    }
+  }, [open, type])
+
   // เช็คการรับค่าใน input
   const handleChange = (e, key, type) => {
     const { value } = e.target
@@ -34,10 +47,10 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
       updatedValue = updatedValue.replace(/[^a-zA-Z\s]/g, '')
       setNameEn(updatedValue)
     } else if (type === 'shth') {
-      updatedValue = updatedValue.replace(/[^ก-๙เ\s]/g, '')
+      updatedValue = updatedValue.replace(/[^ก-๙เ\s.]/g, '')
       setShortNameTh(updatedValue)
     } else if (type === 'shen') {
-      updatedValue = updatedValue.replace(/[^a-zA-Z\s]/g, '')
+      updatedValue = updatedValue.replace(/[^a-zA-Z\s.]/g, '')
       setShortNameEn(updatedValue)
     }
   }
@@ -99,7 +112,15 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
     setSubmitted(true)
 
     // ตรวจสอบค่าว่างใน TextField
-    if (!NameTh || !NameEn || !ShortNameTh || !ShortNameEn || !Dpm || !Faculty || !ReleaseYear) {
+    if (
+      !NameTh ||
+      !NameEn ||
+      !ShortNameTh.includes('.') ||
+      !ShortNameEn.includes('.') ||
+      !Dpm ||
+      !Faculty ||
+      !ReleaseYear
+    ) {
       alert('ฮานาเงะ')
 
       return
@@ -223,8 +244,12 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
                         setShortNameTh(e.target.value)
                         handleChange(e, 'cur_shot_name_th', 'shth')
                       }}
-                      error={submitted && !ShortNameTh} // แสดงสีแดงเมื่อกดส่งและค่าว่าง
-                      helperText={submitted && !ShortNameTh && 'กรุณากรอกข้อมูล'}
+                      error={submitted && !ShortNameTh.includes('.')} // แสดงสีแดงเมื่อกดส่งและค่าว่าง
+                      helperText={
+                        submitted &&
+                        !ShortNameTh.includes('.') &&
+                        'กรุณากรอกข้อมูลให้ครบถ้วน(ต้องใส่ "." อย่างน้อยหนึงตัว )'
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -239,8 +264,12 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
 
                         handleChange(e, 'cur_shot_name_en', 'shen')
                       }}
-                      error={submitted && !ShortNameEn} // แสดงสีแดงเมื่อกดส่งและค่าว่าง
-                      helperText={submitted && !ShortNameEn && 'กรุณากรอกข้อมูล'}
+                      error={submitted && !ShortNameEn.includes('.')} // แสดงสีแดงเมื่อกดส่งและค่าว่าง
+                      helperText={
+                        submitted &&
+                        !ShortNameEn.includes('.') &&
+                        'กรุณากรอกข้อมูลให้ครบถ้วน(ต้องใส่ "." อย่างน้อยหนึงตัว '
+                      }
                     />
                   </Grid>
 
