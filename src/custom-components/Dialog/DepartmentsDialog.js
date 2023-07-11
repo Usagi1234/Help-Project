@@ -208,10 +208,8 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleRestore} sx={{ minWidth: 400 }}>
       <DialogContent>
         <Card>
-          {type === 'insert' && (
-            <CardHeader title='Add New Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />
-          )}
-          {type === 'edit' && <CardHeader title='Edit Faculty Institute' titleTypographyProps={{ variant: 'h6' }} />}
+          {type === 'insert' && <CardHeader title='Add New Departments' titleTypographyProps={{ variant: 'h6' }} />}
+          {type === 'edit' && <CardHeader title='Edit Departments' titleTypographyProps={{ variant: 'h6' }} />}
           <Divider sx={{ margin: 0 }} />
           <CardContent>
             <Grid container spacing={5}>
@@ -245,7 +243,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
               <Grid item xs={12} sm={6} sx={3}>
                 <FormControl fullWidth>
                   <InputLabel id='form-layouts-separator-select-label' error={!!checkError.faculty}>
-                    Academic{' '}
+                    Faculty Institute{' '}
                   </InputLabel>
                   <Select
                     label='Country'
