@@ -21,6 +21,7 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
   const [getSubject, setGetSubject] = useState([])
   const [value, setValue] = useState('') // use when delete button is clicked
   const [deleteId, setDeleteId] = useState('')
+  const tableName = 'Subjects'
 
   const [initialState, setInitialState] = useState({
     curriculum: '0'
@@ -46,6 +47,19 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
       setRows(FilterRows)
     }
   }, [initialState])
+
+  const DataExport = data?.map(val => ({
+    Code: val.sj_code,
+    SubjectNameTH: val.sj_name_th,
+    SubjectNameEN: val.sj_name_en,
+    SubjectGroup: val.sjg_name,
+    Theory: val.sj_theory_credit,
+    Action: val.sj_action_credit,
+    Overtime: val.sj_ot_credit,
+    Credit: val.sj_credit,
+    Curriculum: val.cur_name_th,
+    Year: val.release_year
+  }))
 
   const handleDelete = () => {
     if (deleteId !== '') {
@@ -127,13 +141,13 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
       headerName: 'name(TH)',
       width: 120
     },
-    { field: 'sjg_name', headerName: 'subject group', width: 120 },
-    { field: 'sj_theory_credit', headerName: 'theory', width: 120 },
-    { field: 'sj_action_credit', headerName: 'action', width: 100 },
-    { field: 'sj_ot_credit', headerName: 'ot', width: 100 },
-    { field: 'sj_credit', headerName: 'credit', width: 100 },
-    { field: 'cur_name_th', headerName: 'curriculum', width: 140 },
-    { field: 'release_year', headerName: 'year', width: 100 }
+    { field: 'sjg_name', headerName: 'Subject Group', width: 120 },
+    { field: 'sj_theory_credit', headerName: 'Theory', width: 120 },
+    { field: 'sj_action_credit', headerName: 'Action', width: 100 },
+    { field: 'sj_ot_credit', headerName: 'Overtime', width: 100 },
+    { field: 'sj_credit', headerName: 'Credit', width: 100 },
+    { field: 'cur_name_th', headerName: 'Curriculum', width: 140 },
+    { field: 'release_year', headerName: 'Year', width: 100 }
   ]
 
   console.log(data)
@@ -158,9 +172,9 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
           </Select>
         </FormControl>
         <ExportButton
-        // isEmpty={data?.length > 0 ? 0 : 1}
-        // fileName={tableName + '_' + Date().toLocaleString()}
-        // excelData={DataExport}
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
         />
       </Box>
       {data?.length > 0 && (
