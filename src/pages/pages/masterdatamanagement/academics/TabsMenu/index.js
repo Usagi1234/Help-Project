@@ -15,8 +15,9 @@ import School from 'mdi-material-ui/School'
 
 // ** Demo Tabs Imports
 import AcademicsTab from './Academics'
-import FacultyTab from './Faculty'
 import AcademicTypeTab from './AcademicTypes'
+import FacultyTab from './Faculty'
+import DepartmentsTab from './Departments'
 
 const Tab = styled(MuiTab)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -46,6 +47,7 @@ const Tabs = ({ data }) => {
   const academicsData = data[0].academics
   const academicsTypeData = data[1].academictype
   const facultyData = data[2].faculty
+  const departmentsData = data[3].departments
   const [value, setValue] = useState('')
 
   const handleChange = (event, newValue) => {
@@ -115,7 +117,7 @@ const Tabs = ({ data }) => {
           <FacultyTab data={facultyData} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='departments'>
-          departments
+          <DepartmentsTab data={departmentsData} />
         </TabPanel>
       </TabContext>
     </Card>
