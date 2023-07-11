@@ -25,7 +25,7 @@ export default AcademicsPage
 export async function getServerSideProps(context) {
   const WrapData = []
   try {
-    const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllAcademics`)
+    const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.API.MasterData.academic.getAllAcademics`)
     const resAcademics = await queryAcademics.json()
     if (!resAcademics) {
       return { notFound: true }
@@ -36,7 +36,9 @@ export async function getServerSideProps(context) {
     return { error: err }
   }
   try {
-    const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getallacademictype`)
+    const queryAcademicType = await fetch(
+      `${process.env.NEXT_PUBLIC_API}frappe.API.MasterData.academic_type.getallacademictype`
+    )
     const resAcademicType = await queryAcademicType.json()
     if (!resAcademicType) {
       return { notFound: true }
@@ -47,7 +49,7 @@ export async function getServerSideProps(context) {
     return { error: err }
   }
   try {
-    const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+    const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.API.MasterData.faculty.getAllfacultys`)
     const resFaculty = await queryFaculty.json()
     if (!resFaculty) {
       return { notFound: true }

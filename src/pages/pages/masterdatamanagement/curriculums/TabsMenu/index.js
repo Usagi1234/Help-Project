@@ -38,7 +38,9 @@ const TabName = styled('span')(({ theme }) => ({
 }))
 
 const Tabs = ({ data }) => {
-  const academicsData = data.academics
+  const curriculumsData = data[0].curriculums
+
+  console.log(data[0].curriculums)
 
   const [value, setValue] = useState('')
 
@@ -67,7 +69,7 @@ const Tabs = ({ data }) => {
           />
         </TabList>
         <TabPanel sx={{ p: 0 }} value='curriculums'>
-          <CurriculumsTab data={academicsData} />
+          <CurriculumsTab data={curriculumsData} />
           curriculums
         </TabPanel>
       </TabContext>

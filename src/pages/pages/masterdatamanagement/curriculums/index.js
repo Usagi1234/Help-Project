@@ -23,18 +23,24 @@ const CurriculumsPage = ({ data }) => {
 export default CurriculumsPage
 
 export async function getServerSideProps(context) {
-  const queryAcademics = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllAcademics`)
-  const queryAcademicType = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getallacademictype`)
-  const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+  const WrapData = []
 
-  const resAcademics = await queryAcademics.json()
-  const resAcademicType = await queryAcademicType.json()
-  const resFaculty = await queryFaculty.json()
-
-  const WrapData = {
-    academics: resAcademics.message.Data,
-    academictype: resAcademicType.message.Data,
-    faculty: resFaculty.message.Data
+  try {
+    const queryCurriculums = await fetch(
+      `${process.env.NEXT_PUBLIC_API}frappe.API.MasterData.curriculum.getAllcurriculums`
+    )
+    const resCurriculums = await queryCurriculums.json()
+    if (!resCurriculums) {
+      return { notFound: true }
+    } else {
+      const newRow = resCurriculums.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ curriculums: newRow })
+    }
+  } catch (err) {
+    return { error: err }
   }
 
   return {
