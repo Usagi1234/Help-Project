@@ -18,6 +18,7 @@ function SubjectGroupsTab({ data, dataDropdown }) {
   const [dataRowDel, setDataRowDel] = useState('')
   const [dialogType, setDialogType] = useState('')
   const [dataRow, setDataRow] = useState('')
+  const tableName = 'Subject Groups'
 
   console.log('data: ', data)
 
@@ -36,6 +37,12 @@ function SubjectGroupsTab({ data, dataDropdown }) {
     router.replace(router.asPath)
     setOpenDialogDel(false)
   }
+
+  const DataExport = data?.map(val => ({
+    SubjectCategory: val.subject_category_name,
+    SubjectType: val.subject_type_name,
+    GroupName: val.sjg_name
+  }))
 
   const columns = [
     {
@@ -106,7 +113,11 @@ function SubjectGroupsTab({ data, dataDropdown }) {
         >
           + Subject Groups
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       <DataGrid
         rows={data}

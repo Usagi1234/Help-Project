@@ -14,11 +14,16 @@ function SubjectCategoriesTab({ data }) {
   const [openDelDialogCsc, setOpenDelDialogCsc] = useState(false)
   const [rowData, setRowData] = useState('')
   const [value, setValue] = useState('')
+  const tableName = 'Subject Category'
 
   console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
+
+  const DataExport = data?.map(val => ({
+    SubjectCategory: val.subject_category_name
+  }))
 
   const columns = [
     {
@@ -87,7 +92,11 @@ function SubjectCategoriesTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialogCsc(true)}>
           + SubjectCategory
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       <DataGrid
         rows={data}
