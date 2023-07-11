@@ -52,25 +52,25 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return { error: err }
   }
-  // try {
-  //   const querySubjectGroups = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API}.MasterData.subject_groups.getAllsubject_groups`
-  //   )
-  //   const resSubjectGroups = await querySubjectGroups.json()
-  //   if (!resSubjectGroups) {
-  //     return { notFound: true }
-  //   } else {
-  //     const newRow = resSubjectGroups.message.Data.map((row, index) => ({
-  //       ...row,
-  //       id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
-  //     }))
-  //     WrapData.push({ subjectgroups: newRow })
-  //   }
-  // } catch (err) {
-  //   return { error: err }
-  // }
+  try {
+    const querySubjectGroups = await fetch(
+      `${process.env.NEXT_PUBLIC_API}.MasterData.subject_groups.getAllsubject_groups`
+    )
+    const resSubjectGroups = await querySubjectGroups.json()
+    if (!resSubjectGroups) {
+      return { notFound: true }
+    } else {
+      const newRow = resSubjectGroups.message.Data.map((row, index) => ({
+        ...row,
+        id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
+      }))
+      WrapData.push({ subjectgroups: newRow })
+    }
+  } catch (err) {
+    return { error: err }
+  }
 
-  WrapData.push({ subjectgroups: [] })
+  // WrapData.push({ subjectgroups: [] })
 
   try {
     const querySubjectTypes = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject_type.getAllsubject_type`)

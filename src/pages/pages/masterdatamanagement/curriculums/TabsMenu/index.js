@@ -123,7 +123,7 @@ const Tabs = ({ data }) => {
           curriculums
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects'>
-          <SubjectsTab data={subjects} subjectGroups={subjectgroups} curriculums={curriculums} />
+          <SubjectsTab data={subjects} subjectGroups={subjectGroups} curriculums={curriculums} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
           <SubjectGroupsTab data={subjectGroups} dataDropdown={subjectTypes} />

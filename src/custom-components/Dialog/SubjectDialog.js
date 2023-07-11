@@ -47,7 +47,6 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
   }
 
   const [state, setState] = useState(initialState)
-  const [editState, setEditState] = useState(subject)
 
   const [stateAlert, setStateAlert] = useState(initialStateAlert)
 
@@ -59,9 +58,16 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
   const [tricker, setTricker] = useState(false)
 
   useEffect(() => {
-    setState(initialState)
-    setStateAlert(initialStateAlert)
-  }, [])
+    if(open){
+      if (Dialogtype === 'insert') {
+        setState(initialState)
+      } else {
+        setState(subject)
+      }
+      setStateAlert(initialStateAlert)
+    }
+
+  }, [open])
 
   useEffect(() => {
     console.log(state)
@@ -208,7 +214,12 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
       <DialogContent>
         {/* //////////////////////////////////////////////////////////////////////////////// */}
         <Card>
-          <CardHeader title='Add New Subject ( Curriculum 25NN Name)' titleTypographyProps={{ variant: 'h6' }} />
+          {Dialogtype === 'insert' ? (
+            <CardHeader title='Add New Subject' titleTypographyProps={{ variant: 'h6' }} />
+          ) : (
+            <CardHeader title='Edit Subject' titleTypographyProps={{ variant: 'h6' }} />
+          )}
+
           <Divider sx={{ margin: 0 }} />
           <CardContent>
             <Grid container spacing={5}>
@@ -216,7 +227,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                 <TextField
                   error={stateAlert.sj_name_th}
                   name='sj_name_th'
-                  value={Dialogtype === 'insert' ? state.sj_name_th : editState.sj_name_th || ''}
+                  value={state.sj_name_th || ''}
                   onChange={e => handleChange(e, 'thai')}
                   fullWidth
                   label='Thai Name'
@@ -227,7 +238,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                 <TextField
                   error={stateAlert.sj_name_en}
                   name='sj_name_en'
-                  value={Dialogtype === 'insert' ? state.sj_name_en : editState.sj_name_en || ''}
+                  value={state.sj_name_en || ''}
                   onChange={e => handleChange(e, 'english')}
                   fullWidth
                   label='English Name'
@@ -238,7 +249,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                 <TextField
                   name='sj_code'
                   error={stateAlert.sj_code}
-                  value={Dialogtype === 'insert' ? state.sj_code : editState.sj_code || ''}
+                  value={state.sj_code || ''}
                   onChange={e => handleChange(e, 'code')}
                   fullWidth
                   label='Code'
@@ -250,7 +261,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel>Credit</InputLabel>
                   <Select
                     name='sj_credit'
-                    value={Dialogtype === 'insert' ? state.sj_credit : editState.sj_credit || ''}
+                    value={state.sj_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_credit: e.target.value }))}
                   >
@@ -272,7 +283,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel>Theory</InputLabel>
                   <Select
                     name='sj_theory_credit'
-                    value={Dialogtype === 'insert' ? state.sj_theory_credit : editState.sj_theory_credit || ''}
+                    value={state.sj_theory_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_theory_credit: e.target.value }))}
                   >
@@ -294,7 +305,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel>Action</InputLabel>
                   <Select
                     name='sj_action_credit'
-                    value={Dialogtype === 'insert' ? state.sj_action_credit : editState.sj_action_credit || ''}
+                    value={state.sj_action_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_action_credit: e.target.value }))}
                   >
@@ -316,7 +327,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel>OverTime</InputLabel>
                   <Select
                     name='sj_ot_credit'
-                    value={Dialogtype === 'insert' ? state.sj_ot_credit : editState.sj_ot_credit || ''}
+                    value={state.sj_ot_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_ot_credit: e.target.value }))}
                   >
@@ -338,7 +349,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel id='form-layouts-separator-select-label'>Group</InputLabel>
                   <Select
                     name='subject_group_sjg_id'
-                    value={Dialogtype === 'insert' ? state.subject_group_sjg_id : editState.subject_group_sjg_id || ''}
+                    value={state.subject_group_sjg_id || ''}
                     label='Country'
                     defaultValue=''
                     id='form-layouts-separator-select'
@@ -358,7 +369,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   <InputLabel id='form-layouts-separator-select-label'>Curriculum</InputLabel>
                   <Select
                     name='curriculums_cur_id'
-                    value={Dialogtype === 'insert' ? state.curriculums_cur_id : editState.curriculums_cur_id || ''}
+                    value={state.curriculums_cur_id || ''}
                     label='Country'
                     defaultValue=''
                     id='form-layouts-separator-select'
@@ -377,7 +388,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                 <TextField
                   error={stateAlert.sj_description}
                   name='sj_description'
-                  value={Dialogtype === 'insert' ? state.sj_description : editState.sj_description || ''}
+                  value={state.sj_description || ''}
                   onChange={e => handleChange(e, '')}
                   fullWidth
                   multiline

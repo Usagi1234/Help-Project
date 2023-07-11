@@ -15,6 +15,8 @@ import SubjectsDialog from 'src/custom-components/Dialog/SubjectDialog'
 function SubjectsTab({ data, subjectGroups, curriculums }) {
   const [rows, setRows] = useState(data)
   const [openIns, setOpenIns] = useState(false)
+  const [openUpd, setOpenUpd] = useState(false)
+  const [getSubject, setGetSubject] = useState([])
 
   const [initialState, setInitialState] = useState({
     curriculum: '0'
@@ -80,9 +82,10 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
         <Button
           variant='text'
           onClick={() => {
-            console.log(cellValues.row)
+            // console.log(cellValues.row)
+            setGetSubject(cellValues.row)
             // setInstructor(cellValues.row)
-            // setOpenEditDialog(true)
+            setOpenUpd(true)
           }}
         >
           ...
@@ -104,7 +107,8 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
     { field: 'sj_action_credit', headerName: 'action', width: 100 },
     { field: 'sj_ot_credit', headerName: 'ot', width: 100 },
     { field: 'sj_credit', headerName: 'credit', width: 100 },
-    { field: 'cur_name_th', headerName: 'curriculum', width: 140 }
+    { field: 'cur_name_th', headerName: 'curriculum', width: 140 },
+    { field: 'release_year', headerName: 'year', width: 100 }
   ]
 
   console.log(data)
@@ -155,6 +159,16 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
         curriculums={curriculums}
         subjectGroups={subjectGroups}
         handleClose={setOpenIns}
+        // subject={getSubject}
+      />
+
+      <SubjectsDialog
+        Dialogtype={'update'}
+        open={openUpd}
+        curriculums={curriculums}
+        subjectGroups={subjectGroups}
+        handleClose={setOpenUpd}
+        subject={getSubject}
       />
       {/* <InstructorDialog
         instructor={instructor}
