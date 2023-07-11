@@ -46,7 +46,7 @@ const Tabs = ({ data }) => {
   const subjects = data[1].subjects
   const subjectgroups = data[2].subjectgroups
   const subjecttypes = data[3].subjecttypes
-  const subjectcategories = data[4].subjectcategory
+  const subjectcategories = data[4].subjectcategories
 
   const [value, setValue] = useState('')
 
@@ -135,7 +135,6 @@ const Tabs = ({ data }) => {
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects-Category'>
           <SubjectCategoriesTab data={subjectcategories} />
-          subjects category
         </TabPanel>
       </TabContext>
     </Card>

@@ -31,9 +31,9 @@ const columns = [
   { field: 'ac_address', headerName: 'address', width: 300 }
 ]
 
-if (!data || data.length === 0) {
-  return <p>No data available.</p> // Display a message when rows are empty or undefined
-}
+// if (!data || data.length === 0) {
+//   return <p>No data available.</p> // Display a message when rows are empty or undefined
+// }
 
 function SubjectGroupsTab() {
   return (
