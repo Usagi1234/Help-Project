@@ -85,6 +85,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
           .post('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.insertsubject_groups', state)
           .then(res => {
             console.log(res)
+
             // console.log('Insert Successful information')
           })
           .catch(err => {
@@ -95,6 +96,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
           .put('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.editsubject_groups', state)
           .then(res => {
             console.log(res)
+
             // console.log('Edit Successful information')
           })
           .catch(err => {
@@ -110,7 +112,8 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
       <DialogContent>
         <DialogContentText>
           <Card>
-            <CardHeader title='Add New Subject Group' titleTypographyProps={{ variant: 'h6' }} />
+            {type === 'insert' && <CardHeader title='Add New Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
+            {type === 'edit' && <CardHeader title='Edit Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
             <Divider sx={{ margin: 0 }} />
             <form onSubmit={e => e.preventDefault()}>
               <CardContent>
@@ -121,7 +124,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
                       label='Group Name'
                       placeholder='Subject Group Name'
                       name='sjg_name'
-                      helperText={validationState.sjg_name ? 'Please select your currency' : ''}
+                      helperText={validationState.sjg_name ? 'โปรดกรอกข้อมูล' : ''}
                       error={validationState.sjg_name}
                       value={state.sjg_name || ''}
                       onChange={event => handleChange(event)}
@@ -148,9 +151,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
                           </MenuItem>
                         ))}
                       </Select>
-                      <FormHelperText>
-                        {validationState.subject_type_id && 'Please select Subject Types'}
-                      </FormHelperText>
+                      <FormHelperText>{validationState.subject_type_id && 'โปรดกรอกข้อมูล'}</FormHelperText>
                     </FormControl>
                   </Grid>
                 </Grid>

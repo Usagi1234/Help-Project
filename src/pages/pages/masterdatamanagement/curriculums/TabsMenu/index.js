@@ -44,14 +44,9 @@ const TabName = styled('span')(({ theme }) => ({
 const Tabs = ({ data }) => {
   const curriculums = data[0].curriculums
   const subjects = data[1].subjects
-  const subjectgroups = data[2].subjectgroups
-  const subjecttypes = data[3].subjecttypes
-  const subjectcategories = data[4].subjectCategories
-
-  // const curriculums = data[0].curriculums
-  // const subjects = data[1].subjects
-  // const subjecttypes = data[2].subjecttypes
-  // const subjectcategories = data[3].subjectcategories
+  const subjectGroups = data[2].subjectgroups
+  const subjectTypes = data[3].subjecttypes
+  const subjectCategories = data[4].subjectCategories
 
   const [value, setValue] = useState('')
 
@@ -128,18 +123,18 @@ const Tabs = ({ data }) => {
           curriculums
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects'>
-          <SubjectsTab data={subjects} subjectGroups={subjectgroups} />
+          <SubjectsTab data={subjects} subjectGroups={subjectGroups} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
-          <SubjectGroupsTab data={subjectgroups} dataDropdown={subjecttypes} />
+          <SubjectGroupsTab data={subjectGroups} dataDropdown={subjectTypes} />
           subjects groups
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsTypes'>
-          <SubjectTypesTab data={subjecttypes} />
+          <SubjectTypesTab data={subjectTypes} dataDropdown={subjectCategories} />
           subjects types
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsCategory'>
-          <SubjectCategoriesTab data={subjectcategories} />
+          <SubjectCategoriesTab data={subjectCategories} />
           subjects category
         </TabPanel>
       </TabContext>
