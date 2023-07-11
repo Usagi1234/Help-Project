@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 function CurriculumsTab({ data }) {
   // ตัวแปร เราเตอร์
   const router = useRouter() // Set Router
+  const tableName = 'Curriculums'
 
   // Setstate CurriculumDialog
   const [openInsDialog, setOpenInsDialog] = useState(false)
@@ -28,6 +29,16 @@ function CurriculumsTab({ data }) {
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
+
+  const DataExport = data?.map(val => ({
+    NameTH: val.cur_name_th,
+    NameEN: val.cur_name_en,
+    ShortNameTH: val.cur_shot_name_th,
+    ShortNameEN: val.cur_shot_name_en,
+    Department: val.dpm_name_th,
+    Faculty: val.fi_name_th,
+    ReleaseYear: val.release_year
+  }))
 
   // ประกาศ Colum
   const columns = [
@@ -74,13 +85,13 @@ function CurriculumsTab({ data }) {
         </Button>
       )
     },
-    { field: 'cur_name_th', headerName: 'name(TH)', width: 200 },
-    { field: 'cur_name_en', headerName: 'name(EN)', width: 200 },
+    { field: 'cur_name_th', headerName: 'Name(TH)', width: 200 },
+    { field: 'cur_name_en', headerName: 'Name(EN)', width: 200 },
     { field: 'cur_shot_name_th', headerName: 'Short Name(TH)', width: 150 },
     { field: 'cur_shot_name_en', headerName: 'Short Name(EN)', width: 150 },
     { field: 'dpm_name_th', headerName: 'Department', width: 120 },
-    { field: 'fi_name_th', headerName: 'faculty', width: 120 },
-    { field: 'release_year', headerName: 'release year', width: 300 }
+    { field: 'fi_name_th', headerName: 'Faculty', width: 120 },
+    { field: 'release_year', headerName: 'Release Year', width: 300 }
   ]
 
   // ฟังก์ชัน Delete
@@ -116,7 +127,11 @@ function CurriculumsTab({ data }) {
         <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
           + Curriculums
         </Button>
-        <ExportButton />
+        <ExportButton
+          isEmpty={data?.length > 0 ? 0 : 1}
+          fileName={tableName + '_' + Date().toLocaleString()}
+          excelData={DataExport}
+        />
       </Box>
       <DataGrid
         rows={data}
