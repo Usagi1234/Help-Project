@@ -8,16 +8,17 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
 import TextField from '@mui/material/TextField'
 import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
 import CardContent from '@mui/material/CardContent'
+import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
-const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype }) => {
+const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype, curriculums }) => {
   const router = useRouter()
   // console.log('subjectGroups', subjectGroups)
 
@@ -25,12 +26,15 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
     sj_code: '',
     sj_name_th: '',
     sj_name_en: '',
-    subject_group_sjg_id: '',
     sj_theory_credit: '1',
     sj_action_credit: '1',
     sj_ot_credit: '1',
-    sj_credit: '1',
-    sj_description: ''
+    sj_credit: '3',
+    sj_description: 'none',
+    subject_group_sjg_id: '',
+    curriculums_cur_id: '',
+    sj_chiles: 'none',
+    sj_parents: 'none'
   }
 
   const initialStateAlert = {
@@ -38,25 +42,43 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
     sj_name_th: false,
     sj_name_en: false,
     subject_group_sjg_id: false,
-    sj_theory_credit: false,
-    sj_action_credit: false,
-    sj_ot_credit: false,
-    sj_credit: false,
+    curriculums_cur_id: false,
     sj_description: false
   }
 
   const [state, setState] = useState(initialState)
   const [editState, setEditState] = useState(subject)
 
-  const [stateAlert, setStateAlert] = useState({ initialStateAlert })
+  const [stateAlert, setStateAlert] = useState(initialStateAlert)
 
-  const [dropDown, setDropDown] = useState(subjectGroups)
+  const [dropDown, setDropDown] = useState({
+    subjectgroups: subjectGroups,
+    curriculums: curriculums
+  })
 
   const [tricker, setTricker] = useState(false)
 
-  // useEffect(() => {
-  //   console.log(state)
-  // }, [state])
+  useEffect(() => {
+    setState(initialState)
+    setStateAlert(initialStateAlert)
+  }, [])
+
+  useEffect(() => {
+    console.log(state)
+  }, [state])
+
+  useEffect(() => {
+    const fetchMenuDropdown = async () => {
+      const queryCurriculums = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.curriculum.getAllcurriculums`)
+      const resCurriculums = await queryCurriculums.json()
+      setDropDown({ ...dropDown, curriculums: resCurriculums.message.Data })
+    }
+    fetchMenuDropdown()
+  }, [])
+
+  useEffect(() => {
+    console.log('Dropdown', dropDown)
+  }, [dropDown])
 
   const handleCloseModi = () => {
     handleClose(false)
@@ -83,6 +105,104 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
     }
   }
 
+  const handleInsert = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.insertsubject`, state)
+      .then(function (response) {
+        console.log(response.message)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      .finally(() => {
+        handleCloseModi()
+        router.replace(router.asPath, undefined, { sroll: false })
+      })
+  }
+
+  const ValidationsForm = () => {
+    if (
+      stateAlert.sj_code === false &&
+      stateAlert.sj_name_th === false &&
+      stateAlert.sj_name_en === false &&
+      stateAlert.sj_description === false &&
+      stateAlert.subject_group_sjg_id === false &&
+      stateAlert.curriculums_cur_id === false
+    ) {
+      if (Dialogtype === 'insert') {
+        handleInsert()
+      } else {
+        // handleUpdate()
+      }
+    } else {
+      console.log('please fill all!')
+    }
+  }
+
+  const AlertForm = key => {
+    switch (key) {
+      case 'sj_code':
+        if (state.sj_code !== '') {
+          setStateAlert(pre => ({ ...pre, sj_code: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, sj_code: true }))
+        }
+        break
+      case 'sj_name_th':
+        if (state.sj_name_th !== '') {
+          setStateAlert(pre => ({ ...pre, sj_name_th: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, sj_name_th: true }))
+        }
+        break
+      case 'sj_name_en':
+        if (state.sj_name_en !== '') {
+          setStateAlert(pre => ({ ...pre, sj_name_en: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, sj_name_en: true }))
+        }
+        break
+      case 'subject_group_sjg_id':
+        if (state.subject_group_sjg_id !== '') {
+          setStateAlert(pre => ({ ...pre, subject_group_sjg_id: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, subject_group_sjg_id: true }))
+        }
+        break
+      case 'curriculums_cur_id':
+        if (state.curriculums_cur_id !== '') {
+          setStateAlert(pre => ({ ...pre, curriculums_cur_id: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, curriculums_cur_id: true }))
+        }
+        break
+      case 'sj_description':
+        if (state.sj_description !== '') {
+          setStateAlert(pre => ({ ...pre, sj_description: false }))
+        } else {
+          setStateAlert(pre => ({ ...pre, sj_description: true }))
+        }
+        break
+      default:
+        console.log('Error')
+    }
+  }
+
+  const handleSubmit = () => {
+    Object.keys(stateAlert).forEach(key => {
+      // console.log(key)
+      AlertForm(key)
+    })
+    setTricker(true)
+  }
+
+  useEffect(() => {
+    if (tricker) {
+      ValidationsForm()
+      setTricker(false)
+    }
+  }, [tricker])
+
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleCloseModi} sx={{ minWidth: 400 }}>
       <DialogContent>
@@ -94,8 +214,9 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
             <Grid container spacing={5}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={stateAlert.sj_name_th}
                   name='sj_name_th'
-                  value={Dialogtype === 'insert' ? state.sj_name_th : editState.sj_name_th}
+                  value={Dialogtype === 'insert' ? state.sj_name_th : editState.sj_name_th || ''}
                   onChange={e => handleChange(e, 'thai')}
                   fullWidth
                   label='Thai Name'
@@ -104,8 +225,9 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={stateAlert.sj_name_en}
                   name='sj_name_en'
-                  value={Dialogtype === 'insert' ? state.sj_name_en : editState.sj_name_en}
+                  value={Dialogtype === 'insert' ? state.sj_name_en : editState.sj_name_en || ''}
                   onChange={e => handleChange(e, 'english')}
                   fullWidth
                   label='English Name'
@@ -115,7 +237,8 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
               <Grid item xs={12} sm={6}>
                 <TextField
                   name='sj_code'
-                  value={Dialogtype === 'insert' ? state.sj_code : editState.sj_code}
+                  error={stateAlert.sj_code}
+                  value={Dialogtype === 'insert' ? state.sj_code : editState.sj_code || ''}
                   onChange={e => handleChange(e, 'code')}
                   fullWidth
                   label='Code'
@@ -127,7 +250,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                   <InputLabel>Credit</InputLabel>
                   <Select
                     name='sj_credit'
-                    value={Dialogtype === 'insert' ? state.sj_credit : editState.sj_credit}
+                    value={Dialogtype === 'insert' ? state.sj_credit : editState.sj_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_credit: e.target.value }))}
                   >
@@ -149,7 +272,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                   <InputLabel>Theory</InputLabel>
                   <Select
                     name='sj_theory_credit'
-                    value={Dialogtype === 'insert' ? state.sj_theory_credit : editState.sj_theory_credit}
+                    value={Dialogtype === 'insert' ? state.sj_theory_credit : editState.sj_theory_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_theory_credit: e.target.value }))}
                   >
@@ -171,7 +294,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                   <InputLabel>Action</InputLabel>
                   <Select
                     name='sj_action_credit'
-                    value={Dialogtype === 'insert' ? state.sj_action_credit : editState.sj_action_credit}
+                    value={Dialogtype === 'insert' ? state.sj_action_credit : editState.sj_action_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_action_credit: e.target.value }))}
                   >
@@ -193,7 +316,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                   <InputLabel>OverTime</InputLabel>
                   <Select
                     name='sj_ot_credit'
-                    value={Dialogtype === 'insert' ? state.sj_ot_credit : editState.sj_ot_credit}
+                    value={Dialogtype === 'insert' ? state.sj_ot_credit : editState.sj_ot_credit || ''}
                     defaultValue='1'
                     onChange={e => setState(pre => ({ ...pre, sj_ot_credit: e.target.value }))}
                   >
@@ -211,18 +334,18 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6} lg={6}>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={stateAlert.subject_group_sjg_id}>
                   <InputLabel id='form-layouts-separator-select-label'>Group</InputLabel>
                   <Select
                     name='subject_group_sjg_id'
-                    value={Dialogtype === 'insert' ? state.subject_group_sjg_id : editState.subject_group_sjg_id}
+                    value={Dialogtype === 'insert' ? state.subject_group_sjg_id : editState.subject_group_sjg_id || ''}
                     label='Country'
                     defaultValue=''
                     id='form-layouts-separator-select'
                     labelId='form-layouts-separator-select-label'
                     onChange={e => setState(pre => ({ ...pre, subject_group_sjg_id: e.target.value }))}
                   >
-                    {dropDown?.map(sjg => (
+                    {dropDown?.subjectgroups.map(sjg => (
                       <MenuItem key={sjg.sjg_id} value={sjg.sjg_id}>
                         {sjg.sjg_name}
                       </MenuItem>
@@ -230,10 +353,31 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
                   </Select>
                 </FormControl>
               </Grid>
+              <Grid item xs={12} sm={6} lg={6}>
+                <FormControl fullWidth error={stateAlert.curriculums_cur_id}>
+                  <InputLabel id='form-layouts-separator-select-label'>Curriculum</InputLabel>
+                  <Select
+                    name='curriculums_cur_id'
+                    value={Dialogtype === 'insert' ? state.curriculums_cur_id : editState.curriculums_cur_id || ''}
+                    label='Country'
+                    defaultValue=''
+                    id='form-layouts-separator-select'
+                    labelId='form-layouts-separator-select-label'
+                    onChange={e => setState(pre => ({ ...pre, curriculums_cur_id: e.target.value }))}
+                  >
+                    {dropDown?.curriculums.map(curri => (
+                      <MenuItem key={curri.cur_id} value={curri.cur_id}>
+                        {curri.cur_name_th}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={stateAlert.sj_description}
                   name='sj_description'
-                  value={Dialogtype === 'insert' ? state.sj_description : editState.sj_description}
+                  value={Dialogtype === 'insert' ? state.sj_description : editState.sj_description || ''}
                   onChange={e => handleChange(e, '')}
                   fullWidth
                   multiline
@@ -251,8 +395,8 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype 
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseModi}>Cancel</Button>
-        <Button variant='contained' onClick={handleClose}>
-          Submit
+        <Button variant='contained' onClick={() => handleSubmit()}>
+          {Dialogtype === 'insert' ? 'Submit' : 'Update'}
         </Button>
       </DialogActions>
     </Dialog>
