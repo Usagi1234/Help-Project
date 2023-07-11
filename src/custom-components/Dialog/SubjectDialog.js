@@ -58,7 +58,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
   const [tricker, setTricker] = useState(false)
 
   useEffect(() => {
-    if(open){
+    if (open) {
       if (Dialogtype === 'insert') {
         setState(initialState)
       } else {
@@ -66,7 +66,6 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
       }
       setStateAlert(initialStateAlert)
     }
-
   }, [open])
 
   useEffect(() => {
@@ -104,16 +103,27 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
     } else {
       filterData = value
     }
-    if (Dialogtype === 'insert') {
-      setState({ ...state, [e.target.name]: filterData })
-    } else {
-      setEditState({ ...editState, [e.target.name]: filterData })
-    }
+    setState({ ...state, [e.target.name]: filterData })
   }
 
   const handleInsert = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.insertsubject`, state)
+      .then(function (response) {
+        console.log(response.message)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      .finally(() => {
+        handleCloseModi()
+        router.replace(router.asPath, undefined, { sroll: false })
+      })
+  }
+
+  const handleUpdate = () => {
+    axios
+      .put(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.editsubject`, state)
       .then(function (response) {
         console.log(response.message)
       })
@@ -138,7 +148,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
       if (Dialogtype === 'insert') {
         handleInsert()
       } else {
-        // handleUpdate()
+        handleUpdate()
       }
     } else {
       console.log('please fill all!')
@@ -223,6 +233,17 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
           <Divider sx={{ margin: 0 }} />
           <CardContent>
             <Grid container spacing={5}>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  name='sj_code'
+                  error={stateAlert.sj_code}
+                  value={state.sj_code || ''}
+                  onChange={e => handleChange(e, 'code')}
+                  fullWidth
+                  label='Code'
+                  placeholder='Subject Code'
+                />
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={stateAlert.sj_name_th}
@@ -245,18 +266,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   placeholder='English Name'
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='sj_code'
-                  error={stateAlert.sj_code}
-                  value={state.sj_code || ''}
-                  onChange={e => handleChange(e, 'code')}
-                  fullWidth
-                  label='Code'
-                  placeholder='Subject Code'
-                />
-              </Grid>
-              <Grid item xs={12} sm={3} lg={1.5}>
+              <Grid item xs={12} sm={3} lg={3}>
                 <FormControl fullWidth>
                   <InputLabel>Credit</InputLabel>
                   <Select
@@ -278,7 +288,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={3} lg={1.5}>
+              <Grid item xs={12} sm={3} lg={3}>
                 <FormControl fullWidth>
                   <InputLabel>Theory</InputLabel>
                   <Select
@@ -300,7 +310,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={3} lg={1.5}>
+              <Grid item xs={12} sm={3} lg={3}>
                 <FormControl fullWidth>
                   <InputLabel>Action</InputLabel>
                   <Select
@@ -322,7 +332,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={3} lg={1.5}>
+              <Grid item xs={12} sm={3} lg={3}>
                 <FormControl fullWidth>
                   <InputLabel>OverTime</InputLabel>
                   <Select

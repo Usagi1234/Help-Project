@@ -13,10 +13,14 @@ import axios from 'axios'
 import SubjectsDialog from 'src/custom-components/Dialog/SubjectDialog'
 
 function SubjectsTab({ data, subjectGroups, curriculums }) {
+  const router = useRouter()
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
   const [rows, setRows] = useState(data)
   const [openIns, setOpenIns] = useState(false)
   const [openUpd, setOpenUpd] = useState(false)
   const [getSubject, setGetSubject] = useState([])
+  const [value, setValue] = useState('') // use when delete button is clicked
+  const [deleteId, setDeleteId] = useState('')
 
   const [initialState, setInitialState] = useState({
     curriculum: '0'
@@ -43,6 +47,28 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
     }
   }, [initialState])
 
+  const handleDelete = () => {
+    if (deleteId !== '') {
+      axios
+        .put(`${process.env.NEXT_PUBLIC_API}.MasterData.delete_data.delete`, {
+          table: 'tabsubjects',
+          primary: deleteId
+        })
+        .then(function (response) {
+          // console.log(response.message)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+        .finally(() => {
+          setOpenConfirmDelete(false)
+          router.replace(router.asPath)
+        })
+    } else {
+      console.log('not have any id to delete')
+    }
+  }
+
   const columns = [
     {
       sortable: false,
@@ -58,10 +84,9 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
           color='error'
           m={1}
           onClick={() => {
-            console.log(cellValues.row.sj_id)
-            // setValue(cellValues.row)
-            // setDeleteId(cellValues.row.ist_id)
-            // setOpenConfirmDelete(true)
+            setDeleteId(cellValues.row.sj_id)
+            setValue(cellValues.row)
+            setOpenConfirmDelete(true)
           }}
         >
           <Typography variant='caption' color={'white'}>
@@ -170,18 +195,12 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
         handleClose={setOpenUpd}
         subject={getSubject}
       />
-      {/* <InstructorDialog
-        instructor={instructor}
-        Dialogtype={'edit'}
-        open={openEditDialog}
-        handleClose={setOpenEditDialog}
-      /> */}
-      {/* <ConfirmDeleteDialog
+      <ConfirmDeleteDialog
         open={openConfirmDelete}
-        value={value.ist_fname_th + ' ' + value.ist_lname_th}
-        handleClose={handleClose}
+        value={value.sj_code + ' ' + value.sj_name_th}
+        handleClose={() => setOpenConfirmDelete(false)}
         handleDelete={handleDelete}
-      /> */}
+      />
     </CardContent>
   )
 }

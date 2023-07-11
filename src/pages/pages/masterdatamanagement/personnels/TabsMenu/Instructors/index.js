@@ -28,7 +28,7 @@ function InstructorsTab({ data }) {
   const handleDelete = () => {
     if (deleteId !== '') {
       axios
-        .post(`${process.env.NEXT_PUBLIC_API}frappe.help-api.delete`, {
+        .post(`${process.env.NEXT_PUBLIC_API}.MasterData.delete_data.delete`, {
           table: 'tabinstrutors',
           primary: deleteId
         })
