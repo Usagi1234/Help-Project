@@ -54,7 +54,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
 
   useEffect(() => {
     const fetchMenuDropdown = async () => {
-      const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}frappe.help-api.getAllfacultys`)
+      const queryFaculty = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.faculty.getAllfacultys`)
       const resFaculty = await queryFaculty.json()
       setDropDown({ ...dropDown, faculty: resFaculty.message.Data })
     }
@@ -67,7 +67,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
 
   const handleInsert = () => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_API}frappe.help-api.insertinstructors`, state)
+      .post(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.insertinstructors`, state)
       .then(function (response) {
         console.log(response.message)
       })
@@ -82,7 +82,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
 
   const handleUpdate = () => {
     axios
-      .put(`${process.env.NEXT_PUBLIC_API}frappe.help-api.editinstructor`, editState)
+      .put(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.editinstructor`, editState)
       .then(function (response) {
         console.log(response.message)
       })

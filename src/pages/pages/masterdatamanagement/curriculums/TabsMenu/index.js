@@ -128,7 +128,7 @@ const Tabs = ({ data }) => {
           curriculums
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects'>
-          <SubjectsTab data={subjects} />
+          <SubjectsTab data={subjects} subjectGroups={subjectgroups} />
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
           <SubjectGroupsTab data={subjectgroups} dataDropdown={subjecttypes} />
