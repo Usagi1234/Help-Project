@@ -9,6 +9,11 @@ import MuiTab from '@mui/material/Tab'
 
 // ** Icons Imports
 import School from 'mdi-material-ui/School'
+import Book from 'mdi-material-ui/Book'
+import BookOpenOutline from 'mdi-material-ui/BookOpenOutline'
+import TextBoxOutline from 'mdi-material-ui/TextBoxOutline'
+import FileDocumentOutline from 'mdi-material-ui/FileDocumentOutline'
+import FileDocument from 'mdi-material-ui/FileDocument'
 
 // ** Demo Tabs Imports
 import CurriculumsTab from './Curriculums'
@@ -67,7 +72,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <Book />
                 </IconHidden>
                 <TabName>Curriculums</TabName>
               </Box>
@@ -78,7 +83,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <BookOpenOutline />
                 </IconHidden>
                 <TabName>Subjects</TabName>
               </Box>
@@ -89,7 +94,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <TextBoxOutline />
                 </IconHidden>
                 <TabName>Subjects Groups</TabName>
               </Box>
@@ -100,7 +105,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <FileDocumentOutline />
                 </IconHidden>
                 <TabName>Subjects Types</TabName>
               </Box>
@@ -111,7 +116,7 @@ const Tabs = ({ data }) => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
-                  <School />
+                  <FileDocument />
                 </IconHidden>
                 <TabName>Subjects Category</TabName>
               </Box>

@@ -72,14 +72,14 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
           // console.log(response.message)
         })
         .catch(function (error) {
-          console.log(error)
+          // console.log(error)
         })
         .finally(() => {
           setOpenConfirmDelete(false)
           router.replace(router.asPath)
         })
     } else {
-      console.log('not have any id to delete')
+      // console.log('not have any id to delete')
     }
   }
 
@@ -150,7 +150,7 @@ function SubjectsTab({ data, subjectGroups, curriculums }) {
     { field: 'release_year', headerName: 'Year', width: 100 }
   ]
 
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }

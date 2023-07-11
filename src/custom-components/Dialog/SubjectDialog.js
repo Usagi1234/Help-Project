@@ -68,9 +68,9 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
     }
   }, [open])
 
-  useEffect(() => {
-    console.log(state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log(state)
+  // }, [state])
 
   useEffect(() => {
     const fetchMenuDropdown = async () => {
@@ -81,9 +81,9 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
     fetchMenuDropdown()
   }, [])
 
-  useEffect(() => {
-    console.log('Dropdown', dropDown)
-  }, [dropDown])
+  // useEffect(() => {
+  //   console.log('Dropdown', dropDown)
+  // }, [dropDown])
 
   const handleCloseModi = () => {
     handleClose(false)
@@ -110,10 +110,10 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
     axios
       .post(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.insertsubject`, state)
       .then(function (response) {
-        console.log(response.message)
+        // console.log(response.message)
       })
       .catch(function (error) {
-        console.log(error)
+        // console.log(error)
       })
       .finally(() => {
         handleCloseModi()
@@ -125,10 +125,10 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
     axios
       .put(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.editsubject`, state)
       .then(function (response) {
-        console.log(response.message)
+        // console.log(response.message)
       })
       .catch(function (error) {
-        console.log(error)
+        // console.log(error)
       })
       .finally(() => {
         handleCloseModi()
@@ -151,7 +151,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
         handleUpdate()
       }
     } else {
-      console.log('please fill all!')
+      // console.log('please fill all!')
     }
   }
 
@@ -200,7 +200,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
         }
         break
       default:
-        console.log('Error')
+      // console.log('Error')
     }
   }
 

@@ -61,18 +61,18 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
     fetchMenuDropdown()
   }, [])
 
-  useEffect(() => {
-    console.log('Dropdown', dropDown)
-  }, [dropDown])
+  // useEffect(() => {
+  //   console.log('Dropdown', dropDown)
+  // }, [dropDown])
 
   const handleInsert = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.insertinstructors`, state)
       .then(function (response) {
-        console.log(response.message)
+        // console.log(response.message)
       })
       .catch(function (error) {
-        console.log(error)
+        // console.log(error)
       })
       .finally(() => {
         handleCloseModi()
@@ -84,10 +84,10 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
     axios
       .put(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.editinstructor`, editState)
       .then(function (response) {
-        console.log(response.message)
+        // console.log(response.message)
       })
       .catch(function (error) {
-        console.log(error)
+        // console.log(error)
       })
       .finally(() => {
         handleCloseModi()
@@ -149,7 +149,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
         handleUpdate()
       }
     } else {
-      console.log('please fill all!')
+      // console.log('please fill all!')
     }
   }
 
@@ -210,7 +210,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
           }
           break
         default:
-          console.log('Error')
+        // console.log('Error')
       }
     } else {
       switch (key) {
@@ -268,7 +268,7 @@ const InstrcutorDialog = ({ instructor, open, handleClose, Dialogtype }) => {
           }
           break
         default:
-          console.log('Error')
+        // console.log('Error')
       }
     }
   }

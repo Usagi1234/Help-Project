@@ -149,7 +149,7 @@ function AcademicsTab({ data }) {
         data={data}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
-        handleSubmit={console.log('Submit!')}
+        // handleSubmit={console.log('Submit!')}
       />
 
       {/* เปิด Dialog Edit */}

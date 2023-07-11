@@ -25,7 +25,7 @@ function CurriculumsTab({ data }) {
   //รับค่าจากแถวข้อมูล
   const [rowdata, setRowdata] = useState('')
 
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -59,7 +59,7 @@ function CurriculumsTab({ data }) {
             setValue(cellValues.row)
             setDeleteId(cellValues.row.cur_id)
             setOpenConfirmDelete(true)
-            console.log(cellValues.row)
+            // console.log(cellValues.row)
           }}
         >
           <Typography variant='caption' color={'white'}>
@@ -107,17 +107,17 @@ function CurriculumsTab({ data }) {
           primary: deleteId
         })
         .then(function (response) {
-          console.log(response.message)
+          // console.log(response.message)
         })
         .catch(function (error) {
-          console.log(error)
+          // console.log(error)
         })
         .finally(() => {
           handleClose()
           router.replace(router.asPath)
         })
     } else {
-      console.log('not have any id to delete')
+      // console.log('not have any id to delete')
     }
   }
 
@@ -147,7 +147,7 @@ function CurriculumsTab({ data }) {
         data={data}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
-        handleSubmit={console.log('Submit!')}
+        // handleSubmit={console.log('Submit!')}
       />
 
       {/* เปิด Dialog Edit */}
@@ -157,7 +157,7 @@ function CurriculumsTab({ data }) {
         rowdata={rowdata}
         open={openEditDialog}
         handleClose={() => setOpenEditDialog(false)}
-        handleSubmit={console.log('คาร์บิว')}
+        // handleSubmit={console.log('คาร์บิว')}
       />
 
       {/* เปิด Dialog Delete */}

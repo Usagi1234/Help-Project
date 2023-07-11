@@ -63,7 +63,7 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
         // console.log('dataAC', response.data.message.Data)
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
   }, [])
 
@@ -71,11 +71,11 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
     if (type === 'edit') {
       setState(row)
       setAcademicState(false)
-      console.log('type: ', type)
+      // console.log('type: ', type)
     } else {
       setState(initialState)
       setAcademicState(true)
-      console.log('type: ', type)
+      // console.log('type: ', type)
     }
   }, [row, type])
 
@@ -84,25 +84,25 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
       const data = {
         ac_id: state.ac_id
       }
-      console.log(data)
+      // console.log(data)
       axios
         .get('http://192.168.1.168:8000/api/method/frappe.help-api.getAllCurriculumandFacultyinoneacademic', {
           params: data
         })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           setDataFaculty(res.data.message.FacultyList)
           setDataCurriculum(res.data.message.CurriculumsList)
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err)
         })
     }
   }, [state.ac_id])
 
-  useEffect(() => {
-    console.log('get: ', state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log('get: ', state)
+  // }, [state])
 
   // * สำหรับ ปิดหน้า Dialog
   const handleClose = () => {
@@ -138,7 +138,7 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
   const handleSubmit = () => {
     const emptyKeys = Object.keys(state).filter(key => state[key] === null)
     if (emptyKeys.length > 0) {
-      console.log('incomplete information')
+      // console.log('incomplete information')
       const updatedInsertState = emptyKeys.reduce((prev, key) => ({ ...prev, [key]: true }), {})
       setInsertState(prevState => ({ ...prevState, ...updatedInsertState }))
     } else {
@@ -146,21 +146,21 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
         axios
           .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertcollegian', state)
           .then(res => {
-            console.log(res)
-            console.log('Insert Successful information')
+            // console.log(res)
+            // console.log('Insert Successful information')
           })
           .catch(err => {
-            console.log(err)
+            // console.log(err)
           })
       } else {
         axios
           .put('http://192.168.1.168:8000/api/method/frappe.help-api.editcollegian', state)
           .then(res => {
-            console.log(res)
-            console.log('Edit Successful information')
+            // console.log(res)
+            // console.log('Edit Successful information')
           })
           .catch(err => {
-            console.log(err)
+            // console.log(err)
           })
       }
       onClose(false)

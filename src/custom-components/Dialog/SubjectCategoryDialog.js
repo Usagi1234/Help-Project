@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 
@@ -33,10 +32,10 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
   useEffect(() => {
     if (type === 'insert') {
       setDataCategory(initial)
-      console.log('insert')
+      // console.log('insert')
     } else {
       setDataCategory(rowData)
-      console.log('edit')
+      // console.log('edit')
     }
   }, [type, rowData])
 
@@ -50,9 +49,9 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
     }
   }
 
-  useEffect(() => {
-    console.log(dataCategory)
-  }, [dataCategory])
+  // useEffect(() => {
+  //   console.log(dataCategory)
+  // }, [dataCategory])
 
   const HandleOnInsCsc = () => {
     if (dataCategory.subject_category_name !== '') {
@@ -60,23 +59,23 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
         ...pre,
         ...dataCategory
       }))
-      console.log('1', dataCategory)
+      // console.log('1', dataCategory)
       axios
         .post(
           'http://111.223.38.19/api/method/frappe.API.MasterData.subject_category.insertsubject_category',
           dataCategory
         )
         .then(res => {
-          console.log(res)
+          // console.log(res)
           setDataCategory(initial)
           handleClose()
           router.replace(router.asPath)
         })
     }
     if (dataCategory.subject_category_name !== '') {
-      console.log('subject_category_name ไม่ว่าง')
+      // console.log('subject_category_name ไม่ว่าง')
     } else {
-      console.log('ACT_Name_th ว่าง')
+      // console.log('ACT_Name_th ว่าง')
       setColorCsc(pre => ({ ...pre, subject_category_name: true }))
     }
   }
@@ -95,9 +94,9 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
         })
     }
     if (dataCategory.subject_category_name !== '') {
-      console.log('subject_category_name ไม่ว่าง')
+      // console.log('subject_category_name ไม่ว่าง')
     } else {
-      console.log('subject_category_name ว่าง')
+      // console.log('subject_category_name ว่าง')
       setColorCsc(pre => ({ ...pre, subject_category_name: true }))
     }
   }
@@ -116,34 +115,32 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
     >
       <DialogTitle>{header}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          {/* //////////////////////////////////////////////////////////////////////////////// */}
-          <Card>
-            {type === 'insert' && (
-              <CardHeader title='Add New Subject Category' titleTypographyProps={{ variant: 'h6' }} />
-            )}
-            {type === 'edit' && <CardHeader title='Edit Subject Category' titleTypographyProps={{ variant: 'h6' }} />}
-            <Divider sx={{ margin: 0 }} />
-            <form onSubmit={e => e.preventDefault()}>
-              <CardContent>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={8}>
-                    <TextField
-                      fullWidth
-                      label='Category Name'
-                      placeholder='Subject Category Name'
-                      onChange={event => HandleChangeCsc(event, 'subject_category_name')}
-                      error={colorCsc.subject_category_name}
-                      value={dataCategory.subject_category_name}
-                    />
-                  </Grid>
+        {/* //////////////////////////////////////////////////////////////////////////////// */}
+        <Card>
+          {type === 'insert' && (
+            <CardHeader title='Add New Subject Category' titleTypographyProps={{ variant: 'h6' }} />
+          )}
+          {type === 'edit' && <CardHeader title='Edit Subject Category' titleTypographyProps={{ variant: 'h6' }} />}
+          <Divider sx={{ margin: 0 }} />
+          <form onSubmit={e => e.preventDefault()}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={12} sm={8}>
+                  <TextField
+                    fullWidth
+                    label='Category Name'
+                    placeholder='Subject Category Name'
+                    onChange={event => HandleChangeCsc(event, 'subject_category_name')}
+                    error={colorCsc.subject_category_name}
+                    value={dataCategory.subject_category_name}
+                  />
                 </Grid>
-              </CardContent>
-              <Divider sx={{ margin: 0 }} />
-            </form>
-          </Card>
-          {/* /////////////////////////////////////////////////////////////////////////// */}
-        </DialogContentText>
+              </Grid>
+            </CardContent>
+            <Divider sx={{ margin: 0 }} />
+          </form>
+        </Card>
+        {/* /////////////////////////////////////////////////////////////////////////// */}
       </DialogContent>
       <DialogActions>
         <Button

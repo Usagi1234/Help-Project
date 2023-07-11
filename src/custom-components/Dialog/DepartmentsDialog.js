@@ -25,7 +25,7 @@ import DialogContent from '@mui/material/DialogContent'
 
 const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
   const Route = useRouter()
-  console.log('Data IN ROW', DataInRow)
+  // console.log('Data IN ROW', DataInRow)
 
   // State variables =================================
   const [nameTH, setNameTH] = useState('')
@@ -111,7 +111,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
     axios
       .post('http://111.223.38.19/api/method/frappe.API.MasterData.department.insertDepartment', NewDataDepartments)
       .then(response => {
-        console.log('NewDepartments Done:', response.data)
+        // console.log('NewDepartments Done:', response.data)
 
         // reset ค่า State หลังจากส่งข้อมูล
         setNameTH('')
@@ -125,7 +125,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
         Route.replace(Route.asPath, undefined, { scroll: false })
       })
       .catch(error => {
-        console.error('ERROR NewDepartments:', error)
+        // console.error('ERROR NewDepartments:', error)
       })
   }
 
@@ -149,7 +149,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
     axios
       .put('http://111.223.38.19/api/method/frappe.API.MasterData.department.editDepartment', UpdateDataDepartments)
       .then(response => {
-        console.log('UpdateDataDepartments Done:', response.data)
+        // console.log('UpdateDataDepartments Done:', response.data)
 
         // ปิด Dialog
         handleClose(false)
@@ -158,7 +158,7 @@ const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
         Route.replace(Route.asPath, undefined, { scroll: false })
       })
       .catch(error => {
-        console.error('ERROR UpdateDataDepartments:', error)
+        // console.error('ERROR UpdateDataDepartments:', error)
       })
   }
 
