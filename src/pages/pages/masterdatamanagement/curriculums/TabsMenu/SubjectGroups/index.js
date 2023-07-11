@@ -20,7 +20,7 @@ function SubjectGroupsTab({ data, dataDropdown }) {
   const [dataRow, setDataRow] = useState('')
   const tableName = 'Subject Groups'
 
-  console.log('data: ', data)
+  // console.log('data: ', data)
 
   const handleDeleteRow = () => {
     axios
@@ -29,10 +29,10 @@ function SubjectGroupsTab({ data, dataDropdown }) {
         primary: dataRowDel.sjg_id
       })
       .then(response => {
-        console.log(response)
+        // console.log(response)
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
     router.replace(router.asPath)
     setOpenDialogDel(false)
@@ -59,7 +59,7 @@ function SubjectGroupsTab({ data, dataDropdown }) {
           color='error'
           m={1}
           onClick={() => {
-            console.log(cellValues.row)
+            // console.log(cellValues.row)
             setOpenDialogDel(true)
             setDataRowDel(cellValues.row)
           }}

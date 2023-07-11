@@ -126,7 +126,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
     axios
       .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertacademic', data)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         handleClose()
 
         // window.location.reload()
@@ -134,7 +134,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
         handleCancel() // รีข้อมูล
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
   }
 
@@ -163,16 +163,16 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
     axios
       .put('http://192.168.1.168:8000/api/method/frappe.help-api.editacademic', data)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         handleClose()
 
         // window.location.reload()
         Route.replace(Route.asPath, undefined, { scroll: false })
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
-    console.log(data)
+    // console.log(data)
   }
 
   return (

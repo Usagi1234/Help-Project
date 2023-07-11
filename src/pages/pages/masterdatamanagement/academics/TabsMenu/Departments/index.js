@@ -37,7 +37,7 @@ function DepartmentsTab({ data }) {
     fi_name_th: data.fi_name_th
   })
 
-  console.log('in the row', inRow)
+  // console.log('in the row', inRow)
 
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
@@ -57,17 +57,17 @@ function DepartmentsTab({ data }) {
           primary: deleteId
         })
         .then(function (response) {
-          console.log(response.message)
+          // console.log(response.message)
         })
         .catch(function (error) {
-          console.log(error)
+          // console.log(error)
         })
         .finally(() => {
           handleClose()
           Route.replace(Route.asPath)
         })
     } else {
-      console.log('not have any id to delete')
+      // console.log('not have any id to delete')
     }
   }
 

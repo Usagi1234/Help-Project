@@ -20,7 +20,7 @@ function SubjectTypesTab({ data, dataDropdown }) {
   const [dataRow, setDataRow] = useState('')
   const tableName = 'Subject Types'
 
-  console.log('data: ', data)
+  // console.log('data: ', data)
 
   const handleDeleteRow = () => {
     axios
@@ -29,10 +29,10 @@ function SubjectTypesTab({ data, dataDropdown }) {
         primary: dataRowDel.subject_type_id
       })
       .then(response => {
-        console.log(response)
+        // console.log(response)
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
       })
     router.replace(router.asPath)
     setOpenDialogDel(false)

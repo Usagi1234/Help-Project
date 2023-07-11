@@ -3,7 +3,6 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 import { useRouter } from 'next/router'
 import axios from 'axios'
@@ -40,8 +39,8 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
   const [state, setState] = useState(initialState)
   const [validationState, setValidationState] = useState(initialValidationState)
 
-  console.log(row)
-  useEffect(() => console.log(state), [state])
+  // console.log(row)
+  // useEffect(() => console.log(state), [state])
 
   useEffect(() => {
     if (type === 'edit') {
@@ -52,10 +51,10 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
         subject_type_id: row.subject_type_id,
         sjg_id: row.sjg_id
       }))
-      console.log('type: ', type)
+      // console.log('type: ', type)
     } else {
       setState(initialState)
-      console.log('type: ', type)
+      // console.log('type: ', type)
     }
   }, [row, type])
 
@@ -76,7 +75,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
   const handleSubmit = () => {
     const emptyKeys = Object.keys(state).filter(key => state[key] === null || state[key].length === 0)
     if (emptyKeys.length > 0) {
-      console.log('incomplete information')
+      // console.log('incomplete information')
       const updatedInsertState = emptyKeys.reduce((prev, key) => ({ ...prev, [key]: true }), {})
       setValidationState(prevState => ({ ...prevState, ...updatedInsertState }))
     } else {
@@ -84,23 +83,21 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
         axios
           .post('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.insertsubject_groups', state)
           .then(res => {
-            console.log(res)
-
+            // console.log(res)
             // console.log('Insert Successful information')
           })
           .catch(err => {
-            console.log(err)
+            // console.log(err)
           })
       } else {
         axios
           .put('http://111.223.38.19/api/method/frappe.API.MasterData.subject_groups.editsubject_groups', state)
           .then(res => {
-            console.log(res)
-
+            // console.log(res)
             // console.log('Edit Successful information')
           })
           .catch(err => {
-            console.log(err)
+            // console.log(err)
           })
       }
       handleDialogClose()
@@ -110,56 +107,54 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
   return (
     <Dialog fullWidth maxWidth={'md'} open={open} onClose={handleDialogClose} sx={{ minWidth: 400 }}>
       <DialogContent>
-        <DialogContentText>
-          <Card>
-            {type === 'insert' && <CardHeader title='Add New Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
-            {type === 'edit' && <CardHeader title='Edit Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
-            <Divider sx={{ margin: 0 }} />
-            <form onSubmit={e => e.preventDefault()}>
-              <CardContent>
-                <Grid container spacing={5}>
-                  <Grid item xs={12} sm={7}>
-                    <TextField
-                      fullWidth
-                      label='Group Name'
-                      placeholder='Subject Group Name'
-                      name='sjg_name'
-                      helperText={validationState.sjg_name ? 'โปรดกรอกข้อมูล' : ''}
-                      error={validationState.sjg_name}
-                      value={state.sjg_name || ''}
-                      onChange={event => handleChange(event)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth error={validationState.subject_type_id}>
-                      <InputLabel id='form-layouts-separator-select-label'>Subject Type</InputLabel>
-                      <Select
-                        label='Type'
-                        id='form-layouts-separator-select'
-                        labelId='form-layouts-separator-select-label'
-                        value={state.subject_type_id || ''}
-                        error={validationState.subject_type_id}
-                        onChange={e => setState(pre => ({ ...pre, subject_type_id: e.target.value }))}
-                      >
-                        {dropdown.map(subTypes => (
-                          <MenuItem
-                            key={subTypes.subject_type_id}
-                            value={subTypes.subject_type_id}
-                            onClick={() => setState(pre => ({ ...pre, subject_type_name: subTypes.subject_type_name }))}
-                          >
-                            {subTypes.subject_type_name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                      <FormHelperText>{validationState.subject_type_id && 'โปรดกรอกข้อมูล'}</FormHelperText>
-                    </FormControl>
-                  </Grid>
+        <Card>
+          {type === 'insert' && <CardHeader title='Add New Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
+          {type === 'edit' && <CardHeader title='Edit Subject Group' titleTypographyProps={{ variant: 'h6' }} />}
+          <Divider sx={{ margin: 0 }} />
+          <form onSubmit={e => e.preventDefault()}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={12} sm={7}>
+                  <TextField
+                    fullWidth
+                    label='Group Name'
+                    placeholder='Subject Group Name'
+                    name='sjg_name'
+                    helperText={validationState.sjg_name ? 'โปรดกรอกข้อมูล' : ''}
+                    error={validationState.sjg_name}
+                    value={state.sjg_name || ''}
+                    onChange={event => handleChange(event)}
+                  />
                 </Grid>
-              </CardContent>
-              <Divider sx={{ margin: 0 }} />
-            </form>
-          </Card>
-        </DialogContentText>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth error={validationState.subject_type_id}>
+                    <InputLabel id='form-layouts-separator-select-label'>Subject Type</InputLabel>
+                    <Select
+                      label='Type'
+                      id='form-layouts-separator-select'
+                      labelId='form-layouts-separator-select-label'
+                      value={state.subject_type_id || ''}
+                      error={validationState.subject_type_id}
+                      onChange={e => setState(pre => ({ ...pre, subject_type_id: e.target.value }))}
+                    >
+                      {dropdown.map(subTypes => (
+                        <MenuItem
+                          key={subTypes.subject_type_id}
+                          value={subTypes.subject_type_id}
+                          onClick={() => setState(pre => ({ ...pre, subject_type_name: subTypes.subject_type_name }))}
+                        >
+                          {subTypes.subject_type_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>{validationState.subject_type_id && 'โปรดกรอกข้อมูล'}</FormHelperText>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </CardContent>
+            <Divider sx={{ margin: 0 }} />
+          </form>
+        </Card>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDialogClose}>Cancel</Button>

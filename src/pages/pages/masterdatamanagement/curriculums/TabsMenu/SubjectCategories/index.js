@@ -16,7 +16,7 @@ function SubjectCategoriesTab({ data }) {
   const [value, setValue] = useState('')
   const tableName = 'Subject Category'
 
-  console.log(data)
+  // console.log(data)
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
@@ -42,7 +42,7 @@ function SubjectCategoriesTab({ data }) {
           onClick={() => {
             setValue(cellValues.row)
             setOpenDelDialogCsc(true)
-            console.log(cellValues.row)
+            // console.log(cellValues.row)
           }}
         >
           Del
@@ -63,7 +63,7 @@ function SubjectCategoriesTab({ data }) {
           onClick={() => {
             setRowData(cellValues.row)
             setOpenEditDialogCsc(true)
-            console.log(cellValues.row)
+            // console.log(cellValues.row)
           }}
         >
           ...

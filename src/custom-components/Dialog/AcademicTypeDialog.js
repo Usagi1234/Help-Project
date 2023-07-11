@@ -40,7 +40,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
   useEffect(() => {
     if (type === 'insert') {
       setDataAct(initial)
-      console.log('insert')
+      // console.log('insert')
     } else {
       setDataAct(rowData)
     }
@@ -78,34 +78,33 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
       axios
         .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertacademictype', dataAct) // back end list มา
         .then(res => {
-          console.log(res)
-
+          // console.log(res)
           setDataAct(initial)
           handleClose()
           router.replace(router.asPath)
         })
         .catch(error => {
-          console.log(error)
+          // console.log(error)
         })
     }
     if (dataAct.ac_type_name_th !== '') {
-      console.log('ACT_Name_th ไม่ว่าง')
+      // console.log('ACT_Name_th ไม่ว่าง')
     } else {
-      console.log('ACT_Name_th ว่าง')
+      // console.log('ACT_Name_th ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_type_name_th: true }))
     }
 
     if (dataAct.ac_type_name_en !== '') {
-      console.log('ACT_Name_en ไม่ว่าง')
+      // console.log('ACT_Name_en ไม่ว่าง')
     } else {
-      console.log('ACT_Name_en ว่าง')
+      // console.log('ACT_Name_en ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_type_name_en: true }))
     }
 
     if (dataAct.ac_area !== '') {
-      console.log('ACT_area ไม่ว่าง')
+      // console.log('ACT_area ไม่ว่าง')
     } else {
-      console.log('ACT_area ว่าง')
+      // console.log('ACT_area ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_area: true }))
     }
   }
@@ -120,34 +119,34 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
           router.replace(router.asPath)
         })
         .catch(error => {
-          console.log(error)
+          // console.log(error)
         })
     }
     if (dataAct.ac_type_name_th !== '') {
-      console.log('ACT_Name_th ไม่ว่าง')
+      // console.log('ACT_Name_th ไม่ว่าง')
     } else {
-      console.log('ACT_Name_th ว่าง')
+      // console.log('ACT_Name_th ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_type_name_th: true }))
     }
 
     if (dataAct.ac_type_name_en !== '') {
-      console.log('ACT_Name_en ไม่ว่าง')
+      // console.log('ACT_Name_en ไม่ว่าง')
     } else {
-      console.log('ACT_Name_en ว่าง')
+      // console.log('ACT_Name_en ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_type_name_en: true }))
     }
 
     if (dataAct.ac_area !== '') {
-      console.log('ACT_area ไม่ว่าง')
+      // console.log('ACT_area ไม่ว่าง')
     } else {
-      console.log('ACT_area ว่าง')
+      // console.log('ACT_area ว่าง')
       setColorOnChange(pre => ({ ...pre, ac_area: true }))
     }
   }
 
-  useEffect(() => {
-    console.log(dataAct)
-  }, [dataAct])
+  // useEffect(() => {
+  //   console.log(dataAct)
+  // }, [dataAct])
 
   return (
     <Dialog
