@@ -259,10 +259,18 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
                         error={submitted && !Dpm}
                         helperText={submitted && !Dpm && 'กรุณากรอกข้อมูล'}
                       >
-                        <MenuItem value='DPM-101'>Computer Engineering</MenuItem>
-                        <MenuItem value='DPM-107'>University 2</MenuItem>
-                        <MenuItem value='DPM-105'>University 3</MenuItem>
-                        <MenuItem value='DPM-104'>University 4</MenuItem>
+                        {data
+                          ?.filter((contentCur, index, self) => {
+                            return index === self.findIndex(c => c.dpm_id === contentCur.dpm_id)
+                          })
+                          .filter(contentCur => {
+                            return contentCur.dpm_id !== ''
+                          })
+                          .map((contentCur, value) => (
+                            <MenuItem key={value} value={contentCur.dpm_id}>
+                              {contentCur.dpm_name_th}
+                            </MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                   </Grid>
@@ -281,10 +289,18 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
                         error={submitted && !Faculty}
                         helperText={submitted && !Faculty && 'กรุณากรอกข้อมูล'}
                       >
-                        <MenuItem value='FI-100'>คณะวิศวกรรมศาสตร์</MenuItem>
-                        <MenuItem value='FI-102'>University 2</MenuItem>
-                        <MenuItem value='FI-103'>University 3</MenuItem>
-                        <MenuItem value='FI-104'>University 4</MenuItem>
+                        {data
+                          ?.filter((contentCur, index, self) => {
+                            return index === self.findIndex(c => c.fi_id === contentCur.fi_id)
+                          })
+                          .filter(contentCur => {
+                            return contentCur.fi_id !== ''
+                          })
+                          .map((contentCur, value) => (
+                            <MenuItem key={value} value={contentCur.fi_id}>
+                              {contentCur.fi_name_th}
+                            </MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                   </Grid>
@@ -303,10 +319,18 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
                         error={submitted && !ReleaseYear}
                         helperText={submitted && !ReleaseYear && 'กรุณากรอกข้อมูล'}
                       >
-                        <MenuItem value='release_year'>2562</MenuItem>
-                        <MenuItem value='release_year'>2563</MenuItem>
-                        <MenuItem value='release_year'>2564</MenuItem>
-                        <MenuItem value='release_year'>2565</MenuItem>
+                        {data
+                          ?.filter((contentCur, index, self) => {
+                            return index === self.findIndex(c => c.release_year === contentCur.release_year)
+                          })
+                          .filter(contentCur => {
+                            return contentCur.release_year !== ''
+                          })
+                          .map((contentCur, value) => (
+                            <MenuItem key={value} value={contentCur.release_year}>
+                              {contentCur.release_year}
+                            </MenuItem>
+                          ))}
                       </Select>
                     </FormControl>
                   </Grid>

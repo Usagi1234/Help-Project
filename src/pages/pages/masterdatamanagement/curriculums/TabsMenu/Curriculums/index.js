@@ -78,8 +78,8 @@ function CurriculumsTab({ data }) {
     { field: 'cur_name_en', headerName: 'name(EN)', width: 200 },
     { field: 'cur_shot_name_th', headerName: 'Short Name(TH)', width: 150 },
     { field: 'cur_shot_name_en', headerName: 'Short Name(EN)', width: 150 },
-    { field: 'dpm_id', headerName: 'Department', width: 120 },
-    { field: 'faculty_institutes_fi_id', headerName: 'faculty', width: 120 },
+    { field: 'dpm_name_th', headerName: 'Department', width: 120 },
+    { field: 'fi_name_th', headerName: 'faculty', width: 120 },
     { field: 'release_year', headerName: 'release year', width: 300 }
   ]
 
