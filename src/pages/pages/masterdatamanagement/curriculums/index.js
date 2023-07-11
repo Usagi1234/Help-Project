@@ -52,8 +52,11 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return { error: err }
   }
+
   try {
-    const querySubjectGroups = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject.getAllsubjects`)
+    const querySubjectGroups = await fetch(
+      `${process.env.NEXT_PUBLIC_API}.MasterData.subject_groups.getAllsubject_groups`
+    )
     const resSubjectGroups = await querySubjectGroups.json()
     if (!resSubjectGroups) {
       return { notFound: true }
@@ -67,6 +70,7 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return { error: err }
   }
+
   try {
     const querySubjectTypes = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.subject_type.getAllsubject_type`)
     const resSubjectTypes = await querySubjectTypes.json()
@@ -82,6 +86,7 @@ export async function getServerSideProps(context) {
   } catch (err) {
     return { error: err }
   }
+
   try {
     const querySubjectCategories = await fetch(
       `${process.env.NEXT_PUBLIC_API}.MasterData.subject_category.getAllsubject_category`
@@ -95,7 +100,7 @@ export async function getServerSideProps(context) {
         ...row,
         id: index + 1 // กำหนด id ใหม่โดยใช้ index + 1 เป็นค่า
       }))
-      WrapData.push({ subjectcategories: newRow })
+      WrapData.push({ subjectCategories: newRow })
     }
   } catch (err) {
     return { error: err }

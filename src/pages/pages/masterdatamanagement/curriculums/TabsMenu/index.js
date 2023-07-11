@@ -46,7 +46,12 @@ const Tabs = ({ data }) => {
   const subjects = data[1].subjects
   const subjectgroups = data[2].subjectgroups
   const subjecttypes = data[3].subjecttypes
-  const subjectcategories = data[4].subjectcategory
+  const subjectcategories = data[4].subjectCategories
+
+  // const curriculums = data[0].curriculums
+  // const subjects = data[1].subjects
+  // const subjecttypes = data[2].subjecttypes
+  // const subjectcategories = data[3].subjectcategories
 
   const [value, setValue] = useState('')
 
@@ -85,7 +90,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Groups'
+            value='SubjectsGroups'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -96,7 +101,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Types'
+            value='SubjectsTypes'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -107,7 +112,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Category'
+            value='SubjectsCategory'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -125,15 +130,15 @@ const Tabs = ({ data }) => {
         <TabPanel sx={{ p: 0 }} value='Subjects'>
           <SubjectsTab data={subjects} />
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Groups'>
-          <SubjectGroupsTab data={subjectgroups} data1={subjecttypes} />
+        <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
+          <SubjectGroupsTab data={subjectgroups} dataDropdown={subjecttypes} />
           subjects groups
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Types'>
+        <TabPanel sx={{ p: 0 }} value='SubjectsTypes'>
           <SubjectTypesTab data={subjecttypes} />
           subjects types
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Category'>
+        <TabPanel sx={{ p: 0 }} value='SubjectsCategory'>
           <SubjectCategoriesTab data={subjectcategories} />
           subjects category
         </TabPanel>
