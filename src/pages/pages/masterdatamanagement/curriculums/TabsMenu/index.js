@@ -44,9 +44,9 @@ const TabName = styled('span')(({ theme }) => ({
 const Tabs = ({ data }) => {
   const curriculums = data[0].curriculums
   const subjects = data[1].subjects
-  const subjectgroups = data[2].subjectgroups
-  const subjecttypes = data[3].subjecttypes
-  const subjectcategories = data[4].subjectcategory
+  const subjectGroups = data[2].subjectgroups
+  const subjectTypes = data[3].subjecttypes
+  const subjectCategories = data[4].subjectCategories
 
   const [value, setValue] = useState('')
 
@@ -85,7 +85,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Groups'
+            value='SubjectsGroups'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -96,7 +96,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Types'
+            value='SubjectsTypes'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -107,7 +107,7 @@ const Tabs = ({ data }) => {
             }
           />
           <Tab
-            value='Subjects-Category'
+            value='SubjectsCategory'
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <IconHidden>
@@ -125,16 +125,16 @@ const Tabs = ({ data }) => {
         <TabPanel sx={{ p: 0 }} value='Subjects'>
           <SubjectsTab data={subjects} subjectGroups={subjectgroups} curriculums={curriculums} />
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Groups'>
-          <SubjectGroupsTab data={subjectgroups} data1={subjecttypes} />
+        <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
+          <SubjectGroupsTab data={subjectGroups} dataDropdown={subjectTypes} />
           subjects groups
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Types'>
-          <SubjectTypesTab data={subjecttypes} />
+        <TabPanel sx={{ p: 0 }} value='SubjectsTypes'>
+          <SubjectTypesTab data={subjectTypes} dataDropdown={subjectCategories} />
           subjects types
         </TabPanel>
-        <TabPanel sx={{ p: 0 }} value='Subjects-Category'>
-          <SubjectCategoriesTab data={subjectcategories} />
+        <TabPanel sx={{ p: 0 }} value='SubjectsCategory'>
+          <SubjectCategoriesTab data={subjectCategories} />
           subjects category
         </TabPanel>
       </TabContext>

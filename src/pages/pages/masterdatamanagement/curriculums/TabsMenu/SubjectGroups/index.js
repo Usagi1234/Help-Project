@@ -1,14 +1,41 @@
-import React, { useState } from 'react'
-import CardContent from '@mui/material/CardContent'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+
+// ? Import Mui
 import { DataGrid } from '@mui/x-data-grid'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, CardContent } from '@mui/material'
+
+// ? Import Component
 import ExportButton from 'src/custom-components/BtnExport'
 import SubjectGroupDialog from 'src/custom-components/Dialog/SubjectGroupDialog'
+import ConfirmDeleteDialog from 'src/custom-components/Dialog/DeleteDialogAc_Type/ConfirmDeleteDalog '
 
-function SubjectGroupsTab({ data, data1 }) {
+function SubjectGroupsTab({ data, dataDropdown }) {
+  const router = useRouter()
   const [openDialog, setOpenDialog] = useState(false)
+  const [openDialogDel, setOpenDialogDel] = useState(false)
+  const [dataRowDel, setDataRowDel] = useState('')
   const [dialogType, setDialogType] = useState('')
-  const [dataRow, setDataRow] = useState({})
+  const [dataRow, setDataRow] = useState('')
+
+  console.log('data: ', data)
+
+  const handleDeleteRow = () => {
+    axios
+      .put('http://111.223.38.19/api/method/frappe.API.MasterData.delete_data.delete', {
+        table: 'tabsubject_groups',
+        primary: dataRowDel.sjg_id
+      })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    router.replace(router.asPath)
+    setOpenDialogDel(false)
+  }
 
   const columns = [
     {
@@ -19,13 +46,15 @@ function SubjectGroupsTab({ data, data1 }) {
       field: 'delete',
       headerName: 'Delete',
       width: 85,
-      renderCell: () => (
+      renderCell: cellValues => (
         <Button
           variant='contained'
           color='error'
           m={1}
           onClick={() => {
             console.log(cellValues.row)
+            setOpenDialogDel(true)
+            setDataRowDel(cellValues.row)
           }}
         >
           <Typography variant='caption' color={'white'}>
@@ -35,14 +64,17 @@ function SubjectGroupsTab({ data, data1 }) {
       )
     },
     {
-      field: '',
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      filterable: false,
+      field: 'edit',
       headerName: 'Edit',
       width: 100,
-      renderCell: () => (
+      renderCell: cellValues => (
         <Button
           variant='text'
-          onClick={cellValues => {
-            console.log(cellValues.row)
+          onClick={() => {
             setDataRow(cellValues.row)
             setDialogType('edit')
             setOpenDialog(true)
@@ -58,7 +90,7 @@ function SubjectGroupsTab({ data, data1 }) {
   ]
 
   if (!data || data.length === 0) {
-    return <p>No data available.</p> // Display a message when rows are empty or undefined
+    return <CardContent>No data available.</CardContent> // Display a message when rows are empty or undefined
   }
 
   return (
@@ -68,7 +100,7 @@ function SubjectGroupsTab({ data, data1 }) {
           variant='contained'
           sx={{ mr: 2 }}
           onClick={() => {
-            setDialogType('edit')
+            setDialogType('insert')
             setOpenDialog(true)
           }}
         >
@@ -87,9 +119,15 @@ function SubjectGroupsTab({ data, data1 }) {
       <SubjectGroupDialog
         type={dialogType}
         row={dataRow}
-        Dropdown={data1}
+        dropdown={dataDropdown}
         open={openDialog}
         handleClose={() => setOpenDialog(false)}
+      />
+      <ConfirmDeleteDialog
+        open={openDialogDel}
+        handleClose={() => setOpenDialogDel(false)}
+        value={dataRowDel.sjg_name}
+        handleDelete={handleDeleteRow}
       />
     </CardContent>
   )
