@@ -109,7 +109,8 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
       onClose={() => {
         handleClose()
         router.replace(router.asPath)
-        setColorCsc(initial)
+        setColorCsc(colorError)
+        setDataCategory(initial)
       }}
       sx={{ minWidth: 400 }}
     >
@@ -147,7 +148,8 @@ const SubjectCategoryDialog = ({ open, handleClose, header, rowData, type }) => 
           onClick={() => {
             handleClose()
             router.replace(router.asPath)
-            setColorCsc(initial)
+            setColorCsc(colorError)
+            setDataCategory(initial)
           }}
         >
           Cancel
