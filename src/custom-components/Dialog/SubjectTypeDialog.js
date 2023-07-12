@@ -50,9 +50,11 @@ const SubjectTypeDialog = ({ open, handleClose, type, row, dropdown }) => {
         subject_category_id: row.subject_category_id,
         subject_type_id: row.subject_type_id
       }))
+
       // console.log('type: ', type)
     } else {
       setState(initialState)
+
       // console.log('type: ', type)
     }
   }, [row, type])
@@ -67,7 +69,7 @@ const SubjectTypeDialog = ({ open, handleClose, type, row, dropdown }) => {
   const handleChange = e => {
     const { value } = e.target
     const filterData = ''
-    filterData = value.replace(/^[A-Za-z0-9 ]+$/g, '')
+    filterData = value.replace(/[^ก-๙เแโใไฤฦุูึเะอาิีึืำๅฯๆฺ์ฮฤฦ]+/g, '')
     setState({ ...state, [e.target.name]: filterData })
   }
 

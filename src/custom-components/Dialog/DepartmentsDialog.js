@@ -25,6 +25,7 @@ import DialogContent from '@mui/material/DialogContent'
 
 const DepartmentsDialog = ({ open, handleClose, type, DataInRow }) => {
   const Route = useRouter()
+
   // console.log('Data IN ROW', DataInRow)
 
   // State variables =================================

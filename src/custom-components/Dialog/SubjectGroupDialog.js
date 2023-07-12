@@ -68,7 +68,7 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
   const handleChange = e => {
     const { value } = e.target
     const filterData = ''
-    filterData = value.replace(/^[A-Za-z0-9 ]+$/g, '')
+    filterData = value.replace(/[^ก-๙เแโใไฤฦุูึเะอาิีึืำๅฯๆฺ์ฮฤฦ]+/g, '')
     setState({ ...state, [e.target.name]: filterData })
   }
 
