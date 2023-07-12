@@ -121,7 +121,7 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
       !Faculty ||
       !ReleaseYear
     ) {
-      alert('ฮานาเงะ')
+      // alert('ฮานาเงะ')
 
       return
     }
@@ -158,8 +158,16 @@ const CurriculumsDialog = ({ open, handleClose, handleSubmit, type, data, rowdat
     setSubmitted(true)
 
     // ตรวจสอบค่าว่างใน TextField
-    if (!NameTh || !NameEn || !ShortNameTh || !ShortNameEn || !Dpm || !Faculty || !ReleaseYear) {
-      alert('ฮานาเงะ')
+    if (
+      !NameTh ||
+      !NameEn ||
+      !ShortNameTh.includes('.') ||
+      !ShortNameEn.includes('.') ||
+      !Dpm ||
+      !Faculty ||
+      !ReleaseYear
+    ) {
+      // alert('ฮานาเงะ')
 
       return
     }

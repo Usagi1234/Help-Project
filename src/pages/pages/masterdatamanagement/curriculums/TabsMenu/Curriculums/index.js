@@ -59,6 +59,7 @@ function CurriculumsTab({ data }) {
             setValue(cellValues.row)
             setDeleteId(cellValues.row.cur_id)
             setOpenConfirmDelete(true)
+
             // console.log(cellValues.row)
           }}
         >
@@ -147,6 +148,7 @@ function CurriculumsTab({ data }) {
         data={data}
         open={openInsDialog}
         handleClose={() => setOpenInsDialog(false)}
+
         // handleSubmit={console.log('Submit!')}
       />
 
@@ -157,6 +159,7 @@ function CurriculumsTab({ data }) {
         rowdata={rowdata}
         open={openEditDialog}
         handleClose={() => setOpenEditDialog(false)}
+
         // handleSubmit={console.log('คาร์บิว')}
       />
 
