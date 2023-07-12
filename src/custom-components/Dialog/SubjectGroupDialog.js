@@ -51,9 +51,11 @@ const SubjectGroupDialog = ({ open, handleClose, type, row, dropdown }) => {
         subject_type_id: row.subject_type_id,
         sjg_id: row.sjg_id
       }))
+
       // console.log('type: ', type)
     } else {
       setState(initialState)
+
       // console.log('type: ', type)
     }
   }, [row, type])
