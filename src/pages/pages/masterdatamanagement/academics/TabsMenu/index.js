@@ -45,7 +45,7 @@ const TabName = styled('span')(({ theme }) => ({
 
 const Tabs = ({ data }) => {
   const academicsData = data[0].academics
-  const academicsTypeData = data[1].academictype
+  const academicsTypeData = data[1].academicType
   const facultyData = data[2].faculty
   const departmentsData = data[3].departments
   const [value, setValue] = useState('')

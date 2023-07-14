@@ -49,9 +49,11 @@ const TabName = styled('span')(({ theme }) => ({
 const Tabs = ({ data }) => {
   const curriculums = data[0].curriculums
   const subjects = data[1].subjects
-  const subjectGroups = data[2].subjectgroups
-  const subjectTypes = data[3].subjecttypes
+  const subjectGroups = data[2].subjectGroups
+  const subjectTypes = data[3].subjectTypes
   const subjectCategories = data[4].subjectCategories
+
+  // const { curriculums, subjects, subjectGroups, subjectTypes, subjectCategory } = data
 
   const [value, setValue] = useState('')
 
@@ -125,7 +127,6 @@ const Tabs = ({ data }) => {
         </TabList>
         <TabPanel sx={{ p: 0 }} value='curriculums'>
           <CurriculumsTab data={curriculums} />
-          curriculums
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='Subjects'>
           <SubjectsTab data={subjects} subjectGroups={subjectGroups} curriculums={curriculums} />

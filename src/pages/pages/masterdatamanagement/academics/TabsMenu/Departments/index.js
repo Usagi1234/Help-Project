@@ -39,10 +39,6 @@ function DepartmentsTab({ data }) {
 
   // console.log('in the row', inRow)
 
-  if (!data || data.length === 0) {
-    return <p>No data available.</p> // Display a message when rows are empty or undefined
-  }
-
   const handleClose = () => {
     setOpenConfirmDelete(false)
 
@@ -123,6 +119,10 @@ function DepartmentsTab({ data }) {
     { field: 'fi_name_th', headerName: 'type(TH)', width: 220 },
     { field: 'fi_name_en', headerName: 'type(EN)', width: 220 }
   ]
+
+  if (!data || data.length === 0) {
+    return <p>No data available.</p> // Display a message when rows are empty or undefined
+  }
 
   return (
     <CardContent>

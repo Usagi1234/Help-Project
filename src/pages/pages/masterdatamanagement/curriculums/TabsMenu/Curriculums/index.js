@@ -29,8 +29,9 @@ function CurriculumsTab({ data }) {
   if (!data || data.length === 0) {
     return <p>No data available.</p> // Display a message when rows are empty or undefined
   }
+  console.log('Cur: ', data)
 
-  const DataExport = data?.map(val => ({
+  const DataExport = Object.values(data)?.map(val => ({
     NameTH: val.cur_name_th,
     NameEN: val.cur_name_en,
     ShortNameTH: val.cur_shot_name_th,

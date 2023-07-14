@@ -22,11 +22,13 @@ export default PersonnelsPage
 
 export async function getServerSideProps(context) {
   const WrapData = []
+
+  // ? API collegians
   try {
     const queryCollegians = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.collegian.getAllcollegians`)
     const resCollegians = await queryCollegians.json()
     if (!resCollegians) {
-      return { notFound: true }
+      WrapData.push({ collegians: [] })
     } else {
       const newRow = resCollegians.message.Data.map((row, index) => ({
         ...row,
@@ -35,14 +37,15 @@ export async function getServerSideProps(context) {
       WrapData.push({ collegians: newRow })
     }
   } catch (err) {
-    return { error: err }
+    WrapData.push({ collegians: [] })
   }
 
+  // ? API instructors
   try {
     const queryInstructors = await fetch(`${process.env.NEXT_PUBLIC_API}.MasterData.instructor.getAllinstructors`)
     const resInstructor = await queryInstructors.json()
     if (!resInstructor) {
-      return { notFound: true }
+      WrapData.push({ instructors: [] })
     } else {
       const newRow = resInstructor.message.Data.map((row, index) => ({
         ...row,
@@ -51,7 +54,7 @@ export async function getServerSideProps(context) {
       WrapData.push({ instructors: newRow })
     }
   } catch (err) {
-    return { error: err }
+    WrapData.push({ instructors: [] })
   }
 
   // const WrapData = {
