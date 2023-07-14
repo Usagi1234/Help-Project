@@ -57,9 +57,10 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.1.168:8000/api/method/frappe.help-api.getAllAcademics')
+      .get(`${process.env.NEXT_PUBLIC_API}.MasterData.academic.getAllAcademics`)
       .then(response => {
         setDataAcademic(response.data.message.Data)
+
         // console.log('dataAC', response.data.message.Data)
       })
       .catch(error => {
@@ -71,10 +72,12 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
     if (type === 'edit') {
       setState(row)
       setAcademicState(false)
+
       // console.log('type: ', type)
     } else {
       setState(initialState)
       setAcademicState(true)
+
       // console.log('type: ', type)
     }
   }, [row, type])
@@ -84,9 +87,10 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
       const data = {
         ac_id: state.ac_id
       }
+
       // console.log(data)
       axios
-        .get('http://192.168.1.168:8000/api/method/frappe.help-api.getAllCurriculumandFacultyinoneacademic', {
+        .get(`${process.env.NEXT_PUBLIC_API}.MasterData.collegian.getAllCurriculumandFacultyinoneacademic`, {
           params: data
         })
         .then(res => {
@@ -144,7 +148,7 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
     } else {
       if (type === 'insert') {
         axios
-          .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertcollegian', state)
+          .post(`${process.env.NEXT_PUBLIC_API}.MasterData.collegian.insertcollegian`, state)
           .then(res => {
             // console.log(res)
             // console.log('Insert Successful information')
@@ -154,7 +158,7 @@ const CollegianDialog = ({ open, onClose, type, row }) => {
           })
       } else {
         axios
-          .put('http://192.168.1.168:8000/api/method/frappe.help-api.editcollegian', state)
+          .put(`${process.env.NEXT_PUBLIC_API}.MasterData.collegian.editcollegian`, state)
           .then(res => {
             // console.log(res)
             // console.log('Edit Successful information')
