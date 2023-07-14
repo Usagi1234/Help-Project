@@ -40,6 +40,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
   useEffect(() => {
     if (type === 'insert') {
       setDataAct(initial)
+
       // console.log('insert')
     } else {
       setDataAct(rowData)
@@ -48,13 +49,13 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
 
   const HandleChangeIns = (event, type) => {
     if (type === 'ac_type_name_th') {
-      const newStr = event.target.value.replace(/[^ก-๙เ\s]/g, '')
+      const newStr = event.target.value.replace(/[^ก-๙เ\s0-9]/g, '')
       if (dataAct.ac_type_name_th !== '') {
         setColorOnChange(pre => ({ ...pre, ac_type_name_th: false }))
       }
       setDataAct(pre => ({ ...pre, ac_type_name_th: newStr }))
     } else if (type === 'ac_type_name_en') {
-      const newStr = event.target.value.replace(/[^a-zA-Z\s]/g, '')
+      const newStr = event.target.value.replace(/[^a-zA-Z\s0-9]/g, '')
       if (dataAct.ac_type_name_en !== '') {
         setColorOnChange(pre => ({ ...pre, ac_type_name_en: false }))
       }
@@ -76,7 +77,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
       }))
       console.log('a ', dataAct)
       axios
-        .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertacademictype', dataAct) // back end list มา
+        .post('http://111.223.38.19/api/method/frappe.API.MasterData.academic_type.insertacademictype', dataAct) // back end list มา
         .then(res => {
           // console.log(res)
           setDataAct(initial)
@@ -112,7 +113,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
   const HandleOnEdit = () => {
     if (dataAct.ac_type_name_th !== '' && dataAct.ac_type_name_en !== '' && dataAct.ac_area !== '') {
       axios
-        .put('http://192.168.1.168:8000/api/method/frappe.help-api.editacademictype', dataAct) // back end list มา
+        .put('http://111.223.38.19/api/method/frappe.API.MasterData.academic_type.editacademictype', dataAct) // back end list มา
         .then(res => {
           setDataAct(initial)
           handleClose()
