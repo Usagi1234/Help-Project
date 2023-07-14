@@ -77,7 +77,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
       }))
       console.log('a ', dataAct)
       axios
-        .post('http://111.223.38.19/api/method/frappe.API.MasterData.academic_type.insertacademictype', dataAct) // back end list มา
+        .post(`${process.env.NEXT_PUBLIC_API}.MasterData.academic_type.insertacademictype`, dataAct) // back end list มา
         .then(res => {
           // console.log(res)
           setDataAct(initial)
@@ -113,7 +113,7 @@ const AcademicTypeDialog = ({ open, handleClose, handleSubmit, type, rowData }) 
   const HandleOnEdit = () => {
     if (dataAct.ac_type_name_th !== '' && dataAct.ac_type_name_en !== '' && dataAct.ac_area !== '') {
       axios
-        .put('http://111.223.38.19/api/method/frappe.API.MasterData.academic_type.editacademictype', dataAct) // back end list มา
+        .put(`${process.env.NEXT_PUBLIC_API}.MasterData.academic_type.editacademictype`, dataAct) // back end list มา
         .then(res => {
           setDataAct(initial)
           handleClose()

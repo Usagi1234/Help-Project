@@ -21,7 +21,7 @@ function AcademicTypeTab({ data }) {
 
   const handleOnDelete = id => {
     axios
-      .post('http://111.223.38.19/api/method/frappe.API.MasterData.delete_data.delete', {
+      .post(`${process.env.NEXT_PUBLIC_API}.MasterData.delete_data.delete`, {
         table: 'tabacademic_types',
         primary: id
       })
