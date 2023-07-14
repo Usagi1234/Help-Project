@@ -230,8 +230,8 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
                     setTel(e.target.value)
                     handleChange(e, 'ac_tel', 'tel')
                   }}
-                  error={submitted && (!tel || tel.length !== 12)}
-                  helperText={submitted && (!tel || tel.length !== 12) && 'กรุณากรอกข้อมูลให้ครบ 10 ตัว'}
+                  error={submitted && (!tel || tel.length === 0)}
+                  helperText={submitted && (!tel || tel.length === 0) && 'กรุณากรอกข้อมูลให้ครบ 10 ตัว'}
                   inputProps={{ minLength: 0, maxLength: 10 }}
                 />
               </Grid>
