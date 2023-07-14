@@ -96,7 +96,7 @@ function AcademicsTab({ data }) {
   const handleDelete = () => {
     if (deleteId !== '') {
       axios
-        .post(`http://192.168.1.168:8000/api/method/frappe.help-api.delete`, {
+        .post(`${process.env.NEXT_PUBLIC_API}.MasterData.delete_data.delete`, {
           table: 'tabacademics',
           primary: deleteId
         })

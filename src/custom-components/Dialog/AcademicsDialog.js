@@ -124,7 +124,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
 
     // console.log(data)
     axios
-      .post('http://192.168.1.168:8000/api/method/frappe.help-api.insertacademic', data)
+      .post(`${process.env.NEXT_PUBLIC_API}.MasterData.academic.insertacademic`, data)
       .then(response => {
         // console.log(response)
         handleClose()
@@ -161,7 +161,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
     }
 
     axios
-      .put('http://192.168.1.168:8000/api/method/frappe.help-api.editacademic', data)
+      .put(`${process.env.NEXT_PUBLIC_API}.MasterData.academic.editacademic`, data)
       .then(response => {
         // console.log(response)
         handleClose()
@@ -172,6 +172,7 @@ const AcademicDialog = ({ open, handleClose, handleSubmit, type, data, rowdata }
       .catch(error => {
         // console.log(error)
       })
+
     // console.log(data)
   }
 
