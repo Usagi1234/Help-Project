@@ -75,12 +75,6 @@ function CollegiansTab({ data }) {
     { field: 'fi_name_th', headerName: 'faculty', width: 120 }
   ]
 
-  // * ถ้าไม่มีข้อมูลให้แสดงข้อความ
-  // console.log(data)
-  if (!data || data.length === 0) {
-    return <p>No data available.</p> // Display a message when rows are empty or undefined
-  }
-
   const DataExport = data?.map(val => ({
     Code: val.co_code,
     FirstNameTH: val.co_fname_th,
@@ -107,6 +101,43 @@ function CollegiansTab({ data }) {
       })
     router.replace(router.asPath)
     setOpenConfirmDelete(false)
+  }
+
+  // * ถ้าไม่มีข้อมูลให้แสดง
+  if (!data || data.length === 0) {
+    return (
+      <CardContent>
+        <Box sx={{ mb: 2 }}>
+          <Button
+            variant='contained'
+            sx={{ mr: 2 }}
+            onClick={() => {
+              setOpenDialog(true)
+              setDialogType('insert')
+            }}
+          >
+            + Collegian
+          </Button>
+        </Box>
+        {data.length > 0 && (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            initialState={{
+              pagination: { paginationModel: { pageSize: 10 } }
+            }}
+            pageSizeOptions={[10, 25, 50]}
+          />
+        )}
+        <CollegianDialog type={dialogType} open={openDialog} onClose={() => setOpenDialog(false)} row={dataRow} />
+        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <img
+            src='https://cdn.dribbble.com/users/634336/screenshots/2246883/media/21b6eeac8c36a79c6b4b2a1930bd89a6.png'
+            alt='Image'
+          />
+        </Box>
+      </CardContent>
+    ) // Display a message when rows are empty or undefined
   }
 
   return (

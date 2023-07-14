@@ -20,6 +20,7 @@ import axios from 'axios'
 
 const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype, curriculums }) => {
   const router = useRouter()
+
   // console.log('subjectGroups', subjectGroups)
 
   const initialState = {
@@ -200,6 +201,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
         }
         break
       default:
+
       // console.log('Error')
     }
   }
@@ -366,7 +368,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                     labelId='form-layouts-separator-select-label'
                     onChange={e => setState(pre => ({ ...pre, subject_group_sjg_id: e.target.value }))}
                   >
-                    {dropDown?.subjectgroups.map(sjg => (
+                    {dropDown.subjectgroups?.map(sjg => (
                       <MenuItem key={sjg.sjg_id} value={sjg.sjg_id}>
                         {sjg.sjg_name}
                       </MenuItem>
@@ -386,7 +388,7 @@ const SubjectsDialog = ({ open, handleClose, subject, subjectGroups, Dialogtype,
                     labelId='form-layouts-separator-select-label'
                     onChange={e => setState(pre => ({ ...pre, curriculums_cur_id: e.target.value }))}
                   >
-                    {dropDown?.curriculums.map(curri => (
+                    {dropDown.curriculums?.map(curri => (
                       <MenuItem key={curri.cur_id} value={curri.cur_id}>
                         {curri.cur_name_th}
                       </MenuItem>

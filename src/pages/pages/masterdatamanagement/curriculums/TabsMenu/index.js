@@ -133,15 +133,12 @@ const Tabs = ({ data }) => {
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsGroups'>
           <SubjectGroupsTab data={subjectGroups} dataDropdown={subjectTypes} />
-          subjects groups
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsTypes'>
           <SubjectTypesTab data={subjectTypes} dataDropdown={subjectCategories} />
-          subjects types
         </TabPanel>
         <TabPanel sx={{ p: 0 }} value='SubjectsCategory'>
           <SubjectCategoriesTab data={subjectCategories} />
-          subjects category
         </TabPanel>
       </TabContext>
     </Card>

@@ -97,7 +97,35 @@ function SubjectGroupsTab({ data, dataDropdown }) {
   ]
 
   if (!data || data.length === 0) {
-    return <CardContent>No data available.</CardContent> // Display a message when rows are empty or undefined
+    return (
+      <CardContent>
+        <Box sx={{ mb: 2 }}>
+          <Button
+            variant='contained'
+            sx={{ mr: 2 }}
+            onClick={() => {
+              setDialogType('insert')
+              setOpenDialog(true)
+            }}
+          >
+            + Subject Groups
+          </Button>
+        </Box>
+        <SubjectGroupDialog
+          type={dialogType}
+          row={dataRow}
+          dropdown={dataDropdown}
+          open={openDialog}
+          handleClose={() => setOpenDialog(false)}
+        />
+        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <img
+            src='https://cdn.dribbble.com/users/634336/screenshots/2246883/media/21b6eeac8c36a79c6b4b2a1930bd89a6.png'
+            alt='Image'
+          />
+        </Box>
+      </CardContent>
+    ) // Display a message when rows are empty or undefined
   }
 
   return (
@@ -119,14 +147,17 @@ function SubjectGroupsTab({ data, dataDropdown }) {
           excelData={DataExport}
         />
       </Box>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10 } }
-        }}
-        pageSizeOptions={[10, 25, 50]}
-      />
+      {data.length > 0 && (
+        <DataGrid
+          rows={data}
+          columns={columns}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } }
+          }}
+          pageSizeOptions={[10, 25, 50]}
+        />
+      )}
+
       <SubjectGroupDialog
         type={dialogType}
         row={dataRow}

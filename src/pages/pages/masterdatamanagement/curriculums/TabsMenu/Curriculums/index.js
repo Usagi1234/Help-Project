@@ -25,12 +25,6 @@ function CurriculumsTab({ data }) {
   //รับค่าจากแถวข้อมูล
   const [rowdata, setRowdata] = useState('')
 
-  // console.log(data)
-  if (!data || data.length === 0) {
-    return <p>No data available.</p> // Display a message when rows are empty or undefined
-  }
-  console.log('Cur: ', data)
-
   const DataExport = Object.values(data)?.map(val => ({
     NameTH: val.cur_name_th,
     NameEN: val.cur_name_en,
@@ -123,6 +117,32 @@ function CurriculumsTab({ data }) {
     }
   }
 
+  //? ถ้า Data ว่างแสดงตรงนี้
+  if (!data || data.length === 0) {
+    // return <p>No data available.</p> // Display a message when rows are empty or undefined
+    return (
+      <CardContent>
+        <Box sx={{ mb: 2 }}>
+          <Button variant='contained' sx={{ mr: 2 }} onClick={() => setOpenInsDialog(true)}>
+            + Curriculums
+          </Button>
+          <CurriculumsDialog
+            type={'insert'}
+            data={data}
+            open={openInsDialog}
+            handleClose={() => setOpenInsDialog(false)}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+          <img
+            src='https://cdn.dribbble.com/users/634336/screenshots/2246883/media/21b6eeac8c36a79c6b4b2a1930bd89a6.png'
+            alt='Image'
+          />
+        </Box>
+      </CardContent>
+    )
+  }
+
   return (
     <CardContent>
       <Box sx={{ mb: 2 }}>
@@ -135,14 +155,17 @@ function CurriculumsTab({ data }) {
           excelData={DataExport}
         />
       </Box>
-      <DataGrid
-        rows={data}
-        columns={columns}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10 } }
-        }}
-        pageSizeOptions={[10, 25, 50]}
-      />
+      {data.length > 0 && (
+        <DataGrid
+          rows={data}
+          columns={columns}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 10 } }
+          }}
+          pageSizeOptions={[10, 25, 50]}
+        />
+      )}
+
       {/* เปิด Dialog Insert */}
       <CurriculumsDialog
         type={'insert'}
